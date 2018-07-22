@@ -1,4 +1,4 @@
-package com.capgemini.jstk.boardbuddy.service;
+package com.capgemini.jstk.boardbuddy.service.score.calculator;
 
 import java.util.Map;
 

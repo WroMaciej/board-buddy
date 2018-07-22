@@ -1,5 +1,5 @@
 package com.capgemini.jstk.boardbuddy.dao;
 
-public class BoardgameDao {
+public interface BoardgameDao {
 
 }
