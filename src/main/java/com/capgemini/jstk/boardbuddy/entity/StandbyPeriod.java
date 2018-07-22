@@ -7,7 +7,7 @@ import java.util.Calendar;
  * @author MACIEWRO
  *
  */
-public class Standby {
+public class StandbyPeriod {
 
 	private Integer id;
 	private Integer userId;
