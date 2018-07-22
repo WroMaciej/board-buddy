@@ -1,6 +1,6 @@
 package com.capgemini.jstk.boardbuddy.entity;
 
-public class BoardGame {
+public class Boardgame {
 	
 	private Integer id;
 	private String name;
