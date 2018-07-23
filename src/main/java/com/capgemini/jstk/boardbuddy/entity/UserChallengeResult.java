@@ -8,7 +8,7 @@ public class UserChallengeResult {
 	private Integer id;
 	private Integer userId;
 	private Integer challengeResultId;
-	private String teamName;
+	private Integer placeTaken;
 	
 	
 	public Integer getId() {
@@ -29,13 +29,12 @@ public class UserChallengeResult {
 	public void setChallengeResultId(Integer challengeResultId) {
 		this.challengeResultId = challengeResultId;
 	}
-	public Integer getTeamNumber() {
-		return teamNumber;
+	public Integer getPlaceTaken() {
+		return placeTaken;
 	}
-	public void setTeamNumber(Integer teamNumber) {
-		this.teamNumber = teamNumber;
+	public void setPlaceTaken(Integer placeTaken) {
+		this.placeTaken = placeTaken;
 	}
-	
 	
 	
 	

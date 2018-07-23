@@ -11,6 +11,7 @@ public class UserBoardgame {
 	private Integer id;
 	private Integer userId;
 	private Integer boardgameId;
+	
 	public Integer getUserId() {
 		return userId;
 	}
