@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Availibility period for game
+ * Availebility period for game
  * @author MACIEWRO
  *
  */
