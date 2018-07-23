@@ -2,12 +2,12 @@ package com.capgemini.jstk.boardbuddy.dao;
 
 import java.util.Optional;
 
-import com.capgemini.jstk.boardbuddy.entity.Boardgame;
+import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 
 public interface BoardgameDao {
 	
-	public Optional<Boardgame> findById(Integer id);
+	public Optional<BoardgameDto> findById(Integer id);
 	
-	public Optional<Boardgame> findByName(String name);
+	public Optional<BoardgameDto> findByName(String name);
 
 }

@@ -1,10 +1,9 @@
-package com.capgemini.jstk.boardbuddy.entity;
+package com.capgemini.jstk.boardbuddy.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
-
-public class UserBoardgame {
+public class UserBoardgameDto {
 	
 	@Getter	@Setter
 	private Integer id;
@@ -12,5 +11,5 @@ public class UserBoardgame {
 	private Integer userId;
 	@Getter	@Setter
 	private Integer boardgameId;
-	
+
 }
