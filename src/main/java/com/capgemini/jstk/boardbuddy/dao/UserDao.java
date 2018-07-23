@@ -9,5 +9,7 @@ public interface UserDao {
 	public Optional<User> findById(Integer id);
 	
 	public Optional<User> findByEmail(String email);
+	
+	public Optional<Integer> findRankPosition(User user);
 
 }

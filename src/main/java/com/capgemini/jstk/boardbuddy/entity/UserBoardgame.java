@@ -8,6 +8,7 @@ package com.capgemini.jstk.boardbuddy.entity;
  */
 public class UserBoardgame {
 	
+	private Integer id;
 	private Integer userId;
 	private Integer boardgameId;
 	public Integer getUserId() {
@@ -21,6 +22,12 @@ public class UserBoardgame {
 	}
 	public void setBoardgameId(Integer boardgameId) {
 		this.boardgameId = boardgameId;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 

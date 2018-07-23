@@ -1,7 +1,7 @@
-package com.capgemini.jstk.boardbuddy.entity;
+package com.capgemini.jstk.boardbuddy.dto;
 
-public class User {
-	
+public class UserDto {
+		
 	private Integer id;
 	private String firstName;
 	private String lastName;
@@ -9,6 +9,18 @@ public class User {
 	private String password;
 	private String lifeMotto;
 	private Integer score;
+	
+	
+	private Integer rankPosition;
+	private Integer level;
+	
+	
+	
+	
+	public Integer getLevel() {
+		return level;
+	}
+	
 	
 	
 	public Integer getId() {
@@ -55,5 +67,5 @@ public class User {
 	}
 	
 	
-	
+
 }

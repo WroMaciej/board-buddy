@@ -6,10 +6,12 @@ package com.capgemini.jstk.boardbuddy.entity;
  *
  */
 public class Level {
+	
 	private Integer id;
 	private Integer levelValue;
 	private String name;
 	private Integer minScore;
+	
 	public Integer getId() {
 		return id;
 	}
