@@ -1,14 +1,12 @@
 package com.capgemini.jstk.boardbuddy.dto.mapper;
 
-import java.util.Optional;
-
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.entity.User;
 
-public class UserMapper implements Mapper<User, Optional<UserDto>> {
+public class UserMapper implements Mapper<User, UserDto> {
 
 	@Override
-	public Optional<UserDto> toDto(User entity) {
+	public UserDto toDto(User entity) {
 		final UserDto userDto = new UserDto();
 		userDto.setId(entity.getId());
 		userDto.setFirstName(entity.getFirstName());
@@ -16,11 +14,11 @@ public class UserMapper implements Mapper<User, Optional<UserDto>> {
 		userDto.setEmail(entity.getEmail());
 		userDto.setScore(entity.getScore());
 		userDto.setLifeMotto(entity.getLifeMotto());
-		return Optional.of(userDto);
+		return userDto;
 	}
 
 	@Override
-	public User toEntity(Optional<UserDto> dto) {
+	public User toEntity(UserDto dto) {
 		return null;
 	}
 	
