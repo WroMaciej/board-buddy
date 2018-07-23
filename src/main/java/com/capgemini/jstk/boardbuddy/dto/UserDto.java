@@ -1,71 +1,29 @@
 package com.capgemini.jstk.boardbuddy.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class UserDto {
 		
+	@Getter	@Setter
 	private Integer id;
+	@Getter	@Setter
 	private String firstName;
+	@Getter	@Setter
 	private String lastName;
+	@Getter	@Setter
 	private String email;
+	@Getter	@Setter
 	private String password;
+	@Getter	@Setter
 	private String lifeMotto;
+	@Getter	@Setter
 	private Integer score;
 	
-	
+	@Getter	@Setter
 	private Integer rankPosition;
+	@Getter	@Setter
 	private Integer level;
-	
-	
-	
-	
-	public Integer getLevel() {
-		return level;
-	}
-	
-	
-	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getLifeMotto() {
-		return lifeMotto;
-	}
-	public void setLifeMotto(String lifeMotto) {
-		this.lifeMotto = lifeMotto;
-	}
-	public Integer getScore() {
-		return score;
-	}
-	public void setScore(Integer score) {
-		this.score = score;
-	}
-	
-	
+		
 
 }

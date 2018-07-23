@@ -19,6 +19,12 @@ public class User {
 	private String lifeMotto;
 	@Getter	@Setter
 	private Integer score;
+	@Getter	@Setter
+	private Integer wins;
+	@Getter	@Setter
+	private Integer losses;
+	@Getter	@Setter
+	private Integer draws;
 	
 	
 
