@@ -1,14 +1,14 @@
 package com.capgemini.jstk.boardbuddy.entity;
 
 /**
- * Winning position of given user and given challenge result
+ * Number of team which user belongs to during a challenge
  */
 public class UserChallengeResult {
 	
 	private Integer id;
 	private Integer userId;
 	private Integer challengeResultId;
-	private Integer teamNumber;
+	private String teamName;
 	
 	
 	public Integer getId() {

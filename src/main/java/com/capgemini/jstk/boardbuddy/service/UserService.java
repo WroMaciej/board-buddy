@@ -18,7 +18,6 @@ public class UserService {
 
 	@Autowired
 	public UserService(UserDao userDao, LevelDao levelDao, Mapper mapper) {
-		super();
 		this.userDao = userDao;
 		this.levelDao = levelDao;
 		this.mapper = mapper;

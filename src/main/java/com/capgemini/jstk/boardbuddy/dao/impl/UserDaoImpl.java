@@ -1,15 +1,13 @@
 package com.capgemini.jstk.boardbuddy.dao.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
-import com.capgemini.jstk.boardbuddy.entity.Boardgame;
+import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.entity.User;
 
 @Repository
