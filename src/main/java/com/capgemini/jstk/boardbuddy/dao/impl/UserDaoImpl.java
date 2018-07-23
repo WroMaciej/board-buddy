@@ -16,17 +16,17 @@ public class UserDaoImpl implements UserDao {
 private static List<User> users;
 	
 	@Override
-	public Optional<User> findById(Integer id) {
+	public Optional<UserDto> findById(Integer id) {
 		return users.stream().filter(user -> user.getId().equals(id)).findFirst();
 	}
 
 	@Override
-	public Optional<User> findByEmail(String email) {
+	public Optional<UserDto> findByEmail(String email) {
 		return users.stream().filter(user -> user.getEmail().equals(email)).findFirst();
 	}
 
 	@Override
-	public Optional<Integer> findRankPosition(User user) {
+	public Optional<Integer> findRankPosition(UserDto userDto) {
 		//TODO think about improve this implementation
 		List<User> sortedByScore = new ArrayList<>();
 		sortedByScore.addAll(users);

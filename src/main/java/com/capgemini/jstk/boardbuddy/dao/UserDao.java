@@ -2,14 +2,14 @@ package com.capgemini.jstk.boardbuddy.dao;
 
 import java.util.Optional;
 
-import com.capgemini.jstk.boardbuddy.entity.User;
+import com.capgemini.jstk.boardbuddy.dto.UserDto;
 
 public interface UserDao {
 	
-	public Optional<User> findById(Integer id);
+	public Optional<UserDto> findById(Integer id);
 	
-	public Optional<User> findByEmail(String email);
+	public Optional<UserDto> findByEmail(String email);
 	
-	public Optional<Integer> findRankPosition(User user);
+	public Optional<Integer> findRankPosition(UserDto userDto);
 
 }

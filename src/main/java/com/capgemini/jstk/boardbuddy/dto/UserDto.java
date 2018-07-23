@@ -14,8 +14,6 @@ public class UserDto {
 	@Getter	@Setter
 	private String email;
 	@Getter	@Setter
-	private String password;
-	@Getter	@Setter
 	private String lifeMotto;
 	@Getter	@Setter
 	private Integer score;
