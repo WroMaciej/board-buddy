@@ -1,5 +1,8 @@
 package com.capgemini.jstk.boardbuddy.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Level of rank
  * @author MACIEWRO
@@ -7,36 +10,14 @@ package com.capgemini.jstk.boardbuddy.entity;
  */
 public class Level {
 	
+	@Getter	@Setter
 	private Integer id;
+	@Getter	@Setter
 	private Integer levelValue;
+	@Getter	@Setter
 	private String name;
+	@Getter	@Setter
 	private Integer minScore;
-	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public Integer getLevelValue() {
-		return levelValue;
-	}
-	public void setLevelValue(Integer levelValue) {
-		this.levelValue = levelValue;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public Integer getMinScore() {
-		return minScore;
-	}
-	public void setMinScore(Integer minScore) {
-		this.minScore = minScore;
-	}
-
 	
 	
 }

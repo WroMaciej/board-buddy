@@ -1,44 +1,20 @@
 package com.capgemini.jstk.boardbuddy.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Number of team which user belongs to during a challenge
  */
 public class UserChallengeResult {
 	
+	@Getter	@Setter
 	private Integer id;
+	@Getter	@Setter
 	private Integer userId;
+	@Getter	@Setter
 	private Integer challengeResultId;
-	private Integer placeTaken;
-	
-	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-	public Integer getChallengeResultId() {
-		return challengeResultId;
-	}
-	public void setChallengeResultId(Integer challengeResultId) {
-		this.challengeResultId = challengeResultId;
-	}
-	public Integer getPlaceTaken() {
-		return placeTaken;
-	}
-	public void setPlaceTaken(Integer placeTaken) {
-		this.placeTaken = placeTaken;
-	}
-	
-	
-	
-	
-	
+	@Getter	@Setter
+	private Integer placeTaken;	
 
 }

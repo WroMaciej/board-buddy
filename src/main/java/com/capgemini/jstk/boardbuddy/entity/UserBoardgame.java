@@ -1,35 +1,18 @@
 package com.capgemini.jstk.boardbuddy.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * Many to many relation between users and board games
- * @author MACIEWRO
- *
- */
+
 public class UserBoardgame {
 	
+	@Getter	@Setter
 	private Integer id;
+	@Getter	@Setter
 	private Integer userId;
+	@Getter	@Setter
 	private Integer boardgameId;
 	
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-	public Integer getBoardgameId() {
-		return boardgameId;
-	}
-	public void setBoardgameId(Integer boardgameId) {
-		this.boardgameId = boardgameId;
-	}
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
 	
 
 }

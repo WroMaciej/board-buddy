@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.capgemini.jstk.boardbuddy.dao.BoardgameDao;
 import com.capgemini.jstk.boardbuddy.entity.Boardgame;
+import com.capgemini.jstk.boardbuddy.entity.User;
 
 @Repository
 public class BoardgameDaoImpl implements BoardgameDao {

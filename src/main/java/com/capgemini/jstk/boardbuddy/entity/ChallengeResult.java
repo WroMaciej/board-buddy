@@ -2,32 +2,17 @@ package com.capgemini.jstk.boardbuddy.entity;
 
 import java.util.Calendar;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class ChallengeResult {
 
+	@Getter	@Setter
 	private Integer id;
+	@Getter	@Setter
 	private Calendar dateOfStart;
+	@Getter	@Setter
 	private Calendar dateOfEnd;
-	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Calendar getDateOfStart() {
-		return dateOfStart;
-	}
-	public void setDateOfStart(Calendar dateOfStart) {
-		this.dateOfStart = dateOfStart;
-	}
-	public Calendar getDateOfEnd() {
-		return dateOfEnd;
-	}
-	public void setDateOfEnd(Calendar dateOfEnd) {
-		this.dateOfEnd = dateOfEnd;
-	}
-	
-	
+		
 	
 }

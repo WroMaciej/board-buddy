@@ -29,7 +29,7 @@ public class UserService {
 	}
 	
 	public Integer findRankPosition(UserDto userDto) {
-		return 
+		return null;
 	}
 	
 	

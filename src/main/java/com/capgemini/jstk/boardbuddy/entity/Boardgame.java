@@ -1,23 +1,15 @@
 package com.capgemini.jstk.boardbuddy.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Boardgame {
 	
+	@Getter	@Setter
 	private Integer id;
+	@Getter	@Setter
 	private String name;
 	
-	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-		
+			
 
 }
