@@ -1,5 +1,10 @@
 package com.capgemini.jstk.boardbuddy.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +30,11 @@ public class UserService {
 		return levelDao.findByScore(userDto.getScore()).get();
 	}
 	
-	public Integer findRankPosition(UserDto userDto) {
-		return null;
+	public Optional<Integer> findRankPosition(UserDto userDto) {
+		List<UserDto> sortedByScore = userDao.findAllUsers();
+		sortedByScore.sort((user1, user2) -> user1.getScore() - user2.getScore());
+		Integer rankPosition = sortedByScore.indexOf(userDto);
+		return Optional.of(rankPosition);
 	}
 	
 	

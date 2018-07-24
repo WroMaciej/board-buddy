@@ -38,12 +38,10 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public Optional<Integer> findRankPosition(UserDto userDto) {
-		List<UserDto> sortedByScore = new ArrayList<>();
-		users.forEach(user -> sortedByScore.add(userMapper.toDto(user)));
-		sortedByScore.sort((user1, user2) -> user1.getScore() - user2.getScore());
-		Integer rankPosition = sortedByScore.indexOf(userDto);
-		return Optional.of(rankPosition);
+	public List<UserDto> findAllUsers() {
+		List<UserDto> userDtos = new ArrayList<>();
+		users.forEach(user -> userDtos.add(userMapper.toDto(user)));
+		return userDtos;
 	}
 
 
