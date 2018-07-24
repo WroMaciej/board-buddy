@@ -63,6 +63,11 @@ public class UserServiceTest {
 		Integer positionFound = userService.findRankPosition(userDtoId1).get();
 		//then
 		assertEquals(rankPositionOfId1User, positionFound);
+	}
+	
+	@Test
+	public void testFindUserBoardgames() {
+		//given
 		
 	}
 	

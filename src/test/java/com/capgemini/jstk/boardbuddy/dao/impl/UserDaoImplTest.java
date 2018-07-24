@@ -44,4 +44,14 @@ public class UserDaoImplTest {
 		// then
 		assertEquals("John", userDto.getFirstName());	
 	}
+
+	@Test
+	public void testFindAllUsers() {
+		//given
+		int usersSize = 6;
+		//when
+		int foundSize = userDao.findAllUsers().size();
+		//then
+		assertEquals(usersSize, foundSize);
+	}
 }
