@@ -3,6 +3,7 @@ package com.capgemini.jstk.boardbuddy.dao.impl;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.capgemini.jstk.boardbuddy.dao.BoardgameDao;

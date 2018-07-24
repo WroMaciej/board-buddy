@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
@@ -28,7 +29,7 @@ public class UserDaoImpl implements UserDao {
 	public UserDaoImpl(CommonDatabaseMock commonDatabaseMock, Mapper<User, UserDto> userMapper) {
 		this.commonDatabaseMock = commonDatabaseMock;
 		this.userMapper = userMapper;
-		users = commonDatabaseMock.getUsers();
+		users = this.commonDatabaseMock.getUsers();
 	}
 
 	@Override

@@ -14,13 +14,11 @@ public class UserService {
 
 	private UserDao userDao;
 	private LevelDao levelDao;
-	private Mapper mapper;
 
 	@Autowired
-	public UserService(UserDao userDao, LevelDao levelDao, Mapper mapper) {
+	public UserService(UserDao userDao, LevelDao levelDao) {
 		this.userDao = userDao;
 		this.levelDao = levelDao;
-		this.mapper = mapper;
 	}
 
 	//TODO how to update level field ?
