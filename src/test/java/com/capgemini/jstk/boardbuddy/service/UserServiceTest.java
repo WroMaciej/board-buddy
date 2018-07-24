@@ -17,7 +17,6 @@ import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
-import com.capgemini.jstk.boardbuddy.entity.ChallengeResult;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -101,9 +100,11 @@ public class UserServiceTest {
 	
 	@Test
 	public void testShowUserHistory() {
-		//givenon setup
+		//given on setup
 		//when
 		Collection<ChallengeResultDto> history = userService.fingUserChallenges(userDtoId1);
+		//then
+		assertEquals(expected, actual);
 	}
 	
 	
