@@ -14,5 +14,7 @@ public class Boardgame {
 		this.id = id;
 		this.name = name;
 	}
+	
+	
 
 }

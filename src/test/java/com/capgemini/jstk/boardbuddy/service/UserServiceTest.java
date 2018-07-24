@@ -14,7 +14,6 @@ import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.dto.mapper.impl.UserMapper;
-import com.capgemini.jstk.boardbuddy.entity.Level;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -24,14 +23,9 @@ public class UserServiceTest {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private CommonDatabaseMock commonDatabaseMock;
 	
 	@Autowired
 	UserDao userDao;
-	
-	@Autowired
-	private UserMapper userMapper;
 	
 	UserDto userDtoId1;
 	UserDto userDtoId3;
