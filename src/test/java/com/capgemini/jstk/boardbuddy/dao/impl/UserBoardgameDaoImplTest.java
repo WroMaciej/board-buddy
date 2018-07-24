@@ -39,8 +39,7 @@ public class UserBoardgameDaoImplTest {
 	
 	@Test
 	public void testFindBoardgamesByUser() {
-		//given
-		
+		//given	
 		//when
 		Collection<BoardgameDto> boardgameDtos = userBoardgameDao.findBoardgamesByUser(userDtoId5);
 		//then

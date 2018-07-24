@@ -3,24 +3,27 @@ package com.capgemini.jstk.boardbuddy.dao.impl;
 import java.util.Collection;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.capgemini.jstk.boardbuddy.dao.BoardgameDao;
+import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
-import com.capgemini.jstk.boardbuddy.dto.mapper.impl.BoardgameMapper;
+import com.capgemini.jstk.boardbuddy.dto.mapper.Mapper;
 import com.capgemini.jstk.boardbuddy.entity.Boardgame;
 
 @Repository
 public class BoardgameDaoImpl implements BoardgameDao {
+	
+	private CommonDatabaseMock commonDatabaseMock;
 
 	private static Collection<Boardgame> boardgames;
-	private BoardgameMapper boardgameMapper;
+	private Mapper<Boardgame, BoardgameDto> boardgameMapper;
 	
 	
-	@Autowired
-	public BoardgameDaoImpl(BoardgameMapper boardgameMapper) {
+	public BoardgameDaoImpl(CommonDatabaseMock commonDatabaseMock, Mapper<Boardgame, BoardgameDto> boardgameMapper) {
+		this.commonDatabaseMock = commonDatabaseMock;
 		this.boardgameMapper = boardgameMapper;
+		boardgames = this.commonDatabaseMock.getBoardgames();
 	}
 
 	@Override

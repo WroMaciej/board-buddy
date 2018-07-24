@@ -36,6 +36,7 @@ public class UserBoardgameDaoImpl implements UserBoardgameDao {
 		this.userBoardgameMapper = userBoardgameMapper;
 		this.userDao = userDao;
 		this.boardgameDao = boardgameDao;
+		userBoardgames = this.commonDatabaseMock.getUserBoardgames();
 	}
 
 	@Override
