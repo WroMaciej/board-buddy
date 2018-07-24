@@ -5,9 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.capgemini.jstk.boardbuddy.dao.LevelDao;
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
+import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
-import com.capgemini.jstk.boardbuddy.dto.mapper.Mapper;
-import com.capgemini.jstk.boardbuddy.entity.Level;
 
 @Service
 public class UserService {
@@ -22,7 +21,7 @@ public class UserService {
 	}
 
 	//TODO how to update level field ?
-	public Level findLevel(UserDto userDto) {
+	public LevelDto findLevel(UserDto userDto) {
 		
 		return levelDao.findByScore(userDto.getScore()).get();
 	}

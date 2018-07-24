@@ -36,9 +36,9 @@ public class LevelDaoImplTest {
 	@Test
 	public void testFindById() {
 		// when
-		LevelDto levelDto = levelDao.findById(3).get();
+		LevelDto levelDto = levelDao.findById(2).get();
 		// then
-		assertEquals("John", userDto.getFirstName());	
+		assertEquals(Integer.valueOf(5), levelDto.getLevelValue());	
 	}
 
 }

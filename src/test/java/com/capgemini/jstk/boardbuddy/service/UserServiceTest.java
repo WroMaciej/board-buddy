@@ -11,9 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
 import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
+import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.dto.mapper.impl.UserMapper;
-import com.capgemini.jstk.boardbuddy.entity.Level;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -48,7 +48,7 @@ public class UserServiceTest {
 		//given
 		
 		//when
-		Level level4 = userService.findLevel(userDtoId1);
+		LevelDto level4 = userService.findLevel(userDtoId1);
 		//then
 		assertEquals(Integer.valueOf(4), level4.getLevelValue());
 		
