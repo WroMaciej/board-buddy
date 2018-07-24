@@ -2,10 +2,10 @@ package com.capgemini.jstk.boardbuddy.dao;
 
 import java.util.Optional;
 
-import com.capgemini.jstk.boardbuddy.entity.ChallengeResult;
+import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 
 public interface ChallengeResultDao {
 	
-	public Optional<ChallengeResult> findById(Integer id);
+	public Optional<ChallengeResultDto> findById(Integer id);
 
 }

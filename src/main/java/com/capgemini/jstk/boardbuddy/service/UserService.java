@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.capgemini.jstk.boardbuddy.dao.LevelDao;
 import com.capgemini.jstk.boardbuddy.dao.UserBoardgameDao;
+import com.capgemini.jstk.boardbuddy.dao.UserChallengeResultDao;
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
+import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabase;
@@ -22,14 +24,17 @@ public class UserService {
 	private UserDao userDao;
 	private LevelDao levelDao;
 	private UserBoardgameDao userBoardgameDao;
+	private UserChallengeResultDao userChallengeResultDao;
 
 	
 
 	@Autowired
-	public UserService(UserDao userDao, LevelDao levelDao, UserBoardgameDao userBoardgameDao) {
+	public UserService(UserDao userDao, LevelDao levelDao, UserBoardgameDao userBoardgameDao,
+			UserChallengeResultDao userChallengeResultDao) {
 		this.userDao = userDao;
 		this.levelDao = levelDao;
 		this.userBoardgameDao = userBoardgameDao;
+		this.userChallengeResultDao = userChallengeResultDao;
 	}
 
 	public LevelDto findLevel(UserDto userDto) {
@@ -80,6 +85,10 @@ public class UserService {
 		userStatistics.setRankPosition(findRankPosition(userDto));
 		
 		return userStatistics;
+	}
+
+	public Collection<ChallengeResultDto> fingUserChallenges(UserDto userDto) {
+		return userChallengeResultDao.findUserChallenges(userDto);
 	}
 	
 	
