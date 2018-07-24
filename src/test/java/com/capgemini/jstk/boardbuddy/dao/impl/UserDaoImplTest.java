@@ -51,6 +51,7 @@ public class UserDaoImplTest {
 		int usersSize = 6;
 		//when
 		int foundSize = userDao.findAllUsers().size();
+
 		//then
 		assertEquals(usersSize, foundSize);
 	}

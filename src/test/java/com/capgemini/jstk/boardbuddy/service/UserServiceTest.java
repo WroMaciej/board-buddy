@@ -2,6 +2,8 @@ package com.capgemini.jstk.boardbuddy.service;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Collection;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,10 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
-import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
+import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
-import com.capgemini.jstk.boardbuddy.dto.mapper.impl.UserMapper;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -62,6 +63,16 @@ public class UserServiceTest {
 	@Test
 	public void testFindUserBoardgames() {
 		//given
+		Collection<BoardgameDto> boardgameDtos= userService.findUserBoardgames(userDtoId3);
+		//when
+		int gamesNumber = boardgameDtos.size();
+		boolean hasDuopolyGame = boardgameDtos.stream().anyMatch(game -> game.getName().equals("Duopoly"));
+		boolean hasEverybodyWantsMeGame = boardgameDtos.stream().anyMatch(game -> game.getName().equals("Everybody wants me!"));
+		//then
+		assertEquals(2, gamesNumber);
+		assertEquals(true, hasDuopolyGame);
+		assertEquals(true, hasEverybodyWantsMeGame);
+		
 		
 	}
 	

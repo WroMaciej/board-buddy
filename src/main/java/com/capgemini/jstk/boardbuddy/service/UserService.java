@@ -54,6 +54,8 @@ public class UserService {
 		return userBoardgameDao.findBoardgamesByUser(userDto);
 	}
 	
+	public UserDto findUserProfileInfo()
+	
 	
 	
 
