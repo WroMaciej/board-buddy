@@ -24,8 +24,7 @@ public class UserDaoImpl implements UserDao {
 	
 	
 	
-
-
+	@Autowired
 	public UserDaoImpl(CommonDatabaseMock commonDatabaseMock, Mapper<User, UserDto> userMapper) {
 		this.commonDatabaseMock = commonDatabaseMock;
 		this.userMapper = userMapper;
