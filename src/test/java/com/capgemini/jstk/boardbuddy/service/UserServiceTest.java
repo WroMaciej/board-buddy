@@ -38,22 +38,20 @@ public class UserServiceTest {
 	
 	@Before
     public void setUp() throws Exception {
-		UserDto userDto1 = userDao.findById(1).get();
-		UserDto userDto3 = userDao.findById(3).get();
-		UserDto userDto5 = userDao.findById(5).get();
+		userDtoId1 = userDao.findById(1).get();
+		userDtoId3 = userDao.findById(3).get();
+		userDtoId5 = userDao.findById(5).get();
     }
 	
 	@Test
 	public void testFindingUserLevel() {
 		//given
-		
+		int levelOfId1Element = 4;
 		//when
 		LevelDto level4 = userService.findLevel(userDtoId1);
 		//then
-		assertEquals(Integer.valueOf(4), level4.getLevelValue());
-		
-		
-		
+		assertEquals(Integer.valueOf(levelOfId1Element), level4.getLevelValue());
+		assertEquals("Normal", level4.getName());
 	}
 	
 	

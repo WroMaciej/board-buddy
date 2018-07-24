@@ -22,7 +22,6 @@ public class UserService {
 
 	//TODO how to update level field ?
 	public LevelDto findLevel(UserDto userDto) {
-		
 		return levelDao.findByScore(userDto.getScore()).get();
 	}
 	

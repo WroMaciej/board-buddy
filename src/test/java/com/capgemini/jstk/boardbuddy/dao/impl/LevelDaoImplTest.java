@@ -25,9 +25,6 @@ public class LevelDaoImplTest {
 	@Autowired
 	private CommonDatabaseMock commonDatabaseMock;
 	
-	@Autowired
-	private UserMapper userMapper;
-	
 	@Before
     public void setUp() throws Exception {
         //userDao = new UserDaoImpl(commonDatabaseMock, userMapper);
@@ -39,6 +36,16 @@ public class LevelDaoImplTest {
 		LevelDto levelDto = levelDao.findById(2).get();
 		// then
 		assertEquals(Integer.valueOf(5), levelDto.getLevelValue());	
+	}
+	
+	@Test
+	public void testFindByScore() {
+		//given
+		String levelNameFor1601score = "Master";
+		// when
+		LevelDto levelDto = levelDao.findByScore(Integer.valueOf(1601)).get();
+		// then
+		assertEquals(levelNameFor1601score, levelDto.getName());	
 	}
 
 }
