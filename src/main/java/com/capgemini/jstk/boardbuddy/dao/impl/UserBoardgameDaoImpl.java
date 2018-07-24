@@ -3,6 +3,8 @@ package com.capgemini.jstk.boardbuddy.dao.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Repository;
+
 import com.capgemini.jstk.boardbuddy.dao.BoardgameDao;
 import com.capgemini.jstk.boardbuddy.dao.UserBoardgameDao;
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
@@ -10,9 +12,10 @@ import com.capgemini.jstk.boardbuddy.entity.Boardgame;
 import com.capgemini.jstk.boardbuddy.entity.User;
 import com.capgemini.jstk.boardbuddy.entity.UserBoardgame;
 
+@Repository
 public class UserBoardgameDaoImpl implements UserBoardgameDao {
 	
-	private static List<UserBoardgame> userBoardgames;
+	private static Collection<UserBoardgame> userBoardgames;
 
 	@Override
 	public List<User> findUsersByBoardgame(Boardgame boardgame, UserDao userDao) {

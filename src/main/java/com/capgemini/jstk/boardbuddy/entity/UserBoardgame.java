@@ -13,4 +13,13 @@ public class UserBoardgame {
 	@Getter	@Setter
 	private Integer boardgameId;
 	
+	
+	public UserBoardgame(Integer id, Integer userId, Integer boardgameId) {
+		this.id = id;
+		this.userId = userId;
+		this.boardgameId = boardgameId;
+	}
+	
+	
+	
 }

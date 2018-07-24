@@ -26,6 +26,22 @@ public class User {
 	@Getter	@Setter
 	private Integer draws;
 	
+	public User(Integer id, String firstName, String lastName, String email, String password, String lifeMotto,
+			Integer score, Integer wins, Integer losses, Integer draws) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.lifeMotto = lifeMotto;
+		this.score = score;
+		this.wins = wins;
+		this.losses = losses;
+		this.draws = draws;
+	}
+	
+	
+	
 	
 
 	

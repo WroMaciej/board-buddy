@@ -13,6 +13,13 @@ public class ChallengeResult {
 	private Calendar dateOfStart;
 	@Getter	@Setter
 	private Calendar dateOfEnd;
-		
+	
+	
+	public ChallengeResult(Integer id, Calendar dateOfStart, Calendar dateOfEnd) {
+		super();
+		this.id = id;
+		this.dateOfStart = dateOfStart;
+		this.dateOfEnd = dateOfEnd;
+	}
 	
 }

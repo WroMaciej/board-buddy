@@ -10,6 +10,9 @@ public class Boardgame {
 	@Getter	@Setter
 	private String name;
 	
-			
+	public Boardgame(Integer id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 
 }

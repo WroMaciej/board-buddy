@@ -19,5 +19,14 @@ public class Level {
 	@Getter	@Setter
 	private Integer minScore;
 	
+	public Level(Integer id, Integer levelValue, String name, Integer minScore) {
+		this.id = id;
+		this.levelValue = levelValue;
+		this.name = name;
+		this.minScore = minScore;
+	}
+	
+	
+	
 	
 }
