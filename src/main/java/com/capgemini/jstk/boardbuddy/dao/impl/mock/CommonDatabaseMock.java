@@ -55,12 +55,12 @@ public class CommonDatabaseMock {
 	
 	private boolean populateLevels() {
 		levels = new ArrayList<>();
-		levels.add(new Level(1, 1, "Rock", 0));
-		levels.add(new Level(2, 1, "Dog", 800));
-		levels.add(new Level(3, 1, "Kid", 1010));
-		levels.add(new Level(4, 1, "Normal", 1200));
-		levels.add(new Level(5, 1, "Master", 1600));
-		levels.add(new Level(6, 1, "The only one", 2800));	
+		levels.add(new Level(6, 1, "Rock", 0));
+		levels.add(new Level(5, 2, "Dog", 800));
+		levels.add(new Level(4, 3, "Kid", 1010));
+		levels.add(new Level(3, 4, "Normal", 1200));
+		levels.add(new Level(2, 5, "Master", 1600));
+		levels.add(new Level(1, 6, "The only one", 2800));	
 		return true;
 	}
 

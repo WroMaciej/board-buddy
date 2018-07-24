@@ -9,22 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-//import static org.hamcrest.CoreMatchers.is;
-
-
-import com.capgemini.jstk.boardbuddy.dao.UserDao;
+import com.capgemini.jstk.boardbuddy.dao.LevelDao;
 import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
-import com.capgemini.jstk.boardbuddy.dto.UserDto;
+import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 import com.capgemini.jstk.boardbuddy.dto.mapper.impl.UserMapper;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserDaoImplTest {
-
+public class LevelDaoImplTest {
 	
 	@Autowired
-	private UserDao userDao;
+	private LevelDao levelDao;
 	
 	@Autowired
 	private CommonDatabaseMock commonDatabaseMock;
@@ -40,8 +36,9 @@ public class UserDaoImplTest {
 	@Test
 	public void testFindById() {
 		// when
-		UserDto userDto = userDao.findById(1).get();
+		LevelDto levelDto = levelDao.findById(3).get();
 		// then
 		assertEquals("John", userDto.getFirstName());	
 	}
+
 }
