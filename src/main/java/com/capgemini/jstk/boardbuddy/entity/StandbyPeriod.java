@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Availebility period for game
+ * Availability period for game
  * @author MACIEWRO
  *
  */
@@ -22,6 +22,8 @@ public class StandbyPeriod {
 	private Calendar endDate;
 	@Getter	@Setter
 	private String comment;
+	@Getter @Setter
+	private boolean isActive;
 
 	
 	

@@ -14,7 +14,6 @@ public class LevelMapper implements Mapper<Level, LevelDto> {
 		final LevelDto levelDto = new LevelDto();
 		levelDto.setId(entity.getId());
 		levelDto.setLevelValue(entity.getLevelValue());
-		levelDto.setMinScore(entity.getMinScore());
 		levelDto.setName(entity.getName());
 		return levelDto;
 	}

@@ -18,6 +18,9 @@ public class UserMapper implements Mapper<User, UserDto> {
 		userDto.setEmail(entity.getEmail());
 		userDto.setScore(entity.getScore());
 		userDto.setLifeMotto(entity.getLifeMotto());
+		userDto.setWins(entity.getWins());
+		userDto.setLosses(entity.getLosses());
+		userDto.setDraws(entity.getDraws());
 		return userDto;
 	}
 

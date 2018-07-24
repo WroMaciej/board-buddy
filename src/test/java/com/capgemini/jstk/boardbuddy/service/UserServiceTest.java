@@ -14,8 +14,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
+import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
+import com.capgemini.jstk.boardbuddy.entity.ChallengeResult;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -77,7 +79,7 @@ public class UserServiceTest {
 	
 	@Test
 	public void testUserProfileInfo() {
-		//given
+		//given on setup
 		//when
 		UserDto profileData = userService.findUserProfileInfo(userDtoId1);
 		//then
@@ -85,6 +87,23 @@ public class UserServiceTest {
 		assertEquals("Trabolta", profileData.getLastName());
 		assertTrue(profileData.getId() == null);
 		assertTrue(profileData.getScore() == null);
+	}
+	
+	@Test
+	public void testUserStatistics() {
+		//given on setup
+		//when
+		UserDto statistics = userService.findUserStatistics(userDtoId1);
+		//then
+		assertEquals(4, statistics.getLevelValue().intValue());
+		assertTrue(statistics.getEmail() == null);
+	}
+	
+	@Test
+	public void testShowUserHistory() {
+		//givenon setup
+		//when
+		Collection<ChallengeResultDto> history = userService.fingUserChallenges(userDtoId1);
 	}
 	
 	

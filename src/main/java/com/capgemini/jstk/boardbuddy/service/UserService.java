@@ -69,6 +69,18 @@ public class UserService {
 		
 		return userProfileData;
 	}
+
+	public UserDto findUserStatistics(UserDto userDto) {
+		UserDto userStatistics = new UserDto();
+		userStatistics.setWins(userDto.getWins());
+		userStatistics.setLosses(userDto.getLosses());
+		userStatistics.setDraws(userDto.getDraws());
+		userStatistics.setScore(userDto.getScore());
+		userStatistics.setLevelValue(findLevel(userDto).getLevelValue());
+		userStatistics.setRankPosition(findRankPosition(userDto));
+		
+		return userStatistics;
+	}
 	
 	
 	

@@ -11,8 +11,6 @@ public class LevelDto {
 	private Integer levelValue;
 	@Getter	@Setter
 	private String name;
-	@Getter	@Setter
-	private Integer minScore;
 	
 	@Override
 	public int hashCode() {
@@ -20,7 +18,6 @@ public class LevelDto {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((levelValue == null) ? 0 : levelValue.hashCode());
-		result = prime * result + ((minScore == null) ? 0 : minScore.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -42,11 +39,6 @@ public class LevelDto {
 			if (other.levelValue != null)
 				return false;
 		} else if (!levelValue.equals(other.levelValue))
-			return false;
-		if (minScore == null) {
-			if (other.minScore != null)
-				return false;
-		} else if (!minScore.equals(other.minScore))
 			return false;
 		if (name == null) {
 			if (other.name != null)

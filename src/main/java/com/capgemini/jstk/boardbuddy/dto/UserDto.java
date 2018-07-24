@@ -21,7 +21,14 @@ public class UserDto {
 	@Getter	@Setter
 	private Integer rankPosition;
 	@Getter	@Setter
+	private Integer wins;
+	@Getter	@Setter
+	private Integer losses;
+	@Getter	@Setter
+	private Integer draws;
+	@Getter	@Setter
 	private Integer levelValue;
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
