@@ -2,6 +2,7 @@ package com.capgemini.jstk.boardbuddy.service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.capgemini.jstk.boardbuddy.dao.UserDao;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
+import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabase;
 
 @Service
 public class UserService {
@@ -30,31 +32,43 @@ public class UserService {
 		this.userBoardgameDao = userBoardgameDao;
 	}
 
-	//TODO how to update level field ?
 	public LevelDto findLevel(UserDto userDto) {
-		return levelDao.findByScore(userDto.getScore()).get();
+		Optional<LevelDto> userLevel = levelDao.findByScore(userDto.getScore());
+		if (!userLevel.isPresent()) {
+			throw new NoSuchElementInDatabase("Level for given user not found.");
+		}
+		return userLevel.get();
 	}
 	
-	public boolean updateLevel(UserDto userDto) {
-		userDto.setLevelValue(findLevel(userDto).getLevelValue());
-		return true;
+	public UserDto findLevelAndGetUpdatedDto(UserDto userDto) {
+		LevelDto userLevel = findLevel(userDto);
+		userDto.setLevelValue(userLevel.getLevelValue());
+		return userDto;
 	}
 	
-	public Optional<Integer> findRankPosition(UserDto userDto) {
+	public Integer findRankPosition(UserDto userDto) {
 		List<UserDto> sortedByScore = userDao.findAllUsers();
 		sortedByScore.sort((user1, user2) -> user1.getScore() - user2.getScore());
-		Integer rankPosition = sortedByScore.indexOf(userDto) + 1;
+		int rankPosition = sortedByScore.indexOf(userDto) + 1;
 		if (rankPosition == -1) {
-			rankPosition = null;
+			throw new NoSuchElementException("There is no such user in database. User email: " + userDto.getEmail());
 		}
-		return Optional.ofNullable(rankPosition);
+		return rankPosition;
 	}
 	
 	public Collection<BoardgameDto> findUserBoardgames(UserDto userDto){
 		return userBoardgameDao.findBoardgamesByUser(userDto);
 	}
 	
-	public UserDto findUserProfileInfo()
+	public UserDto findUserProfileInfo(UserDto userDto) {
+		UserDto userProfileData = new UserDto();
+		userProfileData.setEmail(userDto.getEmail());
+		userProfileData.setFirstName(userDto.getFirstName());
+		userProfileData.setLastName(userDto.getLastName());
+		userProfileData.setLifeMotto(userDto.getLifeMotto());
+		
+		return userProfileData;
+	}
 	
 	
 	

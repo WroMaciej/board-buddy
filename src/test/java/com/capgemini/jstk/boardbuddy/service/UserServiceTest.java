@@ -1,6 +1,7 @@
 package com.capgemini.jstk.boardbuddy.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
@@ -53,9 +54,9 @@ public class UserServiceTest {
 	@Test
 	public void testFindRankPosition() {
 		//given
-		Integer rankPositionOfId1User = 4;
+		int rankPositionOfId1User = 4;
 		//when
-		Integer positionFound = userService.findRankPosition(userDtoId1).get();
+		int positionFound = userService.findRankPosition(userDtoId1);
 		//then
 		assertEquals(rankPositionOfId1User, positionFound);
 	}
@@ -71,9 +72,19 @@ public class UserServiceTest {
 		//then
 		assertEquals(2, gamesNumber);
 		assertEquals(true, hasDuopolyGame);
-		assertEquals(true, hasEverybodyWantsMeGame);
-		
-		
+		assertEquals(true, hasEverybodyWantsMeGame);	
+	}
+	
+	@Test
+	public void testUserProfileInfo() {
+		//given
+		//when
+		UserDto profileData = userService.findUserProfileInfo(userDtoId1);
+		//then
+		assertEquals("John", profileData.getFirstName());
+		assertEquals("Trabolta", profileData.getLastName());
+		assertTrue(profileData.getId() == null);
+		assertTrue(profileData.getScore() == null);
 	}
 	
 	

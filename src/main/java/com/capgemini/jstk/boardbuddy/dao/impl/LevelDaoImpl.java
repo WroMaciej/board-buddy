@@ -42,7 +42,7 @@ private Mapper<Level, LevelDto> levelMapper;
 	public Optional<LevelDto> findByScore(Integer score) {
 		Collection<Level> lessOrEqualScoreLevel = levels.stream().filter(level -> level.getMinScore() <= score).collect(Collectors.toList());
 		Level maxLevelFromLesserLevels = Collections.max(lessOrEqualScoreLevel, Comparator.comparing(Level::getMinScore));
-		return Optional.of(levelMapper.toDto(maxLevelFromLesserLevels)); //null is not accepted
+		return Optional.ofNullable(levelMapper.toDto(maxLevelFromLesserLevels)); //null is not accepted
 	}
 	
 
