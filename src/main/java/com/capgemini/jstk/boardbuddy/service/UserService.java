@@ -15,6 +15,7 @@ import com.capgemini.jstk.boardbuddy.dao.UserDao;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
+import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabase;
 
@@ -76,7 +77,7 @@ public class UserService {
 	}
 
 	public UserDto findUserStatistics(UserDto userDto) {
-		UserDto userStatistics = new UserDto();
+		UserDto userStatistics = new UserDto(userDto);
 		userStatistics.setWins(userDto.getWins());
 		userStatistics.setLosses(userDto.getLosses());
 		userStatistics.setDraws(userDto.getDraws());
@@ -89,6 +90,11 @@ public class UserService {
 
 	public Collection<ChallengeResultDto> findUserChallenges(UserDto userDto) {
 		return userChallengeResultDao.findUserChallenges(userDto);
+	}
+
+	public Collection<StandbyPeriodDto> findAllCommonPeriods(UserDto userDtoId1) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

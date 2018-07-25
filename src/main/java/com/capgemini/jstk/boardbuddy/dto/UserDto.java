@@ -5,6 +5,7 @@ import lombok.Setter;
 
 public class UserDto {
 		
+	@Getter
 	private final Integer id;
 	@Getter	@Setter
 	private String firstName;
@@ -31,10 +32,6 @@ public class UserDto {
 	
 	public UserDto(Integer id) {
 		this.id = id;
-	}
-	
-	public UserDto(UserDto idSource) {
-		this.id = idSource.id;
 	}
 
 

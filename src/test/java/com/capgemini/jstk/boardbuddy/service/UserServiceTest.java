@@ -17,7 +17,9 @@ import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
+import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
+import com.capgemini.jstk.boardbuddy.entity.StandbyPeriod;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -105,6 +107,14 @@ public class UserServiceTest {
 		Collection<ChallengeResultDto> history = userService.findUserChallenges(userDtoId1);
 		//then
 		assertEquals(4, history.size());
+	}
+	
+	@Test
+	public void testFindCommonStandbyPeriods() {
+		//given user dtos on setup
+		//when
+		Collection<StandbyPeriodDto> commonPeriods = userService.findAllCommonPeriods(userDtoId1);
+		
 	}
 	
 	

@@ -5,6 +5,7 @@ import lombok.Setter;
 
 public class BoardgameDto {
 	
+	@Getter
 	private final Integer id;
 	@Getter	@Setter
 	private String name;

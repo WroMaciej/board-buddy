@@ -11,7 +11,7 @@ import com.capgemini.jstk.boardbuddy.dao.UserBoardgameDao;
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
 import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
-import com.capgemini.jstk.boardbuddy.dto.UserBoardgameDto;
+import com.capgemini.jstk.boardbuddy.dto.UserBoardgameCto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.dto.mapper.Mapper;
 import com.capgemini.jstk.boardbuddy.entity.UserBoardgame;
@@ -21,7 +21,7 @@ public class UserBoardgameDaoImpl implements UserBoardgameDao {
 	
 	private CommonDatabaseMock commonDatabaseMock;
 	
-	private Mapper<UserBoardgame, UserBoardgameDto> userBoardgameMapper;
+	private Mapper<UserBoardgame, UserBoardgameCto> userBoardgameMapper;
 	
 	private Collection<UserBoardgame> userBoardgames;
 	
@@ -31,7 +31,7 @@ public class UserBoardgameDaoImpl implements UserBoardgameDao {
 	
 	@Autowired
 	public UserBoardgameDaoImpl(CommonDatabaseMock commonDatabaseMock,
-			Mapper<UserBoardgame, UserBoardgameDto> userBoardgameMapper, UserDao userDao, BoardgameDao boardgameDao) {
+			Mapper<UserBoardgame, UserBoardgameCto> userBoardgameMapper, UserDao userDao, BoardgameDao boardgameDao) {
 		this.commonDatabaseMock = commonDatabaseMock;
 		this.userBoardgameMapper = userBoardgameMapper;
 		this.userDao = userDao;
