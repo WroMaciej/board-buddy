@@ -16,8 +16,6 @@ public class UserCRUDservice {
 		this.userDao = userDao;
 	}
 
-
-
 	public void updateProfile (Integer userId, UserDto updatedUserDto) {
 		userDao.updateProfile(userId, updatedUserDto);
 	}

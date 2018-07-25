@@ -21,7 +21,7 @@ import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
-import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabase;
+import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabaseException;
 
 @Service
 public class UserService {
@@ -51,7 +51,7 @@ public class UserService {
 	public LevelDto findLevel(UserDto userDto) {
 		Optional<LevelDto> userLevel = levelDao.findByScore(userDto.getScore());
 		if (!userLevel.isPresent()) {
-			throw new NoSuchElementInDatabase("Level for given user not found.");
+			throw new NoSuchElementInDatabaseException("Level for given user not found.");
 		}
 		return userLevel.get();
 	}
