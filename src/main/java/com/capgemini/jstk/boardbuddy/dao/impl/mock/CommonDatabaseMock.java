@@ -48,6 +48,7 @@ public class CommonDatabaseMock {
 		populateBoardgames();
 		populateUserBoardgames();
 		populateChallengeResults();
+		populateUserChallengeResults();
 	}
 
 	private boolean populateUsers() {

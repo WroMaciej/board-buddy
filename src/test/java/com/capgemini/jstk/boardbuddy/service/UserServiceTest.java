@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
+import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
@@ -104,7 +105,7 @@ public class UserServiceTest {
 		//when
 		Collection<ChallengeResultDto> history = userService.findUserChallenges(userDtoId1);
 		//then
-		assertEquals(3, history.size());
+		assertEquals(4, history.size());
 	}
 	
 	
