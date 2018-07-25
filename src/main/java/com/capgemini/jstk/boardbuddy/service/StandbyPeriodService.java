@@ -19,7 +19,7 @@ public class StandbyPeriodService {
 			commonPeriod = new StandbyPeriodDto(null);
 			commonPeriod.setStartDate(startDate);
 			commonPeriod.setEndDate(endDate);
-		}	
+		}
 		return Optional.ofNullable(commonPeriod);
 	}
 	

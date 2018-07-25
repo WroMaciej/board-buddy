@@ -179,7 +179,15 @@ public class CommonDatabaseMock {
 			throw new DataPreparingException("Preparing of challenge results crashed.");
 		}
 		return true;
-		
+	}
+	
+	private void populateStandbyPeriods() {
+		try {
+			standbyPeriods = new ArrayList<>();
+			standbyPeriods.add(new StandbyPeriod(1, 1, new GregorianCalendar(2018, 7, 25, 8, 0), new GregorianCalendar(2018, 7, 25, 8, 0), null, true);	
+		} catch (Exception e) {
+			throw new DataPreparingException("Preparing of standby periods crashed.");
+		}
 	}
 
 }

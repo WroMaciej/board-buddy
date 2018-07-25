@@ -1,10 +1,13 @@
 package com.capgemini.jstk.boardbuddy.service;
 
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,18 +33,21 @@ public class UserService {
 	private User_BoardgameDao user_BoardgameDao;
 	private UserChallengeResultDao userChallengeResultDao;
 	private StandbyPeriodDao standbyPerdiodDao;
+	private StandbyPeriodService standbyPeriodService;
 
 	
 
 	@Autowired
 	public UserService(UserDao userDao, LevelDao levelDao, User_BoardgameDao user_BoardgameDao,
-			UserChallengeResultDao userChallengeResultDao, StandbyPeriodDao standbyPerdiodDao) {
+			UserChallengeResultDao userChallengeResultDao, StandbyPeriodDao standbyPerdiodDao,
+			StandbyPeriodService standbyPeriodService) {
 		super();
 		this.userDao = userDao;
 		this.levelDao = levelDao;
 		this.user_BoardgameDao = user_BoardgameDao;
 		this.userChallengeResultDao = userChallengeResultDao;
 		this.standbyPerdiodDao = standbyPerdiodDao;
+		this.standbyPeriodService = standbyPeriodService;
 	}
 
 	public LevelDto findLevel(UserDto userDto) {
@@ -51,7 +57,7 @@ public class UserService {
 		}
 		return userLevel.get();
 	}
-	
+
 
 	public UserDto findLevelAndGetUpdatedDto(UserDto userDto) {
 		LevelDto userLevel = findLevel(userDto);
@@ -100,12 +106,16 @@ public class UserService {
 	}
 
 	public Collection<StandbyPeriodDto> findAllCommonPeriods(UserDto userDto) {
+		Collection<Optional<StandbyPeriodDto>> rawCommonPeriods = new ArrayList<>();
 		Collection<StandbyPeriodDto> commonPeriods = new ArrayList<>();
+		Collection<StandbyPeriodDto> userPeriods = standbyPerdiodDao.findByUser(userDto);
+		Collection<StandbyPeriodDto> allPeriods = standbyPerdiodDao.findAll();
 		
-		Stream<StandbyPeriodDto> allUserPeriods = standbyPerdiodDao.findByUser(userDto).stream();
-		
-		allUserPeriods.forEach(action);
-		
+		for (StandbyPeriodDto userPeriod : userPeriods) {
+			Predicate<StandbyPeriodDto> otherUser = anyPeriod -> anyPeriod.getUserId() != userDto.getId();
+			allPeriods.stream().filter(otherUser).forEach(anyPeriod -> rawCommonPeriods.add(standbyPeriodService.commonPeriod(userPeriod, anyPeriod)) );
+		}
+		commonPeriods = rawCommonPeriods.stream().filter(Optional<StandbyPeriodDto>::isPresent).map(Optional::get).collect(Collectors.toList());
 		
 		return commonPeriods;
 	}

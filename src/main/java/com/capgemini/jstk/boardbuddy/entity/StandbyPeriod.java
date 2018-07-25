@@ -5,25 +5,28 @@ import java.util.Calendar;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Availability period for game
- * @author MACIEWRO
- *
- */
+
+@Getter @Setter
 public class StandbyPeriod {
 
-	@Getter	@Setter
 	private Integer id;
-	@Getter	@Setter
 	private Integer userId;
-	@Getter	@Setter
 	private Calendar startDate;
-	@Getter	@Setter
 	private Calendar endDate;
-	@Getter	@Setter
 	private String comment;
-	@Getter @Setter
 	private boolean isActive;
+	
+	public StandbyPeriod(Integer id, Integer userId, Calendar startDate, Calendar endDate, String comment,
+			boolean isActive) {
+		this.id = id;
+		this.userId = userId;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.comment = comment;
+		this.isActive = isActive;
+	}
+	
+	
 
 	
 	

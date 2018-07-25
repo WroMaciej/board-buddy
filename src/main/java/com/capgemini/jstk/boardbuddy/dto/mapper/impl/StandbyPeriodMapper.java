@@ -15,6 +15,7 @@ public class StandbyPeriodMapper implements Mapper<StandbyPeriod, StandbyPeriodD
 		standbyPeriodDto.setUserId(entity.getUserId());
 		standbyPeriodDto.setStartDate(entity.getStartDate());
 		standbyPeriodDto.setEndDate(entity.getEndDate());
+		standbyPeriodDto.setActive(entity.isActive());
 		return standbyPeriodDto;
 	}
 

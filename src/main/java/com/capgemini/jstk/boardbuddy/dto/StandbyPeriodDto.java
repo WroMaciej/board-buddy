@@ -17,6 +17,8 @@ public class StandbyPeriodDto {
 	private Calendar endDate;
 	@Getter	@Setter
 	private String comment;
+	@Getter	@Setter
+	private boolean isActive;
 	
 	public StandbyPeriodDto(Integer id) {
 		this.id = id;

@@ -3,14 +3,12 @@ package com.capgemini.jstk.boardbuddy.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-//TODO get set
+@Getter	@Setter
 public class User_Boardgame_X {
 	
-	@Getter	@Setter
-	private Integer id; //TODO delete
-	@Getter	@Setter
+
+	private Integer id; //TODO maybe delete?
 	private Integer userId;
-	@Getter	@Setter
 	private Integer boardgameId;
 	
 	

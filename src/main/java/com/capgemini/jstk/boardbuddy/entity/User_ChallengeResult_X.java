@@ -3,16 +3,13 @@ package com.capgemini.jstk.boardbuddy.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-
+@Getter	@Setter
 public class User_ChallengeResult_X {
 	
-	@Getter	@Setter
+
 	private Integer id;
-	@Getter	@Setter
 	private Integer userId;
-	@Getter	@Setter
 	private Integer challengeResultId;
-	@Getter	@Setter
 	private Integer placeTaken;
 	
 	
