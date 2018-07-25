@@ -5,12 +5,18 @@ import lombok.Setter;
 
 public class LevelDto {
 	
-	@Getter	@Setter
-	private Integer id;
+	@Getter
+	private final Integer id;
 	@Getter	@Setter
 	private Integer levelValue;
 	@Getter	@Setter
 	private String name;
+	
+	
+	
+	public LevelDto(Integer id) {
+		this.id = id;
+	}
 	
 	@Override
 	public int hashCode() {

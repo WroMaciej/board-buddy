@@ -15,7 +15,6 @@ import com.capgemini.jstk.boardbuddy.entity.ChallengeResult;
 @Repository
 public class ChallengeResultDaoImpl implements ChallengeResultDao {
 
-	private CommonDatabaseMock commonDatabaseMock;
 	
 	private Mapper<ChallengeResult, ChallengeResultDto> challengeResultMapper;
 	
@@ -25,7 +24,6 @@ public class ChallengeResultDaoImpl implements ChallengeResultDao {
 	@Autowired
 	public ChallengeResultDaoImpl(CommonDatabaseMock commonDatabaseMock,
 			Mapper<ChallengeResult, ChallengeResultDto> challengeResultMapper) {
-		this.commonDatabaseMock = commonDatabaseMock;
 		this.challengeResultMapper = challengeResultMapper;
 		challengeResults = commonDatabaseMock.getChallengeResults();
 	}

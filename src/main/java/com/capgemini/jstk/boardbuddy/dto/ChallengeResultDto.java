@@ -7,6 +7,7 @@ import lombok.Setter;
 
 public class ChallengeResultDto {
 	
+	@Getter
 	private final Integer id;
 	@Getter @Setter
 	private BoardgameDto boardgameDto;
@@ -16,7 +17,6 @@ public class ChallengeResultDto {
 	private Calendar dateOfEnd;
 	
 	public ChallengeResultDto(Integer id) {
-		super();
 		this.id = id;
 	}
 

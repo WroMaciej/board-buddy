@@ -1,25 +1,20 @@
 package com.capgemini.jstk.boardbuddy.dao.impl.mock;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.yaml.snakeyaml.events.Event.ID;
 
 import com.capgemini.jstk.boardbuddy.entity.Boardgame;
 import com.capgemini.jstk.boardbuddy.entity.ChallengeResult;
 import com.capgemini.jstk.boardbuddy.entity.Level;
 import com.capgemini.jstk.boardbuddy.entity.StandbyPeriod;
 import com.capgemini.jstk.boardbuddy.entity.User;
-import com.capgemini.jstk.boardbuddy.entity.UserBoardgame;
-import com.capgemini.jstk.boardbuddy.entity.UserChallengeResult;
+import com.capgemini.jstk.boardbuddy.entity.User_Boardgame_X;
+import com.capgemini.jstk.boardbuddy.entity.User_ChallengeResult_X;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.DataPreparingException;
-import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabase;
 
 import lombok.Getter;
 
@@ -31,7 +26,7 @@ public class CommonDatabaseMock {
 	@Getter
 	private Collection<Boardgame> boardgames;
 	@Getter
-	private Collection<UserBoardgame> userBoardgames;
+	private Collection<User_Boardgame_X> user_Boardgame_Xs;
 	@Getter
 	private Collection<ChallengeResult> challengeResults;
 	@Getter
@@ -39,7 +34,7 @@ public class CommonDatabaseMock {
 	@Getter
 	private Collection<Level> levels;
 	@Getter
-	private Collection<UserChallengeResult> userChallengeResults;
+	private Collection<User_ChallengeResult_X> user_ChallengeResult_Xs;
 
 	@Autowired
 	public CommonDatabaseMock() {
@@ -101,32 +96,32 @@ public class CommonDatabaseMock {
 
 	private boolean populateUserBoardgames() {
 		try {
-			userBoardgames = new ArrayList<>();
+			user_Boardgame_Xs = new ArrayList<>();
 			// user id 1
-			userBoardgames.add(new UserBoardgame(1, 1, 1));
-			userBoardgames.add(new UserBoardgame(2, 1, 2));
-			userBoardgames.add(new UserBoardgame(3, 1, 3));
-			userBoardgames.add(new UserBoardgame(4, 1, 4));
-			userBoardgames.add(new UserBoardgame(5, 1, 5));
-			userBoardgames.add(new UserBoardgame(6, 1, 6));
+			user_Boardgame_Xs.add(new User_Boardgame_X(1, 1, 1));
+			user_Boardgame_Xs.add(new User_Boardgame_X(2, 1, 2));
+			user_Boardgame_Xs.add(new User_Boardgame_X(3, 1, 3));
+			user_Boardgame_Xs.add(new User_Boardgame_X(4, 1, 4));
+			user_Boardgame_Xs.add(new User_Boardgame_X(5, 1, 5));
+			user_Boardgame_Xs.add(new User_Boardgame_X(6, 1, 6));
 			// user id 2
-			userBoardgames.add(new UserBoardgame(7, 2, 1));
-			userBoardgames.add(new UserBoardgame(8, 2, 3));
-			userBoardgames.add(new UserBoardgame(9, 2, 6));
+			user_Boardgame_Xs.add(new User_Boardgame_X(7, 2, 1));
+			user_Boardgame_Xs.add(new User_Boardgame_X(8, 2, 3));
+			user_Boardgame_Xs.add(new User_Boardgame_X(9, 2, 6));
 			// user id 3
-			userBoardgames.add(new UserBoardgame(10, 3, 2));
-			userBoardgames.add(new UserBoardgame(11, 3, 6));
+			user_Boardgame_Xs.add(new User_Boardgame_X(10, 3, 2));
+			user_Boardgame_Xs.add(new User_Boardgame_X(11, 3, 6));
 			// user id 4
-			userBoardgames.add(new UserBoardgame(12, 4, 1));
-			userBoardgames.add(new UserBoardgame(13, 4, 2));
-			userBoardgames.add(new UserBoardgame(14, 4, 3));
+			user_Boardgame_Xs.add(new User_Boardgame_X(12, 4, 1));
+			user_Boardgame_Xs.add(new User_Boardgame_X(13, 4, 2));
+			user_Boardgame_Xs.add(new User_Boardgame_X(14, 4, 3));
 			// user id 5
-			userBoardgames.add(new UserBoardgame(15, 5, 1));
-			userBoardgames.add(new UserBoardgame(16, 5, 2));
-			userBoardgames.add(new UserBoardgame(17, 5, 3));
-			userBoardgames.add(new UserBoardgame(18, 5, 6));
+			user_Boardgame_Xs.add(new User_Boardgame_X(15, 5, 1));
+			user_Boardgame_Xs.add(new User_Boardgame_X(16, 5, 2));
+			user_Boardgame_Xs.add(new User_Boardgame_X(17, 5, 3));
+			user_Boardgame_Xs.add(new User_Boardgame_X(18, 5, 6));
 			// user id 6
-			userBoardgames.add(new UserBoardgame(19, 6, 6));
+			user_Boardgame_Xs.add(new User_Boardgame_X(19, 6, 6));
 
 		} catch (Exception e) {
 			throw new DataPreparingException("Preparing of users boardgames crashed.");
@@ -158,27 +153,27 @@ public class CommonDatabaseMock {
 	
 	private boolean populateUserChallengeResults() {
 		try {
-			userChallengeResults = new ArrayList<>();
+			user_ChallengeResult_Xs = new ArrayList<>();
 			//challenge 1
-			userChallengeResults.add(new UserChallengeResult(1, 1, 1, 3));
-			userChallengeResults.add(new UserChallengeResult(2, 2, 1, 2));
-			userChallengeResults.add(new UserChallengeResult(3, 3, 1, 1));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(1, 1, 1, 3));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(2, 2, 1, 2));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(3, 3, 1, 1));
 			//challenge 2
-			userChallengeResults.add(new UserChallengeResult(4, 1, 2, 1));
-			userChallengeResults.add(new UserChallengeResult(5, 5, 2, 2));
-			userChallengeResults.add(new UserChallengeResult(6, 6, 2, 3));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(4, 1, 2, 1));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(5, 5, 2, 2));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(6, 6, 2, 3));
 			//challenge 3
-			userChallengeResults.add(new UserChallengeResult(7, 3, 3, 1));
-			userChallengeResults.add(new UserChallengeResult(8, 4, 3, 2));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(7, 3, 3, 1));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(8, 4, 3, 2));
 			//challenge 4
-			userChallengeResults.add(new UserChallengeResult(9, 1, 4, 2));
-			userChallengeResults.add(new UserChallengeResult(10, 5, 4, 1));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(9, 1, 4, 2));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(10, 5, 4, 1));
 			//challenge 5
-			userChallengeResults.add(new UserChallengeResult(11, 3, 5, 1));
-			userChallengeResults.add(new UserChallengeResult(12, 6, 5, 2));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(11, 3, 5, 1));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(12, 6, 5, 2));
 			//challenge 6 - draw!
-			userChallengeResults.add(new UserChallengeResult(13, 1, 6, 1));
-			userChallengeResults.add(new UserChallengeResult(14, 3, 6, 1));		
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(13, 1, 6, 1));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(14, 3, 6, 1));		
 			
 		} catch (Exception e) {
 			throw new DataPreparingException("Preparing of challenge results crashed.");

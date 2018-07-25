@@ -13,17 +13,14 @@ import com.capgemini.jstk.boardbuddy.entity.Boardgame;
 
 @Repository
 public class BoardgameDaoImpl implements BoardgameDao {
-	
-	private CommonDatabaseMock commonDatabaseMock;
 
 	private static Collection<Boardgame> boardgames;
 	private Mapper<Boardgame, BoardgameDto> boardgameMapper;
 	
 	
 	public BoardgameDaoImpl(CommonDatabaseMock commonDatabaseMock, Mapper<Boardgame, BoardgameDto> boardgameMapper) {
-		this.commonDatabaseMock = commonDatabaseMock;
 		this.boardgameMapper = boardgameMapper;
-		boardgames = this.commonDatabaseMock.getBoardgames();
+		boardgames = commonDatabaseMock.getBoardgames();
 	}
 
 	@Override

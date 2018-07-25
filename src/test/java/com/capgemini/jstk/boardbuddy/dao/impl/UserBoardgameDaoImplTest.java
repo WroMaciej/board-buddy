@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.capgemini.jstk.boardbuddy.dao.UserBoardgameDao;
+import com.capgemini.jstk.boardbuddy.dao.User_BoardgameDao;
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
@@ -21,7 +21,7 @@ import com.capgemini.jstk.boardbuddy.dto.UserDto;
 public class UserBoardgameDaoImplTest {
 	
 	@Autowired
-	private UserBoardgameDao userBoardgameDao;
+	private User_BoardgameDao user_BoardgameDao;
 	
 	@Autowired
 	UserDao userDao;
@@ -41,7 +41,7 @@ public class UserBoardgameDaoImplTest {
 	public void testFindBoardgamesByUser() {
 		//given	
 		//when
-		Collection<BoardgameDto> boardgameDtos = userBoardgameDao.findBoardgamesByUser(userDtoId5);
+		Collection<BoardgameDto> boardgameDtos = user_BoardgameDao.findBoardgamesByUser(userDtoId5);
 		//then
 		assertEquals(4, boardgameDtos.size());
 	}

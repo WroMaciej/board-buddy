@@ -7,8 +7,8 @@ import lombok.Setter;
 
 public class StandbyPeriodDto {
 	
-	@Getter	@Setter
-	private Integer id;
+	@Getter
+	private final Integer id;
 	@Getter	@Setter
 	private Integer userId;
 	@Getter	@Setter
@@ -17,5 +17,11 @@ public class StandbyPeriodDto {
 	private Calendar endDate;
 	@Getter	@Setter
 	private String comment;
+	
+	public StandbyPeriodDto(Integer id) {
+		this.id = id;
+	}
+	
+	
 
 }

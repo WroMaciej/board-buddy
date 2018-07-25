@@ -3,7 +3,7 @@ package com.capgemini.jstk.boardbuddy.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-public class UserBoardgameCto {
+public class User_Boardgame_Cto {
 	
 	@Getter	
 	private final Integer id;
@@ -12,7 +12,7 @@ public class UserBoardgameCto {
 	@Getter	@Setter
 	private Integer boardgameId;
 	
-	public UserBoardgameCto(Integer id) {
+	public User_Boardgame_Cto(Integer id) {
 		this.id = id;
 	}
 	

@@ -1,7 +1,5 @@
 package com.capgemini.jstk.boardbuddy.dto.mapper.impl;
 
-import javax.print.attribute.standard.Sides;
-
 import org.springframework.stereotype.Component;
 
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
@@ -13,8 +11,7 @@ public class StandbyPeriodMapper implements Mapper<StandbyPeriod, StandbyPeriodD
 
 	@Override
 	public StandbyPeriodDto toDto(StandbyPeriod entity) {
-		final StandbyPeriodDto standbyPeriodDto = new StandbyPeriodDto();
-		standbyPeriodDto.setId(entity.getId());
+		final StandbyPeriodDto standbyPeriodDto = new StandbyPeriodDto(entity.getId());
 		standbyPeriodDto.setUserId(entity.getUserId());
 		standbyPeriodDto.setStartDate(entity.getStartDate());
 		standbyPeriodDto.setEndDate(entity.getEndDate());

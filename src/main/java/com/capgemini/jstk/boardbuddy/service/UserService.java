@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.jstk.boardbuddy.dao.LevelDao;
-import com.capgemini.jstk.boardbuddy.dao.UserBoardgameDao;
+import com.capgemini.jstk.boardbuddy.dao.User_BoardgameDao;
 import com.capgemini.jstk.boardbuddy.dao.UserChallengeResultDao;
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
@@ -24,17 +24,17 @@ public class UserService {
 
 	private UserDao userDao;
 	private LevelDao levelDao;
-	private UserBoardgameDao userBoardgameDao;
+	private User_BoardgameDao user_BoardgameDao;
 	private UserChallengeResultDao userChallengeResultDao;
 
 	
 
 	@Autowired
-	public UserService(UserDao userDao, LevelDao levelDao, UserBoardgameDao userBoardgameDao,
+	public UserService(UserDao userDao, LevelDao levelDao, User_BoardgameDao user_BoardgameDao,
 			UserChallengeResultDao userChallengeResultDao) {
 		this.userDao = userDao;
 		this.levelDao = levelDao;
-		this.userBoardgameDao = userBoardgameDao;
+		this.user_BoardgameDao = user_BoardgameDao;
 		this.userChallengeResultDao = userChallengeResultDao;
 	}
 
@@ -63,11 +63,11 @@ public class UserService {
 	}
 	
 	public Collection<BoardgameDto> findUserBoardgames(UserDto userDto){
-		return userBoardgameDao.findBoardgamesByUser(userDto);
+		return user_BoardgameDao.findBoardgamesByUser(userDto);
 	}
 	
 	public UserDto findUserProfileInfo(UserDto userDto) {
-		UserDto userProfileData = new UserDto();
+		UserDto userProfileData = new UserDto(userDto.getId());
 		userProfileData.setEmail(userDto.getEmail());
 		userProfileData.setFirstName(userDto.getFirstName());
 		userProfileData.setLastName(userDto.getLastName());
@@ -77,7 +77,7 @@ public class UserService {
 	}
 
 	public UserDto findUserStatistics(UserDto userDto) {
-		UserDto userStatistics = new UserDto(userDto);
+		UserDto userStatistics = new UserDto(userDto.getId());
 		userStatistics.setWins(userDto.getWins());
 		userStatistics.setLosses(userDto.getLosses());
 		userStatistics.setDraws(userDto.getDraws());

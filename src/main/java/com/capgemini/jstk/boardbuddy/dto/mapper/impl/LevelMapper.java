@@ -11,8 +11,7 @@ public class LevelMapper implements Mapper<Level, LevelDto> {
 
 	@Override
 	public LevelDto toDto(Level entity) {
-		final LevelDto levelDto = new LevelDto();
-		levelDto.setId(entity.getId());
+		final LevelDto levelDto = new LevelDto(entity.getId());
 		levelDto.setLevelValue(entity.getLevelValue());
 		levelDto.setName(entity.getName());
 		return levelDto;

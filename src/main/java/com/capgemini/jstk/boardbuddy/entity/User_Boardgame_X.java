@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-public class UserBoardgame {
+public class User_Boardgame_X {
 	
 	@Getter	@Setter
 	private Integer id;
@@ -14,7 +14,7 @@ public class UserBoardgame {
 	private Integer boardgameId;
 	
 	
-	public UserBoardgame(Integer id, Integer userId, Integer boardgameId) {
+	public User_Boardgame_X(Integer id, Integer userId, Integer boardgameId) {
 		this.id = id;
 		this.userId = userId;
 		this.boardgameId = boardgameId;

@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDao;
-import com.capgemini.jstk.boardbuddy.entity.Boardgame;
 import com.capgemini.jstk.boardbuddy.entity.StandbyPeriod;
 
 @Repository
