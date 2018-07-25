@@ -50,4 +50,22 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 		userPeriods.forEach(standbyPeriod -> userStandbyPeriods.add(standbyPeriodMapper.toDto(standbyPeriod)));
 		return userStandbyPeriods;
 	}
+
+	@Override
+	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) {
+		StandbyPeriod toAdd = new StandbyPeriod(getUniqueId(), userId, standbyPeriodDto.getStartDate(), standbyPeriodDto.getEndDate(), standbyPeriodDto.getComment(), true);
+		standbyPeriods.add(toAdd);
+	}
+	
+	private Integer getUniqueId() {
+		Integer maxId = Integer.valueOf(0);
+		for (StandbyPeriod period : standbyPeriods) {
+			if (period.getId() > maxId) {
+				maxId = period.getId();
+			}
+		}
+		return Integer.valueOf(maxId + 1);
+		
+	}
+	
 }

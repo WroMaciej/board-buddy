@@ -127,6 +127,10 @@ public class UserService {
 		return !findCommonPeriodsWithAnotherUser(userDto1, userDto2).isEmpty();
 	}
 	
+	public void updateProfile (Integer userId, UserDto updatedUserDto) {
+		userDao.updateProfile(userId, updatedUserDto);
+	}
+	
 	
 
 }

@@ -14,4 +14,6 @@ public interface StandbyPeriodDao {
 	
 	public Collection<StandbyPeriodDto> findAll();
 
+	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto);
+
 }

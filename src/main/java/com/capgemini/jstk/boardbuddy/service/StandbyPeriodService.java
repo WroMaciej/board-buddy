@@ -3,14 +3,24 @@ package com.capgemini.jstk.boardbuddy.service;
 import java.util.Calendar;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDao;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 
 @Service
 public class StandbyPeriodService {
 	
+	private StandbyPeriodDao standbyPeriodDao;
 	
+	
+	@Autowired
+	public StandbyPeriodService(StandbyPeriodDao standbyPeriodDao) {
+		super();
+		this.standbyPeriodDao = standbyPeriodDao;
+	}
+
 	public Optional<StandbyPeriodDto> commonPeriod(StandbyPeriodDto senderPeriod, StandbyPeriodDto receiverPeriod){
 		StandbyPeriodDto commonPeriod = null;
 		Calendar startDate = commonPeriodStart(senderPeriod.getStartDate(), receiverPeriod.getStartDate());
@@ -24,6 +34,9 @@ public class StandbyPeriodService {
 		return Optional.ofNullable(commonPeriod);
 	}
 	
+	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) {
+		standbyPeriodDao.addStandbyPeriod(userId, standbyPeriodDto);
+	}
 	
 	private Calendar commonPeriodStart(Calendar startOfPeriod1, Calendar startOfPeriod2) {
 		return getLaterDate(startOfPeriod1, startOfPeriod2);
@@ -47,5 +60,7 @@ public class StandbyPeriodService {
 		}
 		return date1;
 	}
+	
+	
 
 }

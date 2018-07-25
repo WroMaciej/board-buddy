@@ -10,9 +10,14 @@ import java.util.Optional;
 
 import org.junit.Test;
 
+import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDao;
+import com.capgemini.jstk.boardbuddy.dao.UserDao;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 
 public class StandbyPeriodServiceTest {
+	
+	//TODO MOCK OR SPRING
+	StandbyPeriodDao standbyPeriodDao;
 	
 	@Test
 	public void testHasCommonPeriod() {
@@ -27,7 +32,7 @@ public class StandbyPeriodServiceTest {
 		StandbyPeriodDto period2 = new StandbyPeriodDto(null);
 		period2.setStartDate(start2);
 		period2.setEndDate(end2);
-		StandbyPeriodService standbyPeriodService = new StandbyPeriodService();
+		StandbyPeriodService standbyPeriodService = new StandbyPeriodService(standbyPeriodDao);
 		//when
 		Optional<StandbyPeriodDto> commonPeriod = standbyPeriodService.commonPeriod(period1, period2);
 		//then
@@ -49,7 +54,7 @@ public class StandbyPeriodServiceTest {
 				StandbyPeriodDto period2 = new StandbyPeriodDto(null);
 				period2.setStartDate(start2);
 				period2.setEndDate(end2);
-				StandbyPeriodService standbyPeriodService = new StandbyPeriodService();
+				StandbyPeriodService standbyPeriodService = new StandbyPeriodService(standbyPeriodDao);
 				//when
 				Optional<StandbyPeriodDto> commonPeriod = standbyPeriodService.commonPeriod(period1, period2);
 				//then

@@ -19,6 +19,8 @@ import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
+import com.capgemini.jstk.boardbuddy.entity.User;
+import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabaseException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -118,6 +120,52 @@ public class UserServiceTest {
 		assertFalse(userService.isCommonPeriodForUsers(userDtoId1, userDtoId3));
 		assertTrue(userService.isCommonPeriodForUsers(userDtoId1, userDtoId5));		
 	}
+	
+	@Test
+	public void testUpdateProfile(){
+		//given
+		UserDto newUserProfile = new UserDto(null);
+		newUserProfile.setEmail("new@domain.com");
+		newUserProfile.setFirstName("Tom");
+		//when
+		userService.updateProfile(1, newUserProfile);
+		UserDto updatedUser = userDao.findById(1).get();
+		//then
+		assertEquals("Tom", updatedUser.getFirstName());
+		assertEquals("new@domain.com", updatedUser.getEmail());
+		assertEquals(null, updatedUser.getLastName());
+		
+		//clean up
+		newUserProfile.setEmail("johnny@domain.com");
+		newUserProfile.setFirstName("John");
+		newUserProfile.setLastName("Trabolta");
+		newUserProfile.setLifeMotto("Lets dance!");
+		userService.updateProfile(1, newUserProfile);
+		
+	}
+	
+	@Test
+	public void testUpdateProfileWhichNotExist(){
+		//given
+		UserDto newUserProfile = new UserDto(null);
+		newUserProfile.setEmail("new@domain.com");
+		newUserProfile.setFirstName("Tom");
+		boolean thrownException = false;
+		//when
+		
+		try {
+			userService.updateProfile(99, newUserProfile);
+		} catch (NoSuchElementInDatabaseException e) {
+			thrownException = true;
+		}
+		
+		UserDto updatedUser = userDao.findById(1).get();
+		//then
+		assertTrue(thrownException);
+		assertEquals("John", updatedUser.getFirstName());
+		assertEquals("Trabolta", updatedUser.getLastName());
+	}
+	
 	
 	
 
