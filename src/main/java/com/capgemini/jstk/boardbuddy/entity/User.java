@@ -5,6 +5,7 @@ import lombok.Setter;
 
 public class User {
 	
+	//TODO is setter needed? How to modify entity without hibernate?
 	@Getter	@Setter
 	private Integer id;
 	@Getter	@Setter

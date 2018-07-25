@@ -85,7 +85,6 @@ public class UserServiceTest {
 		//then
 		assertEquals("John", profileData.getFirstName());
 		assertEquals("Trabolta", profileData.getLastName());
-		assertTrue(profileData.getId() == null);
 		assertTrue(profileData.getScore() == null);
 	}
 	

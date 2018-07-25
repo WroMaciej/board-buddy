@@ -11,8 +11,7 @@ public class BoardgameMapper implements Mapper<Boardgame, BoardgameDto>{
 
 	@Override
 	public BoardgameDto toDto(Boardgame entity) {
-		final BoardgameDto boardgameDto = new BoardgameDto();
-		boardgameDto.setId(entity.getId());
+		final BoardgameDto boardgameDto = new BoardgameDto(entity.getId());
 		boardgameDto.setName(entity.getName());
 		return boardgameDto;
 	}
