@@ -1,4 +1,4 @@
-package com.capgemini.jstk.boardbuddy.validation.exceptions;
+package com.capgemini.jstk.boardbuddy.validation;
 
 public interface Validator<T> {
 	

@@ -13,6 +13,7 @@ public class ChallengeResultMapper implements Mapper<ChallengeResult, ChallengeR
 	public ChallengeResultDto toDto(ChallengeResult entity) {
 		final ChallengeResultDto challengeResultDto = new ChallengeResultDto();
 		challengeResultDto.setId(entity.getId());
+		challengeResultDto.setBoardgameId(entity.getBoardgameId());
 		challengeResultDto.setDateOfStart(entity.getDateOfStart());
 		challengeResultDto.setDateOfEnd(entity.getDateOfEnd());
 		return challengeResultDto;

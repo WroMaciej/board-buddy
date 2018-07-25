@@ -102,9 +102,9 @@ public class UserServiceTest {
 	public void testShowUserHistory() {
 		//given on setup
 		//when
-		Collection<ChallengeResultDto> history = userService.fingUserChallenges(userDtoId1);
+		Collection<ChallengeResultDto> history = userService.findUserChallenges(userDtoId1);
 		//then
-		assertEquals(expected, actual);
+		assertEquals(3, history.size());
 	}
 	
 	

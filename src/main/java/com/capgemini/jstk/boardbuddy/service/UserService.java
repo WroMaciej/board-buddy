@@ -87,7 +87,7 @@ public class UserService {
 		return userStatistics;
 	}
 
-	public Collection<ChallengeResultDto> fingUserChallenges(UserDto userDto) {
+	public Collection<ChallengeResultDto> findUserChallenges(UserDto userDto) {
 		return userChallengeResultDao.findUserChallenges(userDto);
 	}
 	
