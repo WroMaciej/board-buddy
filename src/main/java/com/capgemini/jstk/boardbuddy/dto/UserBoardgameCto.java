@@ -8,12 +8,11 @@ public class UserBoardgameCto {
 	@Getter	
 	private final Integer id;
 	@Getter	@Setter
-	private UserDto userDto;
+	private Integer userId;
 	@Getter	@Setter
-	private BoardgameDto boardgameDto;
+	private Integer boardgameId;
 	
 	public UserBoardgameCto(Integer id) {
-		super();
 		this.id = id;
 	}
 	
