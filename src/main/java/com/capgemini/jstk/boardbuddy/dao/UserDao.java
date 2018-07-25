@@ -10,5 +10,7 @@ public interface UserDao {
 	public Optional<UserDto> findById(Integer id);
 	
 	public List<UserDto> findAllUsers();
+	
+	public void updateProfile(Integer userId, UserDto updatedUserDto);
 
 }
