@@ -17,8 +17,6 @@ import com.capgemini.jstk.boardbuddy.entity.User;
 @Repository
 public class UserDaoImpl implements UserDao {
 	
-	private CommonDatabaseMock commonDatabaseMock;
-	
 	private Mapper<User, UserDto> userMapper;
 
 	private Collection<User> users;
@@ -27,9 +25,8 @@ public class UserDaoImpl implements UserDao {
 	
 	@Autowired
 	public UserDaoImpl(CommonDatabaseMock commonDatabaseMock, Mapper<User, UserDto> userMapper) {
-		this.commonDatabaseMock = commonDatabaseMock;
 		this.userMapper = userMapper;
-		users = this.commonDatabaseMock.getUsers();
+		users = commonDatabaseMock.getUsers();
 	}
 
 	@Override

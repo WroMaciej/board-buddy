@@ -10,7 +10,5 @@ public interface UserDao {
 	public Optional<UserDto> findById(Integer id);
 	
 	public List<UserDto> findAllUsers();
-	
-	//public Optional<Integer> findRankPosition(UserDto userDto);
 
 }

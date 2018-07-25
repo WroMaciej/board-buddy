@@ -4,14 +4,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.jstk.boardbuddy.dao.LevelDao;
-import com.capgemini.jstk.boardbuddy.dao.User_BoardgameDao;
+import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDao;
 import com.capgemini.jstk.boardbuddy.dao.UserChallengeResultDao;
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
+import com.capgemini.jstk.boardbuddy.dao.User_BoardgameDao;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
@@ -26,16 +28,19 @@ public class UserService {
 	private LevelDao levelDao;
 	private User_BoardgameDao user_BoardgameDao;
 	private UserChallengeResultDao userChallengeResultDao;
+	private StandbyPeriodDao standbyPerdiodDao;
 
 	
 
 	@Autowired
 	public UserService(UserDao userDao, LevelDao levelDao, User_BoardgameDao user_BoardgameDao,
-			UserChallengeResultDao userChallengeResultDao) {
+			UserChallengeResultDao userChallengeResultDao, StandbyPeriodDao standbyPerdiodDao) {
+		super();
 		this.userDao = userDao;
 		this.levelDao = levelDao;
 		this.user_BoardgameDao = user_BoardgameDao;
 		this.userChallengeResultDao = userChallengeResultDao;
+		this.standbyPerdiodDao = standbyPerdiodDao;
 	}
 
 	public LevelDto findLevel(UserDto userDto) {
@@ -46,6 +51,7 @@ public class UserService {
 		return userLevel.get();
 	}
 	
+
 	public UserDto findLevelAndGetUpdatedDto(UserDto userDto) {
 		LevelDto userLevel = findLevel(userDto);
 		userDto.setLevelValue(userLevel.getLevelValue());
@@ -92,8 +98,8 @@ public class UserService {
 		return userChallengeResultDao.findUserChallenges(userDto);
 	}
 
-	public Collection<StandbyPeriodDto> findAllCommonPeriods(UserDto userDtoId1) {
-		// TODO Auto-generated method stub
+	public Collection<StandbyPeriodDto> findAllCommonPeriods(UserDto userDto) {
+		Stream<StandbyPeriodDto> allUserPeriods = standbyPerdiodDao.
 		return null;
 	}
 	

@@ -1,11 +1,17 @@
 package com.capgemini.jstk.boardbuddy.dao;
 
+import java.util.Collection;
 import java.util.Optional;
 
-import com.capgemini.jstk.boardbuddy.entity.StandbyPeriod;
+import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
+import com.capgemini.jstk.boardbuddy.dto.UserDto;
 
 public interface StandbyPeriodDao {
 	
-	public Optional<StandbyPeriod> findById(Integer id);
+	public Optional<StandbyPeriodDto> findById(Integer id);
+	
+	public Collection<StandbyPeriodDto> findByUser(UserDto userDto);
+	
+	public Collection<StandbyPeriodDto> findAll();
 
 }
