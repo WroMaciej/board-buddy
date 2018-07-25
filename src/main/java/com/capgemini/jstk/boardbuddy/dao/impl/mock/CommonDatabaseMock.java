@@ -157,23 +157,23 @@ public class CommonDatabaseMock {
 			//challenge 1
 			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(1, 1, 1, 3));
 			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(2, 2, 1, 2));
-			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(3, 3, 1, 1));
+
 			//challenge 2
-			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(4, 1, 2, 1));
-			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(5, 5, 2, 2));
-			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(6, 6, 2, 3));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(3, 1, 2, 1));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(4, 5, 2, 2));
+
 			//challenge 3
-			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(7, 3, 3, 1));
-			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(8, 4, 3, 2));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(5, 3, 3, 1));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(6, 4, 3, 2));
 			//challenge 4
-			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(9, 1, 4, 2));
-			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(10, 5, 4, 1));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(7, 1, 4, 2));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(8, 5, 4, 1));
 			//challenge 5
-			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(11, 3, 5, 1));
-			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(12, 6, 5, 2));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(9, 3, 5, 1));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(10, 6, 5, 2));
 			//challenge 6 - draw!
-			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(13, 1, 6, 1));
-			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(14, 3, 6, 1));		
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(11, 1, 6, 1));
+			user_ChallengeResult_Xs.add(new User_ChallengeResult_X(12, 3, 6, 1));		
 			
 		} catch (Exception e) {
 			throw new DataPreparingException("Preparing of challenge results crashed.");

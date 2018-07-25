@@ -45,8 +45,9 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 
 	@Override
 	public Collection<StandbyPeriodDto> findByUser(UserDto userDto) {
-		Collection<StandbyPeriodDto> allUserStandbyPeriods = new ArrayList<>();
-		Stream<StandbyPeriodDto> sameId = standbyPeriods.stream().filter(standbyPeriodDto -> standbyPeriodDto.getUserId().equals(userDto.getId()));
-		
+		Collection<StandbyPeriodDto> userStandbyPeriods = new ArrayList<>();
+		Stream<StandbyPeriod> userPeriods = standbyPeriods.stream().filter(standbyPeriodDto -> standbyPeriodDto.getUserId().equals(userDto.getId()));
+		userPeriods.forEach(standbyPeriod -> userStandbyPeriods.add(standbyPeriodMapper.toDto(standbyPeriod)));
+		return userStandbyPeriods;
 	}
 }

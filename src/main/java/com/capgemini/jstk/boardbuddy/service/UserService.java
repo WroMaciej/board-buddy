@@ -1,5 +1,6 @@
 package com.capgemini.jstk.boardbuddy.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -99,8 +100,14 @@ public class UserService {
 	}
 
 	public Collection<StandbyPeriodDto> findAllCommonPeriods(UserDto userDto) {
-		Stream<StandbyPeriodDto> allUserPeriods = standbyPerdiodDao.
-		return null;
+		Collection<StandbyPeriodDto> commonPeriods = new ArrayList<>();
+		
+		Stream<StandbyPeriodDto> allUserPeriods = standbyPerdiodDao.findByUser(userDto).stream();
+		
+		allUserPeriods.forEach(action);
+		
+		
+		return commonPeriods;
 	}
 	
 	
