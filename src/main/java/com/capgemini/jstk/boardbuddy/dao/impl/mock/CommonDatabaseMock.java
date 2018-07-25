@@ -9,6 +9,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.yaml.snakeyaml.events.Event.ID;
 
 import com.capgemini.jstk.boardbuddy.entity.Boardgame;
 import com.capgemini.jstk.boardbuddy.entity.ChallengeResult;
@@ -46,6 +47,7 @@ public class CommonDatabaseMock {
 		populateLevels();
 		populateBoardgames();
 		populateUserBoardgames();
+		populateChallengeResults();
 	}
 
 	private boolean populateUsers() {
@@ -133,8 +135,8 @@ public class CommonDatabaseMock {
 	}
 
 	private boolean populateChallengeResults() {
-		challengeResults = new ArrayList<>();
 		try {
+			challengeResults = new ArrayList<>();
 			challengeResults.add(new ChallengeResult(1, 1, new GregorianCalendar(2018, 7, 1, 12, 0),
 					new GregorianCalendar(2018, 7, 1, 18, 0)));
 			challengeResults.add(new ChallengeResult(2, 3, new GregorianCalendar(2018, 7, 2, 16, 0),
@@ -151,6 +153,37 @@ public class CommonDatabaseMock {
 			throw new DataPreparingException("Preparing of challenge results crashed.");
 		}
 		return true;
+	}
+	
+	private boolean populateUserChallengeResults() {
+		try {
+			userChallengeResults = new ArrayList<>();
+			//challenge 1
+			userChallengeResults.add(new UserChallengeResult(1, 1, 1, 3));
+			userChallengeResults.add(new UserChallengeResult(2, 2, 1, 2));
+			userChallengeResults.add(new UserChallengeResult(3, 3, 1, 1));
+			//challenge 2
+			userChallengeResults.add(new UserChallengeResult(4, 1, 2, 1));
+			userChallengeResults.add(new UserChallengeResult(5, 5, 2, 2));
+			userChallengeResults.add(new UserChallengeResult(6, 6, 2, 3));
+			//challenge 3
+			userChallengeResults.add(new UserChallengeResult(7, 3, 3, 1));
+			userChallengeResults.add(new UserChallengeResult(8, 4, 3, 2));
+			//challenge 4
+			userChallengeResults.add(new UserChallengeResult(9, 1, 4, 2));
+			userChallengeResults.add(new UserChallengeResult(10, 5, 4, 1));
+			//challenge 5
+			userChallengeResults.add(new UserChallengeResult(11, 3, 5, 1));
+			userChallengeResults.add(new UserChallengeResult(12, 6, 5, 2));
+			//challenge 6 - draw!
+			userChallengeResults.add(new UserChallengeResult(13, 1, 6, 1));
+			userChallengeResults.add(new UserChallengeResult(14, 3, 6, 1));		
+			
+		} catch (Exception e) {
+			throw new DataPreparingException("Preparing of challenge results crashed.");
+		}
+		return true;
+		
 	}
 
 }

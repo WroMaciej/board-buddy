@@ -35,7 +35,7 @@ public class UserChallengeResultDaoImpl implements UserChallengeResultDao {
 		this.userChallengeResultMapper = userChallengeResultMapper;
 		this.userDao = userDao;
 		this.challengeResultDao = challengeResultDao;
-		this.userChallengeResults = this.commonDatabaseMock.getUserChallengeResults();
+		userChallengeResults = this.commonDatabaseMock.getUserChallengeResults();
 	}
 
 
