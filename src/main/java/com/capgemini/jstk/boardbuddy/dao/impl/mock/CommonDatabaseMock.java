@@ -44,6 +44,7 @@ public class CommonDatabaseMock {
 		populateUserBoardgames();
 		populateChallengeResults();
 		populateUserChallengeResults();
+		populateStandbyPeriods();
 	}
 
 	private boolean populateUsers() {
@@ -184,7 +185,33 @@ public class CommonDatabaseMock {
 	private void populateStandbyPeriods() {
 		try {
 			standbyPeriods = new ArrayList<>();
-			standbyPeriods.add(new StandbyPeriod(1, 1, new GregorianCalendar(2018, 7, 25, 8, 0), new GregorianCalendar(2018, 7, 25, 8, 0), null, true);	
+			
+			standbyPeriods.add(
+					new StandbyPeriod(1, 1, new GregorianCalendar(2018, 7, 25, 8, 0), new GregorianCalendar(2018, 7, 25, 10, 0), null, true));
+			standbyPeriods.add(
+					new StandbyPeriod(2, 1, new GregorianCalendar(2018, 7, 25, 14, 0), new GregorianCalendar(2018, 7, 25, 16, 0), null, true));
+			standbyPeriods.add(
+					new StandbyPeriod(3, 1, new GregorianCalendar(2018, 7, 26, 19, 0), new GregorianCalendar(2018, 7, 26, 22, 0), null, true));
+			
+			standbyPeriods.add(
+					new StandbyPeriod(4, 2, new GregorianCalendar(2018, 7, 25, 4, 0), new GregorianCalendar(2018, 7, 25, 9, 0), null, true));
+			standbyPeriods.add(
+					new StandbyPeriod(5, 2, new GregorianCalendar(2018, 7, 25, 15, 0), new GregorianCalendar(2018, 7, 25, 17, 0), null, true));
+			
+			standbyPeriods.add(
+					new StandbyPeriod(6, 3, new GregorianCalendar(2018, 7, 25, 22, 0), new GregorianCalendar(2018, 7, 26, 2, 0), null, true));
+			
+			standbyPeriods.add(
+					new StandbyPeriod(7, 4, new GregorianCalendar(2018, 7, 25, 8, 0), new GregorianCalendar(2018, 7, 25, 10, 0), null, true));
+			
+			standbyPeriods.add(
+					new StandbyPeriod(8, 5, new GregorianCalendar(2018, 7, 25, 5, 0), new GregorianCalendar(2018, 7, 25, 23, 0), null, true));
+			
+			standbyPeriods.add(
+					new StandbyPeriod(9, 5, new GregorianCalendar(2018, 7, 26, 6, 0), new GregorianCalendar(2018, 7, 27, 16, 0), null, true));
+			standbyPeriods.add(
+					new StandbyPeriod(10, 6, new GregorianCalendar(2018, 7, 25, 8, 0), new GregorianCalendar(2018, 7, 26, 8, 0), null, true));
+			
 		} catch (Exception e) {
 			throw new DataPreparingException("Preparing of standby periods crashed.");
 		}

@@ -1,6 +1,5 @@
 package com.capgemini.jstk.boardbuddy.service;
 
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -112,14 +110,22 @@ public class UserService {
 		Collection<StandbyPeriodDto> allPeriods = standbyPerdiodDao.findAll();
 		
 		for (StandbyPeriodDto userPeriod : userPeriods) {
+			Predicate<StandbyPeriodDto> isActive = period -> period.isActive();
 			Predicate<StandbyPeriodDto> otherUser = anyPeriod -> anyPeriod.getUserId() != userDto.getId();
-			allPeriods.stream().filter(otherUser).forEach(anyPeriod -> rawCommonPeriods.add(standbyPeriodService.commonPeriod(userPeriod, anyPeriod)) );
+			allPeriods.stream().filter(otherUser.and(isActive)).forEach(anyPeriod -> rawCommonPeriods.add(standbyPeriodService.commonPeriod(userPeriod, anyPeriod)) );
 		}
 		commonPeriods = rawCommonPeriods.stream().filter(Optional<StandbyPeriodDto>::isPresent).map(Optional::get).collect(Collectors.toList());
 		
 		return commonPeriods;
 	}
 	
+	public Collection<StandbyPeriodDto> findCommonPeriodsWithAnotherUser(UserDto userDto1, UserDto userDto2){
+		return findAllCommonPeriods(userDto1).stream().filter(period -> period.getUserId().equals(userDto2.getId())).collect(Collectors.toSet());
+	}
+	
+	public boolean isCommonPeriodForUsers(UserDto userDto1, UserDto userDto2) {
+		return !findCommonPeriodsWithAnotherUser(userDto1, userDto2).isEmpty();
+	}
 	
 	
 

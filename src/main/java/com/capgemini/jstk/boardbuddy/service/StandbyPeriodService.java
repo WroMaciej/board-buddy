@@ -11,14 +11,15 @@ import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 public class StandbyPeriodService {
 	
 	
-	public Optional<StandbyPeriodDto> commonPeriod(StandbyPeriodDto period1, StandbyPeriodDto period2){
+	public Optional<StandbyPeriodDto> commonPeriod(StandbyPeriodDto senderPeriod, StandbyPeriodDto receiverPeriod){
 		StandbyPeriodDto commonPeriod = null;
-		Calendar startDate = commonPeriodStart(period1.getStartDate(), period2.getStartDate());
-		Calendar endDate = commonPeriodEnd(period1.getEndDate(), period2.getEndDate());
+		Calendar startDate = commonPeriodStart(senderPeriod.getStartDate(), receiverPeriod.getStartDate());
+		Calendar endDate = commonPeriodEnd(senderPeriod.getEndDate(), receiverPeriod.getEndDate());
 		if (endDate.after(startDate)) {
 			commonPeriod = new StandbyPeriodDto(null);
 			commonPeriod.setStartDate(startDate);
 			commonPeriod.setEndDate(endDate);
+			commonPeriod.setUserId(receiverPeriod.getUserId());
 		}
 		return Optional.ofNullable(commonPeriod);
 	}

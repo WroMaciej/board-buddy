@@ -1,6 +1,7 @@
 package com.capgemini.jstk.boardbuddy.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
@@ -111,8 +112,11 @@ public class UserServiceTest {
 	public void testFindCommonStandbyPeriods() {
 		//given user dtos on setup
 		//when
-		Collection<StandbyPeriodDto> commonPeriods = userService.findAllCommonPeriods(userDtoId1);
-		
+		Collection<StandbyPeriodDto> commonPeriods = userService.findAllCommonPeriods(userDtoId1);		
+		//then
+		assertFalse(commonPeriods.isEmpty());
+		assertFalse(userService.isCommonPeriodForUsers(userDtoId1, userDtoId3));
+		assertTrue(userService.isCommonPeriodForUsers(userDtoId1, userDtoId5));		
 	}
 	
 	
