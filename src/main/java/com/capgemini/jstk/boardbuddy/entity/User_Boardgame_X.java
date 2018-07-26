@@ -7,7 +7,7 @@ import lombok.Setter;
 public class User_Boardgame_X {
 	
 
-	private Integer id; //TODO maybe delete?
+	private Integer id;
 	private Integer userId;
 	private Integer boardgameId;
 	

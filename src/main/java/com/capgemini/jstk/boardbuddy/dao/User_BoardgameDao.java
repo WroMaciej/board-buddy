@@ -12,4 +12,6 @@ public interface User_BoardgameDao {
 	
 	public Collection<BoardgameDto> findBoardgamesByUser(Integer boardgameId);
 
+	public void addBoardgame(Integer requestingUserId, Integer boardgameId);
+
 }

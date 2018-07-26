@@ -28,7 +28,7 @@ public class UserServiceTest {
 	
 	
 	@Autowired
-	private UserService userService;
+	private UserServiceFacade userService;
 	
 	
 	@Autowired

@@ -11,16 +11,16 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.capgemini.jstk.boardbuddy.dao.impl.StandbyPeriodDaoImpl;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
+import com.capgemini.jstk.boardbuddy.service.impl.StandbyPeriodService;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 
-@SuppressWarnings("deprecation")
 @RunWith(MockitoJUnitRunner.class)
 public class StandbyPeriodServiceTest {
 
@@ -28,7 +28,7 @@ public class StandbyPeriodServiceTest {
 	private StandbyPeriodDaoImpl standbyPeriodDaoMock;
 
 	
-	private StandbyPeriodService standbyPeriodService;
+	private StandbyPeriodServiceFacade standbyPeriodService;
 
 	@Before
 	public void setup() {
@@ -88,7 +88,7 @@ public class StandbyPeriodServiceTest {
 		Optional<StandbyPeriodDto> returnedDto = Optional.of(fullDto);
 		// when
 		Mockito.when(standbyPeriodDaoMock
-				.findById(Matchers.any(Integer.class))).thenReturn(returnedDto);
+				.findById(ArgumentMatchers.any(Integer.class))).thenReturn(returnedDto);
 		standbyPeriodService.addStandbyPeriod(1, toAdd);
 		//TODO how to check if it really was added? - new integration
 		// then

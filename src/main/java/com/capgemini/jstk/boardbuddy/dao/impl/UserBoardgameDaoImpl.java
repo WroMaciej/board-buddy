@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.capgemini.jstk.boardbuddy.dao.BoardgameDao;
-import com.capgemini.jstk.boardbuddy.dao.User_BoardgameDao;
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
+import com.capgemini.jstk.boardbuddy.dao.User_BoardgameDao;
 import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
-import com.capgemini.jstk.boardbuddy.dto.User_Boardgame_Cto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
+import com.capgemini.jstk.boardbuddy.dto.User_Boardgame_Cto;
 import com.capgemini.jstk.boardbuddy.dto.mapper.Mapper;
 import com.capgemini.jstk.boardbuddy.entity.User_Boardgame_X;
 
@@ -46,6 +46,21 @@ public class UserBoardgameDaoImpl implements User_BoardgameDao {
 		return user_Boardgame_Xs.stream().filter(userBoardgame -> userBoardgame.getUserId().equals(userId))
 				.map(userBoardgame -> boardgameDao.findById(userBoardgame.getBoardgameId()).get() )
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public void addBoardgame(Integer ownerUserId, Integer boardgameId) {
+		user_Boardgame_Xs.add(new User_Boardgame_X(getUniqueId(), ownerUserId, boardgameId));
+	}
+	
+	private Integer getUniqueId() {
+		Integer maxId = Integer.valueOf(0);
+		for (User_Boardgame_X join : user_Boardgame_Xs) {
+			if (join.getId() > maxId) {
+				maxId = join.getId();
+			}
+		}
+		return Integer.valueOf(maxId + 1);		
 	}
 
 
