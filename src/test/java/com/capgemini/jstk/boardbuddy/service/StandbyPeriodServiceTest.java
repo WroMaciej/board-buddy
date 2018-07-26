@@ -11,12 +11,11 @@ import java.util.Optional;
 import org.junit.Test;
 
 import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDao;
-import com.capgemini.jstk.boardbuddy.dao.UserDao;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 
 public class StandbyPeriodServiceTest {
 	
-	//TODO MOCK OR SPRING
+	//just for compiling purpose - no usage
 	StandbyPeriodDao standbyPeriodDao;
 	
 	@Test

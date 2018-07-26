@@ -35,7 +35,7 @@ public class UserDaoImplTest {
 		UserDto userDto = userDao.findById(1).get();
 		// then
 		assertEquals("John", userDto.getFirstName());	
-	}
+	} 
 
 	@Test
 	public void testFindAllUsers() {

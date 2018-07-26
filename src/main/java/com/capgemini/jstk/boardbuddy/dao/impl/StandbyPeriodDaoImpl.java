@@ -14,6 +14,7 @@ import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.dto.mapper.Mapper;
 import com.capgemini.jstk.boardbuddy.entity.StandbyPeriod;
+import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabaseException;
 
 @Repository
 public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
@@ -65,7 +66,22 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 			}
 		}
 		return Integer.valueOf(maxId + 1);
+	
 		
+	}
+
+	@Override
+	public void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId) {
+		StandbyPeriod toDelete = getStandbyPeriodFromDatabase(deletingPeriodId);
+		standbyPeriods.remove(toDelete);
+	}
+	
+	private StandbyPeriod getStandbyPeriodFromDatabase(Integer standbyPeriodId) {
+		Optional<StandbyPeriod> standbyPeriod = standbyPeriods.stream().filter(period -> period.getId().equals(standbyPeriodId)).findFirst();
+		if (!standbyPeriod.isPresent()) {
+			throw new NoSuchElementInDatabaseException("Standby period to be deleted does not exist! Standby period ID: " + standbyPeriodId);
+		}
+		return standbyPeriod.get();
 	}
 	
 }

@@ -38,6 +38,10 @@ public class StandbyPeriodService {
 		standbyPeriodDao.addStandbyPeriod(userId, standbyPeriodDto);
 	}
 	
+	public void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId) {
+		standbyPeriodDao.deleteStandbyPeriod(userId, deletingPeriodId);
+	}
+	
 	private Calendar commonPeriodStart(Calendar startOfPeriod1, Calendar startOfPeriod2) {
 		return getLaterDate(startOfPeriod1, startOfPeriod2);
 		
