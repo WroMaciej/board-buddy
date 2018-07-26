@@ -27,6 +27,7 @@ public class StandbyPeriodServiceTest {
 	@Mock
 	private StandbyPeriodDaoImpl standbyPeriodDaoMock;
 
+	
 	private StandbyPeriodService standbyPeriodService;
 
 	@Before
@@ -88,6 +89,7 @@ public class StandbyPeriodServiceTest {
 		// when
 		Mockito.when(standbyPeriodDaoMock.findById(Matchers.any(Integer.class))).thenReturn(returnedDto);
 		standbyPeriodService.addStandbyPeriod(1, toAdd);
+		//TODO how to check if it really was added?
 		// then
 		assertEquals(returnedDto, standbyPeriodDaoMock.findById(1));
 	}
