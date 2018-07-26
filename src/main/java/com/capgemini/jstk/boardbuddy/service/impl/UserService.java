@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capgemini.jstk.boardbuddy.aop.LogActivity;
 import com.capgemini.jstk.boardbuddy.dao.LevelDaoFacade;
 import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDaoFacade;
 import com.capgemini.jstk.boardbuddy.dao.UserChallengeResultDaoFacade;
@@ -112,7 +111,6 @@ public class UserService implements UserServiceFacade {
 	}
 
 	@Override
-	@LogActivity(message = "Finding user challenges")
 	public Collection<ChallengeResultDto> findUserChallenges(UserDto userDto) {
 		return userChallengeResultDaoFacade.findUserChallenges(userDto);
 	}
@@ -126,8 +124,8 @@ public class UserService implements UserServiceFacade {
 
 		for (StandbyPeriodDto userPeriod : userPeriods) {
 			Predicate<StandbyPeriodDto> isActive = period -> period.isActive();
-			Predicate<StandbyPeriodDto> otherUser = anyPeriod -> anyPeriod.getUserId() != userDto
-					.getId();
+			Predicate<StandbyPeriodDto> otherUser = anyPeriod -> !anyPeriod.getUserId().equals(userDto
+					.getId());
 			allPeriods.stream().filter(otherUser.and(isActive))
 					.forEach(anyPeriod -> rawCommonPeriods
 							.add(standbyPeriodService.commonPeriod(userPeriod, anyPeriod)));
@@ -164,7 +162,7 @@ public class UserService implements UserServiceFacade {
 		Map<UserDto, String> userMessageMap = new HashMap<>();
 		Collection<StandbyPeriodDto> commonStandbys = findAllCommonPeriods(new UserDto(userId));
 		commonStandbys.stream()
-				.forEach(period -> userMessageMap.put(new UserDto(period.getId()), comment));
+				.forEach(period -> userMessageMap.put(userDaoFacade.findById(period.getUserId()).get(), comment));
 		standbyPeriodDaoFacade.deleteStandbyPeriod(userId, deletingPeriodId);
 		return userMessageMap;
 	}

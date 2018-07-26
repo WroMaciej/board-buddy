@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.capgemini.jstk.boardbuddy.aop.LogActivity;
 import com.capgemini.jstk.boardbuddy.dao.UserDaoFacade;
 import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
@@ -29,6 +30,7 @@ public class UserDao implements UserDaoFacade {
 	}
 
 	@Override
+	@LogActivity(message = "User found.")
 	public Optional<UserDto> findById(Integer id) {
 		return Optional
 				.ofNullable(userMapper.toDto(users.stream().filter(user -> user.getId().equals(id)).findFirst().get()));

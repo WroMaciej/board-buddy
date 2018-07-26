@@ -26,7 +26,6 @@ public class StandbyPeriodServiceTest {
 
 	@Mock
 	private StandbyPeriodDao standbyPeriodDaoMock;
-
 	
 	private StandbyPeriodServiceFacade standbyPeriodService;
 
@@ -90,7 +89,6 @@ public class StandbyPeriodServiceTest {
 		Mockito.when(standbyPeriodDaoMock
 				.findById(ArgumentMatchers.any(Integer.class))).thenReturn(returnedDto);
 		standbyPeriodService.addStandbyPeriod(1, toAdd);
-		//TODO how to check if it really was added? - new integration
 		// then
 		assertEquals(returnedDto, standbyPeriodDaoMock.findById(1));
 	}

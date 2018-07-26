@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,10 +27,8 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDataba
 @SpringBootTest
 public class UserServiceTest {
 	
-	
 	@Autowired
 	private UserServiceFacade userService;
-	
 	
 	@Autowired
 	UserDaoFacade userDaoFacade;
@@ -164,6 +163,21 @@ public class UserServiceTest {
 		assertTrue(thrownException);
 		assertEquals("John", updatedUser.getFirstName());
 		assertEquals("Trabolta", updatedUser.getLastName());
+	}
+	
+	@Test
+	public void testDeleteStandbyPeriod() throws IllegalAccessException {
+		//given
+		Integer userId = 1;
+		Integer standbyPeriodToDeleteId = 1;
+		//when
+		Map<UserDto, String> messages = userService.deleteStandbyPeriod(userId, standbyPeriodToDeleteId, "I have to do some programming. Sorry guys!");
+		//then
+		assertFalse(messages.containsKey(new UserDto(1)));
+		assertTrue(messages.containsKey(new UserDto(2)));
+		assertFalse(messages.containsKey(new UserDto(3)));
+		assertTrue(messages.containsKey(new UserDto(4)));
+		assertEquals( "I have to do some programming. Sorry guys!", messages.get(new UserDto(2)));
 	}
 	
 	
