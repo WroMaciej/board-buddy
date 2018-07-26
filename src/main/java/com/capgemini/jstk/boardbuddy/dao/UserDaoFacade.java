@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 
-public interface UserDao {
+public interface UserDaoFacade {
 
 	public Optional<UserDto> findById(Integer id);
 

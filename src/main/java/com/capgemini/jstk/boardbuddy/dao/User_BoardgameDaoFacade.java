@@ -5,7 +5,7 @@ import java.util.Collection;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 
-public interface User_BoardgameDao {
+public interface User_BoardgameDaoFacade {
 
 	public Collection<UserDto> findUsersByBoardgame(Integer boardgameId);
 

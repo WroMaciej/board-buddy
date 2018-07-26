@@ -13,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.capgemini.jstk.boardbuddy.aop.LogActivity;
-import com.capgemini.jstk.boardbuddy.dao.UserDao;
+import com.capgemini.jstk.boardbuddy.dao.UserDaoFacade;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
@@ -33,18 +32,17 @@ public class UserServiceTest {
 	
 	
 	@Autowired
-	UserDao userDao;
+	UserDaoFacade userDaoFacade;
 	
 	UserDto userDtoId1;
 	UserDto userDtoId3;
 	UserDto userDtoId5;
 	
 	@Before
-	@LogActivity(message = "NEW TEST")
     public void setUp() throws Exception {
-		userDtoId1 = userDao.findById(1).get();
-		userDtoId3 = userDao.findById(3).get();
-		userDtoId5 = userDao.findById(5).get();
+		userDtoId1 = userDaoFacade.findById(1).get();
+		userDtoId3 = userDaoFacade.findById(3).get();
+		userDtoId5 = userDaoFacade.findById(5).get();
     }
 	
 	@Test
@@ -131,7 +129,7 @@ public class UserServiceTest {
 		newUserProfile.setFirstName("Tom");
 		//when
 		userService.updateProfile(1, newUserProfile);
-		UserDto updatedUser = userDao.findById(1).get();
+		UserDto updatedUser = userDaoFacade.findById(1).get();
 		//then
 		assertEquals("Tom", updatedUser.getFirstName());
 		assertEquals("new@domain.com", updatedUser.getEmail());
@@ -161,7 +159,7 @@ public class UserServiceTest {
 			thrownException = true;
 		}
 		
-		UserDto updatedUser = userDao.findById(1).get();
+		UserDto updatedUser = userDaoFacade.findById(1).get();
 		//then
 		assertTrue(thrownException);
 		assertEquals("John", updatedUser.getFirstName());

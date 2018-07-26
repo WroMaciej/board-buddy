@@ -6,25 +6,25 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.capgemini.jstk.boardbuddy.dao.BoardgameDao;
+import com.capgemini.jstk.boardbuddy.dao.BoardgameDaoFacade;
 import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.mapper.Mapper;
 import com.capgemini.jstk.boardbuddy.entity.Boardgame;
-import com.capgemini.jstk.boardbuddy.validation.Validator;
+import com.capgemini.jstk.boardbuddy.validation.ValidatorFacade;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 
 @Repository
-public class BoardgameDaoImpl implements BoardgameDao {
+public class BoardgameDao implements BoardgameDaoFacade {
 
 	private Collection<Boardgame> boardgames;
 	private Mapper<Boardgame, BoardgameDto> boardgameMapper;
-	private Validator<BoardgameDto> boardgameValidator;
+	private ValidatorFacade<BoardgameDto> boardgameValidatorFacade;
 	
 	@Autowired
-	public BoardgameDaoImpl(CommonDatabaseMock commonDatabaseMock, Mapper<Boardgame, BoardgameDto> boardgameMapper, Validator<BoardgameDto> boardgameValidator) {
+	public BoardgameDao(CommonDatabaseMock commonDatabaseMock, Mapper<Boardgame, BoardgameDto> boardgameMapper, ValidatorFacade<BoardgameDto> boardgameValidator) {
 		this.boardgameMapper = boardgameMapper;
-		this.boardgameValidator = boardgameValidator;
+		this.boardgameValidatorFacade = boardgameValidator;
 		boardgames = commonDatabaseMock.getBoardgames();
 	}
 
@@ -43,7 +43,7 @@ public class BoardgameDaoImpl implements BoardgameDao {
 	@Override
 	public void addBoardgame(BoardgameDto boardgameDto) throws IllegalOperationException {
 		Boardgame toAdd = new Boardgame(getUniqueId(), boardgameDto.getName());
-		boardgameValidator.validate(boardgameMapper.toDto(toAdd));
+		boardgameValidatorFacade.validate(boardgameMapper.toDto(toAdd));
 		boardgames.add(toAdd);
 	}
 	

@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.capgemini.jstk.boardbuddy.dao.impl.StandbyPeriodDaoImpl;
+import com.capgemini.jstk.boardbuddy.dao.impl.StandbyPeriodDao;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.service.impl.StandbyPeriodService;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
@@ -25,7 +25,7 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationExcep
 public class StandbyPeriodServiceTest {
 
 	@Mock
-	private StandbyPeriodDaoImpl standbyPeriodDaoMock;
+	private StandbyPeriodDao standbyPeriodDaoMock;
 
 	
 	private StandbyPeriodServiceFacade standbyPeriodService;

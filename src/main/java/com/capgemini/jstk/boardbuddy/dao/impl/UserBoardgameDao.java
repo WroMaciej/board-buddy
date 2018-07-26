@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.capgemini.jstk.boardbuddy.dao.BoardgameDao;
-import com.capgemini.jstk.boardbuddy.dao.UserDao;
-import com.capgemini.jstk.boardbuddy.dao.User_BoardgameDao;
+import com.capgemini.jstk.boardbuddy.dao.BoardgameDaoFacade;
+import com.capgemini.jstk.boardbuddy.dao.UserDaoFacade;
+import com.capgemini.jstk.boardbuddy.dao.User_BoardgameDaoFacade;
 import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
@@ -17,34 +17,34 @@ import com.capgemini.jstk.boardbuddy.dto.mapper.Mapper;
 import com.capgemini.jstk.boardbuddy.entity.User_Boardgame_X;
 
 @Repository
-public class UserBoardgameDaoImpl implements User_BoardgameDao {
+public class UserBoardgameDao implements User_BoardgameDaoFacade {
 	
 	
 	private Collection<User_Boardgame_X> user_Boardgame_Xs;
 	
-	private UserDao userDao;
-	private BoardgameDao boardgameDao;
+	private UserDaoFacade userDaoFacade;
+	private BoardgameDaoFacade boardgameDaoFacade;
 	
 	
 	@Autowired
-	public UserBoardgameDaoImpl(CommonDatabaseMock commonDatabaseMock,
-			Mapper<User_Boardgame_X, User_Boardgame_Cto> user_Boardgame_XMapper, UserDao userDao, BoardgameDao boardgameDao) {
-		this.userDao = userDao;
-		this.boardgameDao = boardgameDao;
+	public UserBoardgameDao(CommonDatabaseMock commonDatabaseMock,
+			Mapper<User_Boardgame_X, User_Boardgame_Cto> user_Boardgame_XMapper, UserDaoFacade userDaoFacade, BoardgameDaoFacade boardgameDaoFacade) {
+		this.userDaoFacade = userDaoFacade;
+		this.boardgameDaoFacade = boardgameDaoFacade;
 		user_Boardgame_Xs = commonDatabaseMock.getUser_Boardgame_Xs();
 	}
 
 	@Override
 	public Collection<UserDto> findUsersByBoardgame(Integer boardgameId) {
 		return user_Boardgame_Xs.stream().filter(userBoardgame -> userBoardgame.getBoardgameId().equals(boardgameId))
-				.map(userBoardgame -> userDao.findById(userBoardgame.getUserId()).get() )
+				.map(userBoardgame -> userDaoFacade.findById(userBoardgame.getUserId()).get() )
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Collection<BoardgameDto> findBoardgamesByUser(Integer userId) {
 		return user_Boardgame_Xs.stream().filter(userBoardgame -> userBoardgame.getUserId().equals(userId))
-				.map(userBoardgame -> boardgameDao.findById(userBoardgame.getBoardgameId()).get() )
+				.map(userBoardgame -> boardgameDaoFacade.findById(userBoardgame.getBoardgameId()).get() )
 				.collect(Collectors.toList());
 	}
 

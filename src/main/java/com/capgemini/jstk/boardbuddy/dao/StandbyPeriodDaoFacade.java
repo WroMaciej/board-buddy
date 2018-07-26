@@ -7,7 +7,7 @@ import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 
-public interface StandbyPeriodDao {
+public interface StandbyPeriodDaoFacade {
 
 	public Optional<StandbyPeriodDto> findById(Integer id);
 

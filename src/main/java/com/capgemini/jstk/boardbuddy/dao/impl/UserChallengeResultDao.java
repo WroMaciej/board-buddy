@@ -7,9 +7,9 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.capgemini.jstk.boardbuddy.dao.ChallengeResultDao;
-import com.capgemini.jstk.boardbuddy.dao.UserChallengeResultDao;
-import com.capgemini.jstk.boardbuddy.dao.UserDao;
+import com.capgemini.jstk.boardbuddy.dao.ChallengeResultDaoFacade;
+import com.capgemini.jstk.boardbuddy.dao.UserChallengeResultDaoFacade;
+import com.capgemini.jstk.boardbuddy.dao.UserDaoFacade;
 import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
 import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
@@ -18,18 +18,18 @@ import com.capgemini.jstk.boardbuddy.dto.mapper.Mapper;
 import com.capgemini.jstk.boardbuddy.entity.User_ChallengeResult_X;
 
 @Repository
-public class UserChallengeResultDaoImpl implements UserChallengeResultDao {
+public class UserChallengeResultDao implements UserChallengeResultDaoFacade {
 
 	private CommonDatabaseMock commonDatabaseMock;
-	private ChallengeResultDao challengeResultDao;
+	private ChallengeResultDaoFacade challengeResultDaoFacade;
 	private Collection<User_ChallengeResult_X> user_ChallengeResult_Xs;
 	
 	@Autowired
-	public UserChallengeResultDaoImpl(CommonDatabaseMock commonDatabaseMock,
-			Mapper<User_ChallengeResult_X, User_ChallengeResult_Cto> user_ChallengeResult_XMapper, UserDao userDao,
-			ChallengeResultDao challengeResultDao) {
+	public UserChallengeResultDao(CommonDatabaseMock commonDatabaseMock,
+			Mapper<User_ChallengeResult_X, User_ChallengeResult_Cto> user_ChallengeResult_XMapper, UserDaoFacade userDaoFacade,
+			ChallengeResultDaoFacade challengeResultDaoFacade) {
 		this.commonDatabaseMock = commonDatabaseMock;
-		this.challengeResultDao = challengeResultDao;
+		this.challengeResultDaoFacade = challengeResultDaoFacade;
 		user_ChallengeResult_Xs = this.commonDatabaseMock.getUser_ChallengeResult_Xs();
 	}
 
@@ -40,7 +40,7 @@ public class UserChallengeResultDaoImpl implements UserChallengeResultDao {
 		Stream<User_ChallengeResult_X> allWithSameUserId = user_ChallengeResult_Xs.stream()
 				.filter(userChallengeResult -> userChallengeResult.getUserId().equals(userDto.getId()));
 		Stream<ChallengeResultDto> mapped = allWithSameUserId.map(
-				userChallengeResult -> challengeResultDao.findById(userChallengeResult.getChallengeResultId()).get() );
+				userChallengeResult -> challengeResultDaoFacade.findById(userChallengeResult.getChallengeResultId()).get() );
 		return mapped.collect(Collectors.toList());
 	}
 

@@ -8,28 +8,28 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDao;
+import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDaoFacade;
 import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.dto.mapper.Mapper;
 import com.capgemini.jstk.boardbuddy.entity.StandbyPeriod;
-import com.capgemini.jstk.boardbuddy.validation.Validator;
+import com.capgemini.jstk.boardbuddy.validation.ValidatorFacade;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabaseException;
 
 @Repository
-public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
+public class StandbyPeriodDao implements StandbyPeriodDaoFacade {
 
-	private Validator<StandbyPeriodDto> standbyPeriodValidator;
+	private ValidatorFacade<StandbyPeriodDto> standbyPeriodValidatorFacade;
 	private Mapper<StandbyPeriod, StandbyPeriodDto> standbyPeriodMapper;
 	private Collection<StandbyPeriod> standbyPeriods;
 
 	@Autowired
-	public StandbyPeriodDaoImpl(Validator<StandbyPeriodDto> standbyPeriodValidator,
+	public StandbyPeriodDao(ValidatorFacade<StandbyPeriodDto> standbyPeriodValidator,
 			Mapper<StandbyPeriod, StandbyPeriodDto> standbPeriodMapper, CommonDatabaseMock commonDatabaseMock) {
 		super();
-		this.standbyPeriodValidator = standbyPeriodValidator;
+		this.standbyPeriodValidatorFacade = standbyPeriodValidator;
 		this.standbyPeriodMapper = standbPeriodMapper;
 		standbyPeriods = commonDatabaseMock.getStandbyPeriods();
 	}
@@ -60,7 +60,7 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException {
 		StandbyPeriod toAdd = new StandbyPeriod(getUniqueId(), userId, standbyPeriodDto.getStartDate(),
 				standbyPeriodDto.getEndDate(), standbyPeriodDto.getComment(), true);
-		standbyPeriodValidator.validate(standbyPeriodMapper.toDto(toAdd));
+		standbyPeriodValidatorFacade.validate(standbyPeriodMapper.toDto(toAdd));
 		standbyPeriods.add(toAdd);
 	}
 
@@ -103,7 +103,7 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 		if (!toUpdate.getUserId().equals(userId)) {
 			throw new IllegalAccessException("Access denied. Attempt of deleting period from another user.");
 		}
-		standbyPeriodValidator.validate(standbyPeriodMapper.toDto(toUpdate));
+		standbyPeriodValidatorFacade.validate(standbyPeriodMapper.toDto(toUpdate));
 		toUpdate.setStartDate(updatedDto.getStartDate());
 		toUpdate.setEndDate(updatedDto.getEndDate());
 		toUpdate.setComment(updatedDto.getComment());

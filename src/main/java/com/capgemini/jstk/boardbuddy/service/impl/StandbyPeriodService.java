@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDao;
+import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDaoFacade;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.service.StandbyPeriodServiceFacade;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
@@ -14,12 +14,12 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationExcep
 @Service
 public class StandbyPeriodService implements StandbyPeriodServiceFacade{
 
-	private StandbyPeriodDao standbyPeriodDao;
+	private StandbyPeriodDaoFacade standbyPeriodDaoFacade;
 	
 
 	@Autowired
-	public StandbyPeriodService(StandbyPeriodDao standbyPeriodDao) {
-		this.standbyPeriodDao = standbyPeriodDao;
+	public StandbyPeriodService(StandbyPeriodDaoFacade standbyPeriodDaoFacade) {
+		this.standbyPeriodDaoFacade = standbyPeriodDaoFacade;
 	}
 
 	@Override
@@ -38,12 +38,12 @@ public class StandbyPeriodService implements StandbyPeriodServiceFacade{
 
 	@Override
 	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException {
-		standbyPeriodDao.addStandbyPeriod(userId, standbyPeriodDto);
+		standbyPeriodDaoFacade.addStandbyPeriod(userId, standbyPeriodDto);
 	}
 
 	@Override
 	public void updateStandbyPeriod(Integer userId, StandbyPeriodDto updatedDto) throws IllegalOperationException, IllegalAccessException {
-		standbyPeriodDao.updateStandbyPeriod(userId, updatedDto);
+		standbyPeriodDaoFacade.updateStandbyPeriod(userId, updatedDto);
 	}
 
 	private Calendar commonPeriodStart(Calendar startOfPeriod1, Calendar startOfPeriod2) {

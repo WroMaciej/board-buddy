@@ -12,17 +12,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 //import static org.hamcrest.CoreMatchers.is;
 
 
-import com.capgemini.jstk.boardbuddy.dao.UserDao;
+import com.capgemini.jstk.boardbuddy.dao.UserDaoFacade;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserDaoImplTest {
+public class UserDaoTest {
 
 	
 	@Autowired
-	private UserDao userDao;
+	private UserDaoFacade userDaoFacade;
 	
 	@Before
     public void setUp() throws Exception {
@@ -32,7 +32,7 @@ public class UserDaoImplTest {
 	@Test
 	public void testFindById() {
 		// when
-		UserDto userDto = userDao.findById(1).get();
+		UserDto userDto = userDaoFacade.findById(1).get();
 		// then
 		assertEquals("John", userDto.getFirstName());	
 	} 
@@ -42,7 +42,7 @@ public class UserDaoImplTest {
 		//given
 		int usersSize = 6;
 		//when
-		int foundSize = userDao.findAllUsers().size();
+		int foundSize = userDaoFacade.findAllUsers().size();
 
 		//then
 		assertEquals(usersSize, foundSize);

@@ -14,11 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.jstk.boardbuddy.aop.LogActivity;
-import com.capgemini.jstk.boardbuddy.dao.LevelDao;
-import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDao;
-import com.capgemini.jstk.boardbuddy.dao.UserChallengeResultDao;
-import com.capgemini.jstk.boardbuddy.dao.UserDao;
-import com.capgemini.jstk.boardbuddy.dao.User_BoardgameDao;
+import com.capgemini.jstk.boardbuddy.dao.LevelDaoFacade;
+import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDaoFacade;
+import com.capgemini.jstk.boardbuddy.dao.UserChallengeResultDaoFacade;
+import com.capgemini.jstk.boardbuddy.dao.UserDaoFacade;
+import com.capgemini.jstk.boardbuddy.dao.User_BoardgameDaoFacade;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
@@ -26,37 +26,37 @@ import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.service.StandbyPeriodServiceFacade;
 import com.capgemini.jstk.boardbuddy.service.UserServiceFacade;
-import com.capgemini.jstk.boardbuddy.validation.Validator;
+import com.capgemini.jstk.boardbuddy.validation.ValidatorFacade;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabaseException;
 
 @Service
 public class UserService implements UserServiceFacade {
 
-	private Validator<UserDto> userValidator;
-	private UserDao userDao;
-	private LevelDao levelDao;
-	private User_BoardgameDao user_BoardgameDao;
-	private UserChallengeResultDao userChallengeResultDao;
-	private StandbyPeriodDao standbyPeriodDao;
+	private ValidatorFacade<UserDto> userValidatorFacade;
+	private UserDaoFacade userDaoFacade;
+	private LevelDaoFacade levelDaoFacade;
+	private User_BoardgameDaoFacade user_BoardgameDaoFacade;
+	private UserChallengeResultDaoFacade userChallengeResultDaoFacade;
+	private StandbyPeriodDaoFacade standbyPeriodDaoFacade;
 	private StandbyPeriodServiceFacade standbyPeriodService;
 
 	@Autowired
-	public UserService(UserDao userDao, LevelDao levelDao, User_BoardgameDao user_BoardgameDao,
-			UserChallengeResultDao userChallengeResultDao, StandbyPeriodDao standbyPerdiodDao,
-			StandbyPeriodServiceFacade standbyPeriodService, Validator<UserDto> userValidator) {
-		this.userValidator = userValidator;
-		this.userDao = userDao;
-		this.levelDao = levelDao;
-		this.user_BoardgameDao = user_BoardgameDao;
-		this.userChallengeResultDao = userChallengeResultDao;
-		this.standbyPeriodDao = standbyPerdiodDao;
+	public UserService(UserDaoFacade userDaoFacade, LevelDaoFacade levelDaoFacade, User_BoardgameDaoFacade user_BoardgameDaoFacade,
+			UserChallengeResultDaoFacade userChallengeResultDaoFacade, StandbyPeriodDaoFacade standbyPerdiodDao,
+			StandbyPeriodServiceFacade standbyPeriodService, ValidatorFacade<UserDto> userValidator) {
+		this.userValidatorFacade = userValidator;
+		this.userDaoFacade = userDaoFacade;
+		this.levelDaoFacade = levelDaoFacade;
+		this.user_BoardgameDaoFacade = user_BoardgameDaoFacade;
+		this.userChallengeResultDaoFacade = userChallengeResultDaoFacade;
+		this.standbyPeriodDaoFacade = standbyPerdiodDao;
 		this.standbyPeriodService = standbyPeriodService;
 	}
 
 	@Override
 	public LevelDto findLevel(UserDto userDto) {
-		Optional<LevelDto> userLevel = levelDao.findByScore(userDto.getScore());
+		Optional<LevelDto> userLevel = levelDaoFacade.findByScore(userDto.getScore());
 		if (!userLevel.isPresent()) {
 			throw new NoSuchElementInDatabaseException("Level for given user not found.");
 		}
@@ -72,7 +72,7 @@ public class UserService implements UserServiceFacade {
 
 	@Override
 	public Integer findRankPosition(UserDto userDto) {
-		List<UserDto> sortedByScore = userDao.findAllUsers();
+		List<UserDto> sortedByScore = userDaoFacade.findAllUsers();
 		sortedByScore.sort((user1, user2) -> user1.getScore() - user2.getScore());
 		int rankPosition = sortedByScore.indexOf(userDto) + 1;
 		if (rankPosition == -1) {
@@ -84,7 +84,7 @@ public class UserService implements UserServiceFacade {
 
 	@Override
 	public Collection<BoardgameDto> findUserBoardgames(UserDto userDto) {
-		return user_BoardgameDao.findBoardgamesByUser(userDto.getId());
+		return user_BoardgameDaoFacade.findBoardgamesByUser(userDto.getId());
 	}
 
 	@Override
@@ -114,15 +114,15 @@ public class UserService implements UserServiceFacade {
 	@Override
 	@LogActivity(message = "Finding user challenges")
 	public Collection<ChallengeResultDto> findUserChallenges(UserDto userDto) {
-		return userChallengeResultDao.findUserChallenges(userDto);
+		return userChallengeResultDaoFacade.findUserChallenges(userDto);
 	}
 
 	@Override
 	public Collection<StandbyPeriodDto> findAllCommonPeriods(UserDto userDto) {
 		Collection<Optional<StandbyPeriodDto>> rawCommonPeriods = new ArrayList<>();
 		Collection<StandbyPeriodDto> commonPeriods = new ArrayList<>();
-		Collection<StandbyPeriodDto> userPeriods = standbyPeriodDao.findByUser(userDto);
-		Collection<StandbyPeriodDto> allPeriods = standbyPeriodDao.findAll();
+		Collection<StandbyPeriodDto> userPeriods = standbyPeriodDaoFacade.findByUser(userDto);
+		Collection<StandbyPeriodDto> allPeriods = standbyPeriodDaoFacade.findAll();
 
 		for (StandbyPeriodDto userPeriod : userPeriods) {
 			Predicate<StandbyPeriodDto> isActive = period -> period.isActive();
@@ -154,8 +154,8 @@ public class UserService implements UserServiceFacade {
 	@Override
 	public void updateProfile(Integer userId, UserDto updatedUserDto)
 			throws IllegalOperationException {
-		userValidator.validate(updatedUserDto);
-		userDao.updateProfile(userId, updatedUserDto);
+		userValidatorFacade.validate(updatedUserDto);
+		userDaoFacade.updateProfile(userId, updatedUserDto);
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public class UserService implements UserServiceFacade {
 		Collection<StandbyPeriodDto> commonStandbys = findAllCommonPeriods(new UserDto(userId));
 		commonStandbys.stream()
 				.forEach(period -> userMessageMap.put(new UserDto(period.getId()), comment));
-		standbyPeriodDao.deleteStandbyPeriod(userId, deletingPeriodId);
+		standbyPeriodDaoFacade.deleteStandbyPeriod(userId, deletingPeriodId);
 		return userMessageMap;
 	}
 

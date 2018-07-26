@@ -8,7 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.capgemini.jstk.boardbuddy.dao.UserDao;
+import com.capgemini.jstk.boardbuddy.dao.UserDaoFacade;
 import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.dto.mapper.Mapper;
@@ -16,14 +16,14 @@ import com.capgemini.jstk.boardbuddy.entity.User;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabaseException;
 
 @Repository
-public class UserDaoImpl implements UserDao {
+public class UserDao implements UserDaoFacade {
 
 	private Mapper<User, UserDto> userMapper;
 
 	private Collection<User> users;
 
 	@Autowired
-	public UserDaoImpl(CommonDatabaseMock commonDatabaseMock, Mapper<User, UserDto> userMapper) {
+	public UserDao(CommonDatabaseMock commonDatabaseMock, Mapper<User, UserDto> userMapper) {
 		this.userMapper = userMapper;
 		users = commonDatabaseMock.getUsers();
 	}

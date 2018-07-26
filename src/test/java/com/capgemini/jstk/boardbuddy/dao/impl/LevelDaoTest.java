@@ -8,23 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.capgemini.jstk.boardbuddy.dao.LevelDao;
+import com.capgemini.jstk.boardbuddy.dao.LevelDaoFacade;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class LevelDaoImplTest {
+public class LevelDaoTest {
 	
 	@Autowired
-	private LevelDao levelDao;
+	private LevelDaoFacade levelDaoFacade;
 	
 
 
 	@Test
 	public void testFindById() {
 		// when
-		LevelDto levelDto = levelDao.findById(2).get();
+		LevelDto levelDto = levelDaoFacade.findById(2).get();
 		// then
 		assertEquals(Integer.valueOf(5), levelDto.getLevelValue());	
 	}
@@ -34,7 +34,7 @@ public class LevelDaoImplTest {
 		//given
 		String levelNameFor1601score = "Master";
 		// when
-		LevelDto levelDto = levelDao.findByScore(Integer.valueOf(1601)).get();
+		LevelDto levelDto = levelDaoFacade.findByScore(Integer.valueOf(1601)).get();
 		// then
 		assertEquals(levelNameFor1601score, levelDto.getName());	
 	}
