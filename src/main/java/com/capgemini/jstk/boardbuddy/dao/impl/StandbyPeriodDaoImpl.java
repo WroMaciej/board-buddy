@@ -20,14 +20,14 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDataba
 
 @Repository
 public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
-	
+
 	private Validator<StandbyPeriodDto> standbyPeriodValidator;
 	private Mapper<StandbyPeriod, StandbyPeriodDto> standbyPeriodMapper;
 	private Collection<StandbyPeriod> standbyPeriods;
-	
+
 	@Autowired
-	public StandbyPeriodDaoImpl(Validator<StandbyPeriodDto> standbyPeriodValidator, Mapper<StandbyPeriod, StandbyPeriodDto> standbPeriodMapper,
-			CommonDatabaseMock commonDatabaseMock) {
+	public StandbyPeriodDaoImpl(Validator<StandbyPeriodDto> standbyPeriodValidator,
+			Mapper<StandbyPeriod, StandbyPeriodDto> standbPeriodMapper, CommonDatabaseMock commonDatabaseMock) {
 		super();
 		this.standbyPeriodValidator = standbyPeriodValidator;
 		this.standbyPeriodMapper = standbPeriodMapper;
@@ -36,9 +36,8 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 
 	@Override
 	public Optional<StandbyPeriodDto> findById(Integer id) {
-		return Optional.ofNullable(
-				standbyPeriodMapper.toDto(
-						standbyPeriods.stream().filter(standbyPeriod -> standbyPeriod.getId().equals(id)).findFirst().get() ) );
+		return Optional.ofNullable(standbyPeriodMapper.toDto(
+				standbyPeriods.stream().filter(standbyPeriod -> standbyPeriod.getId().equals(id)).findFirst().get()));
 	}
 
 	@Override
@@ -51,18 +50,20 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 	@Override
 	public Collection<StandbyPeriodDto> findByUser(UserDto userDto) {
 		Collection<StandbyPeriodDto> userStandbyPeriods = new ArrayList<>();
-		Stream<StandbyPeriod> userPeriods = standbyPeriods.stream().filter(standbyPeriodDto -> standbyPeriodDto.getUserId().equals(userDto.getId()));
+		Stream<StandbyPeriod> userPeriods = standbyPeriods.stream()
+				.filter(standbyPeriodDto -> standbyPeriodDto.getUserId().equals(userDto.getId()));
 		userPeriods.forEach(standbyPeriod -> userStandbyPeriods.add(standbyPeriodMapper.toDto(standbyPeriod)));
 		return userStandbyPeriods;
 	}
 
 	@Override
 	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException {
-		StandbyPeriod toAdd = new StandbyPeriod(getUniqueId(), userId, standbyPeriodDto.getStartDate(), standbyPeriodDto.getEndDate(), standbyPeriodDto.getComment(), true);
+		StandbyPeriod toAdd = new StandbyPeriod(getUniqueId(), userId, standbyPeriodDto.getStartDate(),
+				standbyPeriodDto.getEndDate(), standbyPeriodDto.getComment(), true);
 		standbyPeriodValidator.validate(standbyPeriodMapper.toDto(toAdd));
 		standbyPeriods.add(toAdd);
 	}
-	
+
 	private Integer getUniqueId() {
 		Integer maxId = Integer.valueOf(0);
 		for (StandbyPeriod period : standbyPeriods) {
@@ -70,28 +71,39 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 				maxId = period.getId();
 			}
 		}
-		return Integer.valueOf(maxId + 1);		
+		return Integer.valueOf(maxId + 1);
+	}
+
+	private void informUsersWhenDeletingPeriod(Integer userId, StandbyPeriod toDelete, String comment) {
+		toDelete.setActive(false);
+		toDelete.setComment(comment);
+
 	}
 
 	@Override
-	public void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId) throws IllegalAccessException {
+	public void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId, String comment)
+			throws IllegalAccessException {
 		StandbyPeriod toDelete = getStandbyPeriodFromDatabase(deletingPeriodId);
 		if (!toDelete.getUserId().equals(userId)) {
 			throw new IllegalAccessException("Access denied. Attempt of deleting period from another user.");
 		}
+		informUsersWhenDeletingPeriod(userId, toDelete, comment);
 		standbyPeriods.remove(toDelete);
 	}
-	
+
 	private StandbyPeriod getStandbyPeriodFromDatabase(Integer standbyPeriodId) {
-		Optional<StandbyPeriod> standbyPeriod = standbyPeriods.stream().filter(period -> period.getId().equals(standbyPeriodId)).findFirst();
+		Optional<StandbyPeriod> standbyPeriod = standbyPeriods.stream()
+				.filter(period -> period.getId().equals(standbyPeriodId)).findFirst();
 		if (!standbyPeriod.isPresent()) {
-			throw new NoSuchElementInDatabaseException("Standby period to be deleted does not exist! Standby period ID: " + standbyPeriodId);
+			throw new NoSuchElementInDatabaseException(
+					"Standby period to be deleted does not exist! Standby period ID: " + standbyPeriodId);
 		}
 		return standbyPeriod.get();
 	}
 
 	@Override
-	public void updateStandbyPeriod(Integer userId, StandbyPeriodDto updatedDto) throws IllegalOperationException, IllegalAccessException {
+	public void updateStandbyPeriod(Integer userId, StandbyPeriodDto updatedDto)
+			throws IllegalOperationException, IllegalAccessException {
 		StandbyPeriod toUpdate = getStandbyPeriodFromDatabase(updatedDto.getId());
 		if (!toUpdate.getUserId().equals(userId)) {
 			throw new IllegalAccessException("Access denied. Attempt of deleting period from another user.");
@@ -101,5 +113,5 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 		toUpdate.setEndDate(updatedDto.getEndDate());
 		toUpdate.setComment(updatedDto.getComment());
 	}
-	
+
 }

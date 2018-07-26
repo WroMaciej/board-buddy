@@ -4,17 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class BoardgameDto {
-	
+
 	@Getter
 	private final Integer id;
-	@Getter	@Setter
+	@Getter
+	@Setter
 	private String name;
-	
-	
+
 	public BoardgameDto(Integer id) {
 		this.id = id;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -23,7 +22,6 @@ public class BoardgameDto {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -41,12 +39,5 @@ public class BoardgameDto {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
 
-	
-	
 }

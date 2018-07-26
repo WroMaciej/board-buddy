@@ -7,14 +7,16 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationExcep
 
 public interface StandbyPeriodServiceFacade {
 
-	Optional<StandbyPeriodDto> commonPeriod(StandbyPeriodDto senderPeriod, StandbyPeriodDto receiverPeriod);
+	Optional<StandbyPeriodDto> commonPeriod(StandbyPeriodDto senderPeriod,
+			StandbyPeriodDto receiverPeriod);
 
-	void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException;
-
-	void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId) throws IllegalAccessException;
+	void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto)
+			throws IllegalOperationException;
 
 	void updateStandbyPeriod(Integer userId, StandbyPeriodDto updatedDto)
 			throws IllegalOperationException, IllegalAccessException;
 
-}
+	void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId, String comment)
+			throws IllegalAccessException;
 
+}

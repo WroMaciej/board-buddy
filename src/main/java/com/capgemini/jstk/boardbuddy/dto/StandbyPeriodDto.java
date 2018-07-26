@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class StandbyPeriodDto {
-	
+
 	@Getter
 	private final Integer id;
 	@Getter	@Setter
@@ -19,12 +19,12 @@ public class StandbyPeriodDto {
 	private String comment;
 	@Getter	@Setter
 	private boolean isActive;
-	
+
 	public StandbyPeriodDto(Integer id) {
 		this.id = id;
 	}
 
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -36,27 +36,34 @@ public class StandbyPeriodDto {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		StandbyPeriodDto other = (StandbyPeriodDto) obj;
 		if (endDate == null) {
-			if (other.endDate != null)
+			if (other.endDate != null) {
 				return false;
-		} else if (!endDate.equals(other.endDate))
+			}
+		} else if (!endDate.equals(other.endDate)) {
 			return false;
+		}
 		if (startDate == null) {
-			if (other.startDate != null)
+			if (other.startDate != null) {
 				return false;
-		} else if (!startDate.equals(other.startDate))
+			}
+		} else if (!startDate.equals(other.startDate)) {
 			return false;
+		}
 		return true;
 	}
-	
-	
-	
+
+
+
 
 }

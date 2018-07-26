@@ -43,8 +43,8 @@ public class StandbyPeriodService implements StandbyPeriodServiceFacade{
 	}
 	
 	@Override
-	public void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId) throws IllegalAccessException {
-		standbyPeriodDao.deleteStandbyPeriod(userId, deletingPeriodId);
+	public void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId, String comment) throws IllegalAccessException {
+		standbyPeriodDao.deleteStandbyPeriod(userId, deletingPeriodId, comment);
 	}
 	
 	@Override
