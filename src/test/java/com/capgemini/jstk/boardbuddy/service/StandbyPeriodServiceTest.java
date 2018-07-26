@@ -8,19 +8,32 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Optional;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDao;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
+import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 
+@SuppressWarnings("deprecation")
 public class StandbyPeriodServiceTest {
-	
-	//just for compiling purpose - no usage
-	StandbyPeriodDao standbyPeriodDao;
-	
+
+	@Mock
+	private StandbyPeriodDao standbyPeriodDaoMock;
+
+	private StandbyPeriodService standbyPeriodService;
+
+	@Before
+	public void setup() {
+		standbyPeriodService = new StandbyPeriodService(standbyPeriodDaoMock);
+	}
+
 	@Test
 	public void testHasCommonPeriod() {
-		//given
+		// given
 		Calendar start1 = new GregorianCalendar(2018, 1, 1, 1, 0);
 		Calendar end1 = new GregorianCalendar(2018, 1, 1, 14, 0);
 		Calendar start2 = new GregorianCalendar(2018, 1, 1, 10, 0);
@@ -31,33 +44,49 @@ public class StandbyPeriodServiceTest {
 		StandbyPeriodDto period2 = new StandbyPeriodDto(null);
 		period2.setStartDate(start2);
 		period2.setEndDate(end2);
-		StandbyPeriodService standbyPeriodService = new StandbyPeriodService(standbyPeriodDao);
-		//when
+		// when
 		Optional<StandbyPeriodDto> commonPeriod = standbyPeriodService.commonPeriod(period1, period2);
-		//then
+		// then
 		assertTrue(commonPeriod.isPresent());
-		assertEquals(new GregorianCalendar(2018,1,1,10,0), commonPeriod.get().getStartDate());
-		assertEquals(new GregorianCalendar(2018,1,1,14,0), commonPeriod.get().getEndDate());
+		assertEquals(new GregorianCalendar(2018, 1, 1, 10, 0), commonPeriod.get().getStartDate());
+		assertEquals(new GregorianCalendar(2018, 1, 1, 14, 0), commonPeriod.get().getEndDate());
 	}
-	
+
 	@Test
 	public void testDontHaveCommonPeriod() {
-		//given
-				Calendar start1 = new GregorianCalendar(2018, 1, 1, 1, 0);
-				Calendar end1 = new GregorianCalendar(2018, 1, 1, 10, 0);
-				Calendar start2 = new GregorianCalendar(2018, 1, 1, 14, 0);
-				Calendar end2 = new GregorianCalendar(2018, 1, 1, 22, 0);
-				StandbyPeriodDto period1 = new StandbyPeriodDto(null);
-				period1.setStartDate(start1);
-				period1.setEndDate(end1);
-				StandbyPeriodDto period2 = new StandbyPeriodDto(null);
-				period2.setStartDate(start2);
-				period2.setEndDate(end2);
-				StandbyPeriodService standbyPeriodService = new StandbyPeriodService(standbyPeriodDao);
-				//when
-				Optional<StandbyPeriodDto> commonPeriod = standbyPeriodService.commonPeriod(period1, period2);
-				//then
-				assertFalse(commonPeriod.isPresent());
+		// given
+		Calendar start1 = new GregorianCalendar(2018, 1, 1, 1, 0);
+		Calendar end1 = new GregorianCalendar(2018, 1, 1, 10, 0);
+		Calendar start2 = new GregorianCalendar(2018, 1, 1, 14, 0);
+		Calendar end2 = new GregorianCalendar(2018, 1, 1, 22, 0);
+		StandbyPeriodDto period1 = new StandbyPeriodDto(null);
+		period1.setStartDate(start1);
+		period1.setEndDate(end1);
+		StandbyPeriodDto period2 = new StandbyPeriodDto(null);
+		period2.setStartDate(start2);
+		period2.setEndDate(end2);
+		// when
+		Optional<StandbyPeriodDto> commonPeriod = standbyPeriodService.commonPeriod(period1, period2);
+		// then
+		assertFalse(commonPeriod.isPresent());
+	}
+
+	@Test
+	public void testAddStandbyPeriod() throws IllegalOperationException {
+		// given
+		StandbyPeriodDto toAdd = new StandbyPeriodDto(null);
+		toAdd.setStartDate(new GregorianCalendar(2018, 7, 28, 12, 0));
+		toAdd.setEndDate(new GregorianCalendar(2018, 7, 28, 16, 0));
+		StandbyPeriodDto fullDto = new StandbyPeriodDto(1);
+		fullDto.setStartDate(toAdd.getStartDate());
+		fullDto.setEndDate(toAdd.getEndDate());
+		fullDto.setActive(true);
+		Optional<StandbyPeriodDto> returnedDto = Optional.of(fullDto);
+		// when
+		Mockito.when(standbyPeriodDaoMock.findById(Matchers.any(Integer.class))).thenReturn(returnedDto);
+		standbyPeriodService.addStandbyPeriod(1, toAdd);
+		// then
+		assertEquals(returnedDto, standbyPeriodDaoMock.findById(1));
 	}
 
 }

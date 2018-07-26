@@ -26,9 +26,10 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 	private Collection<StandbyPeriod> standbyPeriods;
 	
 	@Autowired
-	public StandbyPeriodDaoImpl(Mapper<StandbyPeriod, StandbyPeriodDto> standbPeriodMapper,
+	public StandbyPeriodDaoImpl(Validator<StandbyPeriodDto> standbyPeriodValidator, Mapper<StandbyPeriod, StandbyPeriodDto> standbPeriodMapper,
 			CommonDatabaseMock commonDatabaseMock) {
 		super();
+		this.standbyPeriodValidator = standbyPeriodValidator;
 		this.standbyPeriodMapper = standbPeriodMapper;
 		standbyPeriods = commonDatabaseMock.getStandbyPeriods();
 	}
@@ -58,7 +59,7 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 	@Override
 	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException {
 		StandbyPeriod toAdd = new StandbyPeriod(getUniqueId(), userId, standbyPeriodDto.getStartDate(), standbyPeriodDto.getEndDate(), standbyPeriodDto.getComment(), true);
-		standbyPeriodValidator.isValid(standbyPeriodMapper.toDto(toAdd));
+		standbyPeriodValidator.validate(standbyPeriodMapper.toDto(toAdd));
 		standbyPeriods.add(toAdd);
 	}
 	

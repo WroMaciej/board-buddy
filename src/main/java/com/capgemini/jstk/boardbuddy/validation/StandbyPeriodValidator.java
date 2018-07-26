@@ -9,7 +9,7 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationExcep
 public class StandbyPeriodValidator implements Validator<StandbyPeriodDto> {
 
 	@Override
-	public void isValid(StandbyPeriodDto toValidate) throws IllegalOperationException {
+	public void validate(StandbyPeriodDto toValidate) throws IllegalOperationException {
 		if (toValidate.getStartDate() == null || toValidate.getEndDate() == null) {
 			throw new IllegalOperationException("No such data in standby period record. Standby period has to contain both start and end date.");
 		}

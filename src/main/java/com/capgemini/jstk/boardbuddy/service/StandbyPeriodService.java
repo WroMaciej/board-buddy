@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDao;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
+import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 
 @Service
 public class StandbyPeriodService {
@@ -34,7 +35,7 @@ public class StandbyPeriodService {
 		return Optional.ofNullable(commonPeriod);
 	}
 	
-	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) {
+	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException {
 		standbyPeriodDao.addStandbyPeriod(userId, standbyPeriodDto);
 	}
 	

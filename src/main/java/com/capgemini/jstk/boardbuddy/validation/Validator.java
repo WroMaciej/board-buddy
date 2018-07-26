@@ -4,6 +4,6 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationExcep
 
 public interface Validator<T> {
 	
-	public void isValid(T toValidate) throws IllegalOperationException;
+	public void validate(T toValidate) throws IllegalOperationException;
 
 }

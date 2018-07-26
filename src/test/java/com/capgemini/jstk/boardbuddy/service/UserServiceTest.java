@@ -19,7 +19,7 @@ import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
-import com.capgemini.jstk.boardbuddy.entity.User;
+import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabaseException;
 
 @RunWith(SpringRunner.class)
@@ -122,7 +122,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void testUpdateProfile(){
+	public void testUpdateProfile() throws IllegalOperationException{
 		//given
 		UserDto newUserProfile = new UserDto(null);
 		newUserProfile.setEmail("new@domain.com");
@@ -145,7 +145,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void testUpdateProfileWhichNotExist(){
+	public void testUpdateProfileWhichNotExist() throws IllegalOperationException{
 		//given
 		UserDto newUserProfile = new UserDto(null);
 		newUserProfile.setEmail("new@domain.com");

@@ -19,25 +19,23 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.DataPreparingExceptio
 import lombok.Getter;
 
 @Component
+@Getter
 public class CommonDatabaseMock {
 
-	@Getter
 	private Collection<User> users;
-	@Getter
 	private Collection<Boardgame> boardgames;
-	@Getter
 	private Collection<User_Boardgame_X> user_Boardgame_Xs;
-	@Getter
 	private Collection<ChallengeResult> challengeResults;
-	@Getter
 	private Collection<StandbyPeriod> standbyPeriods;
-	@Getter
 	private Collection<Level> levels;
-	@Getter
 	private Collection<User_ChallengeResult_X> user_ChallengeResult_Xs;
 
 	@Autowired
 	public CommonDatabaseMock() {
+		resetDatabase();
+	}
+	
+	public void resetDatabase() {
 		populateUsers();
 		populateLevels();
 		populateBoardgames();

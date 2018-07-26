@@ -21,11 +21,14 @@ import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
 import com.capgemini.jstk.boardbuddy.dto.LevelDto;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
+import com.capgemini.jstk.boardbuddy.validation.Validator;
+import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabaseException;
 
 @Service
 public class UserService {
 
+	private Validator<UserDto> userValidator;
 	private UserDao userDao;
 	private LevelDao levelDao;
 	private User_BoardgameDao user_BoardgameDao;
@@ -38,8 +41,8 @@ public class UserService {
 	@Autowired
 	public UserService(UserDao userDao, LevelDao levelDao, User_BoardgameDao user_BoardgameDao,
 			UserChallengeResultDao userChallengeResultDao, StandbyPeriodDao standbyPerdiodDao,
-			StandbyPeriodService standbyPeriodService) {
-		super();
+			StandbyPeriodService standbyPeriodService, Validator<UserDto> userValidator) {
+		this.userValidator = userValidator;
 		this.userDao = userDao;
 		this.levelDao = levelDao;
 		this.user_BoardgameDao = user_BoardgameDao;
@@ -127,7 +130,8 @@ public class UserService {
 		return !findCommonPeriodsWithAnotherUser(userDto1, userDto2).isEmpty();
 	}
 	
-	public void updateProfile (Integer userId, UserDto updatedUserDto) {
+	public void updateProfile (Integer userId, UserDto updatedUserDto) throws IllegalOperationException {
+		userValidator.validate(updatedUserDto);
 		userDao.updateProfile(userId, updatedUserDto);
 	}
 	
