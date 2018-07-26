@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
+import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 
 public interface StandbyPeriodDao {
 	
@@ -14,7 +15,7 @@ public interface StandbyPeriodDao {
 	
 	public Collection<StandbyPeriodDto> findAll();
 
-	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto);
+	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException;
 
 	public void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId) throws IllegalAccessException;
 

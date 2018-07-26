@@ -14,11 +14,14 @@ import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.dto.mapper.Mapper;
 import com.capgemini.jstk.boardbuddy.entity.StandbyPeriod;
+import com.capgemini.jstk.boardbuddy.validation.Validator;
+import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabaseException;
 
 @Repository
 public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 	
+	private Validator<StandbyPeriodDto> standbyPeriodValidator;
 	private Mapper<StandbyPeriod, StandbyPeriodDto> standbyPeriodMapper;
 	private Collection<StandbyPeriod> standbyPeriods;
 	
@@ -53,8 +56,9 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 	}
 
 	@Override
-	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) {
+	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException {
 		StandbyPeriod toAdd = new StandbyPeriod(getUniqueId(), userId, standbyPeriodDto.getStartDate(), standbyPeriodDto.getEndDate(), standbyPeriodDto.getComment(), true);
+		standbyPeriodValidator.isValid(standbyPeriodMapper.toDto(toAdd));
 		standbyPeriods.add(toAdd);
 	}
 	
