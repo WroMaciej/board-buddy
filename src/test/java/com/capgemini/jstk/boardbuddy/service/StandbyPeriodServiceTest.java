@@ -10,19 +10,22 @@ import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDao;
+import com.capgemini.jstk.boardbuddy.dao.impl.StandbyPeriodDaoImpl;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 
 @SuppressWarnings("deprecation")
+@RunWith(MockitoJUnitRunner.class)
 public class StandbyPeriodServiceTest {
 
 	@Mock
-	private StandbyPeriodDao standbyPeriodDaoMock;
+	private StandbyPeriodDaoImpl standbyPeriodDaoMock;
 
 	private StandbyPeriodService standbyPeriodService;
 
