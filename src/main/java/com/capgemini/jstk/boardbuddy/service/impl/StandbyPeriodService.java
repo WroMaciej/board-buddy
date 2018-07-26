@@ -13,13 +13,12 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationExcep
 
 @Service
 public class StandbyPeriodService implements StandbyPeriodServiceFacade{
-	
+
 	private StandbyPeriodDao standbyPeriodDao;
 	
-	
+
 	@Autowired
 	public StandbyPeriodService(StandbyPeriodDao standbyPeriodDao) {
-		super();
 		this.standbyPeriodDao = standbyPeriodDao;
 	}
 
@@ -36,46 +35,42 @@ public class StandbyPeriodService implements StandbyPeriodServiceFacade{
 		}
 		return Optional.ofNullable(commonPeriod);
 	}
-	
+
 	@Override
 	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException {
 		standbyPeriodDao.addStandbyPeriod(userId, standbyPeriodDto);
 	}
-	
-	@Override
-	public void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId, String comment) throws IllegalAccessException {
-		standbyPeriodDao.deleteStandbyPeriod(userId, deletingPeriodId, comment);
-	}
-	
+
 	@Override
 	public void updateStandbyPeriod(Integer userId, StandbyPeriodDto updatedDto) throws IllegalOperationException, IllegalAccessException {
 		standbyPeriodDao.updateStandbyPeriod(userId, updatedDto);
 	}
-	
+
 	private Calendar commonPeriodStart(Calendar startOfPeriod1, Calendar startOfPeriod2) {
 		return getLaterDate(startOfPeriod1, startOfPeriod2);
-		
+
 	}
-	
+
 	private Calendar commonPeriodEnd(Calendar endOfPeriod1, Calendar endOfPeriod2) {
 		return getEarlierDate(endOfPeriod1, endOfPeriod2);
 	}
-	
-	
+
+
 	private Calendar getEarlierDate(Calendar date1, Calendar date2) {
 		if (date1.before(date2)) {
 			return date1;
 		}
 		return date2;
 	}
-	
+
 	private Calendar getLaterDate(Calendar date1, Calendar date2) {
 		if (date1.before(date2)) {
 			return date2;
 		}
 		return date1;
 	}
-	
-	
+
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.capgemini.jstk.boardbuddy.service;
 
 import java.util.Collection;
+import java.util.Map;
 
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
@@ -32,6 +33,9 @@ public interface UserServiceFacade {
 	boolean isCommonPeriodForUsers(UserDto userDto1, UserDto userDto2);
 
 	void updateProfile(Integer userId, UserDto updatedUserDto) throws IllegalOperationException;
+
+	Map<UserDto, String> deleteStandbyPeriod(Integer userId, Integer deletingPeriodId,
+			String comment) throws IllegalAccessException;
 
 }
 

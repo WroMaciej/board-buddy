@@ -21,7 +21,7 @@ public interface StandbyPeriodDao {
 	public void updateStandbyPeriod(Integer userId, StandbyPeriodDto updatedDto)
 			throws IllegalOperationException, IllegalAccessException;
 
-	void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId, String comment)
+	void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId)
 			throws IllegalAccessException;
 
 }

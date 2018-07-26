@@ -2,7 +2,9 @@ package com.capgemini.jstk.boardbuddy.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -11,6 +13,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capgemini.jstk.boardbuddy.aop.LogActivity;
 import com.capgemini.jstk.boardbuddy.dao.LevelDao;
 import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDao;
 import com.capgemini.jstk.boardbuddy.dao.UserChallengeResultDao;
@@ -35,10 +38,8 @@ public class UserService implements UserServiceFacade {
 	private LevelDao levelDao;
 	private User_BoardgameDao user_BoardgameDao;
 	private UserChallengeResultDao userChallengeResultDao;
-	private StandbyPeriodDao standbyPerdiodDao;
+	private StandbyPeriodDao standbyPeriodDao;
 	private StandbyPeriodServiceFacade standbyPeriodService;
-
-	
 
 	@Autowired
 	public UserService(UserDao userDao, LevelDao levelDao, User_BoardgameDao user_BoardgameDao,
@@ -49,7 +50,7 @@ public class UserService implements UserServiceFacade {
 		this.levelDao = levelDao;
 		this.user_BoardgameDao = user_BoardgameDao;
 		this.userChallengeResultDao = userChallengeResultDao;
-		this.standbyPerdiodDao = standbyPerdiodDao;
+		this.standbyPeriodDao = standbyPerdiodDao;
 		this.standbyPeriodService = standbyPeriodService;
 	}
 
@@ -68,23 +69,24 @@ public class UserService implements UserServiceFacade {
 		userDto.setLevelValue(userLevel.getLevelValue());
 		return userDto;
 	}
-	
+
 	@Override
 	public Integer findRankPosition(UserDto userDto) {
 		List<UserDto> sortedByScore = userDao.findAllUsers();
 		sortedByScore.sort((user1, user2) -> user1.getScore() - user2.getScore());
 		int rankPosition = sortedByScore.indexOf(userDto) + 1;
 		if (rankPosition == -1) {
-			throw new NoSuchElementException("There is no such user in database. User email: " + userDto.getEmail());
+			throw new NoSuchElementException(
+					"There is no such user in database. User email: " + userDto.getEmail());
 		}
 		return rankPosition;
 	}
-	
+
 	@Override
-	public Collection<BoardgameDto> findUserBoardgames(UserDto userDto){
+	public Collection<BoardgameDto> findUserBoardgames(UserDto userDto) {
 		return user_BoardgameDao.findBoardgamesByUser(userDto.getId());
 	}
-	
+
 	@Override
 	public UserDto findUserProfileInfo(UserDto userDto) {
 		UserDto userProfileData = new UserDto(userDto.getId());
@@ -92,7 +94,7 @@ public class UserService implements UserServiceFacade {
 		userProfileData.setFirstName(userDto.getFirstName());
 		userProfileData.setLastName(userDto.getLastName());
 		userProfileData.setLifeMotto(userDto.getLifeMotto());
-		
+
 		return userProfileData;
 	}
 
@@ -105,11 +107,12 @@ public class UserService implements UserServiceFacade {
 		userStatistics.setScore(userDto.getScore());
 		userStatistics.setLevelValue(findLevel(userDto).getLevelValue());
 		userStatistics.setRankPosition(findRankPosition(userDto));
-		
+
 		return userStatistics;
 	}
 
 	@Override
+	@LogActivity
 	public Collection<ChallengeResultDto> findUserChallenges(UserDto userDto) {
 		return userChallengeResultDao.findUserChallenges(userDto);
 	}
@@ -118,35 +121,52 @@ public class UserService implements UserServiceFacade {
 	public Collection<StandbyPeriodDto> findAllCommonPeriods(UserDto userDto) {
 		Collection<Optional<StandbyPeriodDto>> rawCommonPeriods = new ArrayList<>();
 		Collection<StandbyPeriodDto> commonPeriods = new ArrayList<>();
-		Collection<StandbyPeriodDto> userPeriods = standbyPerdiodDao.findByUser(userDto);
-		Collection<StandbyPeriodDto> allPeriods = standbyPerdiodDao.findAll();
-		
+		Collection<StandbyPeriodDto> userPeriods = standbyPeriodDao.findByUser(userDto);
+		Collection<StandbyPeriodDto> allPeriods = standbyPeriodDao.findAll();
+
 		for (StandbyPeriodDto userPeriod : userPeriods) {
 			Predicate<StandbyPeriodDto> isActive = period -> period.isActive();
-			Predicate<StandbyPeriodDto> otherUser = anyPeriod -> anyPeriod.getUserId() != userDto.getId();
-			allPeriods.stream().filter(otherUser.and(isActive)).forEach(anyPeriod -> rawCommonPeriods.add(standbyPeriodService.commonPeriod(userPeriod, anyPeriod)) );
+			Predicate<StandbyPeriodDto> otherUser = anyPeriod -> anyPeriod.getUserId() != userDto
+					.getId();
+			allPeriods.stream().filter(otherUser.and(isActive))
+					.forEach(anyPeriod -> rawCommonPeriods
+							.add(standbyPeriodService.commonPeriod(userPeriod, anyPeriod)));
 		}
-		commonPeriods = rawCommonPeriods.stream().filter(Optional<StandbyPeriodDto>::isPresent).map(Optional::get).collect(Collectors.toList());
-		
+		commonPeriods = rawCommonPeriods.stream().filter(Optional<StandbyPeriodDto>::isPresent)
+				.map(Optional::get).collect(Collectors.toList());
+
 		return commonPeriods;
 	}
-	
+
 	@Override
-	public Collection<StandbyPeriodDto> findCommonPeriodsWithAnotherUser(UserDto userDto1, UserDto userDto2){
-		return findAllCommonPeriods(userDto1).stream().filter(period -> period.getUserId().equals(userDto2.getId())).collect(Collectors.toSet());
+	public Collection<StandbyPeriodDto> findCommonPeriodsWithAnotherUser(UserDto userDto1,
+			UserDto userDto2) {
+		return findAllCommonPeriods(userDto1).stream()
+				.filter(period -> period.getUserId().equals(userDto2.getId()))
+				.collect(Collectors.toSet());
 	}
-	
+
 	@Override
 	public boolean isCommonPeriodForUsers(UserDto userDto1, UserDto userDto2) {
 		return !findCommonPeriodsWithAnotherUser(userDto1, userDto2).isEmpty();
 	}
-	
+
 	@Override
-	public void updateProfile (Integer userId, UserDto updatedUserDto) throws IllegalOperationException {
+	public void updateProfile(Integer userId, UserDto updatedUserDto)
+			throws IllegalOperationException {
 		userValidator.validate(updatedUserDto);
 		userDao.updateProfile(userId, updatedUserDto);
 	}
-	
-	
+
+	@Override
+	public Map<UserDto, String> deleteStandbyPeriod(Integer userId, Integer deletingPeriodId,
+			String comment) throws IllegalAccessException {
+		Map<UserDto, String> userMessageMap = new HashMap<>();
+		Collection<StandbyPeriodDto> commonStandbys = findAllCommonPeriods(new UserDto(userId));
+		commonStandbys.stream()
+				.forEach(period -> userMessageMap.put(new UserDto(period.getId()), comment));
+		standbyPeriodDao.deleteStandbyPeriod(userId, deletingPeriodId);
+		return userMessageMap;
+	}
 
 }

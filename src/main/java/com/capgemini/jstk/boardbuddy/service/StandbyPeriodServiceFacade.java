@@ -15,8 +15,4 @@ public interface StandbyPeriodServiceFacade {
 
 	void updateStandbyPeriod(Integer userId, StandbyPeriodDto updatedDto)
 			throws IllegalOperationException, IllegalAccessException;
-
-	void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId, String comment)
-			throws IllegalAccessException;
-
 }
