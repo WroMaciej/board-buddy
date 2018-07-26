@@ -43,6 +43,10 @@ public class StandbyPeriodService {
 		standbyPeriodDao.deleteStandbyPeriod(userId, deletingPeriodId);
 	}
 	
+	public void updateStandbyPeriod(Integer userId, StandbyPeriodDto updatedDto) throws IllegalOperationException, IllegalAccessException {
+		standbyPeriodDao.updateStandbyPeriod(userId, updatedDto);
+	}
+	
 	private Calendar commonPeriodStart(Calendar startOfPeriod1, Calendar startOfPeriod2) {
 		return getLaterDate(startOfPeriod1, startOfPeriod2);
 		

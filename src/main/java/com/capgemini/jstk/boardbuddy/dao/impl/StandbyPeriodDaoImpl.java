@@ -91,5 +91,17 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 		}
 		return standbyPeriod.get();
 	}
+
+	@Override
+	public void updateStandbyPeriod(Integer userId, StandbyPeriodDto updatedDto) throws IllegalOperationException, IllegalAccessException {
+		StandbyPeriod toUpdate = getStandbyPeriodFromDatabase(updatedDto.getId());
+		if (!toUpdate.getUserId().equals(userId)) {
+			throw new IllegalAccessException("Access denied. Attempt of deleting period from another user.");
+		}
+		standbyPeriodValidator.validate(standbyPeriodMapper.toDto(toUpdate));
+		toUpdate.setStartDate(updatedDto.getStartDate());
+		toUpdate.setEndDate(updatedDto.getEndDate());
+		toUpdate.setComment(updatedDto.getComment());
+	}
 	
 }
