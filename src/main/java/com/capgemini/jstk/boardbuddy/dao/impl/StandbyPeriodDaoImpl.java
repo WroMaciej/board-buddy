@@ -71,8 +71,11 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 	}
 
 	@Override
-	public void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId) {
+	public void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId) throws IllegalAccessException {
 		StandbyPeriod toDelete = getStandbyPeriodFromDatabase(deletingPeriodId);
+		if (!toDelete.getUserId().equals(userId)) {
+			throw new IllegalAccessException("Access denied. Attempt of deleting period from another user.");
+		}
 		standbyPeriods.remove(toDelete);
 	}
 	

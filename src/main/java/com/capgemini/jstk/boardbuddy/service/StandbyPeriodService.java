@@ -38,7 +38,7 @@ public class StandbyPeriodService {
 		standbyPeriodDao.addStandbyPeriod(userId, standbyPeriodDto);
 	}
 	
-	public void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId) {
+	public void deleteStandbyPeriod(Integer userId, Integer deletingPeriodId) throws IllegalAccessException {
 		standbyPeriodDao.deleteStandbyPeriod(userId, deletingPeriodId);
 	}
 	
