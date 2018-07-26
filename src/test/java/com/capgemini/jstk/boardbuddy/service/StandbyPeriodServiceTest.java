@@ -87,9 +87,10 @@ public class StandbyPeriodServiceTest {
 		fullDto.setActive(true);
 		Optional<StandbyPeriodDto> returnedDto = Optional.of(fullDto);
 		// when
-		Mockito.when(standbyPeriodDaoMock.findById(Matchers.any(Integer.class))).thenReturn(returnedDto);
+		Mockito.when(standbyPeriodDaoMock
+				.findById(Matchers.any(Integer.class))).thenReturn(returnedDto);
 		standbyPeriodService.addStandbyPeriod(1, toAdd);
-		//TODO how to check if it really was added?
+		//TODO how to check if it really was added? - new integration
 		// then
 		assertEquals(returnedDto, standbyPeriodDaoMock.findById(1));
 	}

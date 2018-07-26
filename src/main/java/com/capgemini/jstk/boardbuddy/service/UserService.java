@@ -77,7 +77,7 @@ public class UserService {
 	}
 	
 	public Collection<BoardgameDto> findUserBoardgames(UserDto userDto){
-		return user_BoardgameDao.findBoardgamesByUser(userDto);
+		return user_BoardgameDao.findBoardgamesByUser(userDto.getId());
 	}
 	
 	public UserDto findUserProfileInfo(UserDto userDto) {

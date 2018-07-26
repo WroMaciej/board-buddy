@@ -70,9 +70,7 @@ public class StandbyPeriodDaoImpl implements StandbyPeriodDao {
 				maxId = period.getId();
 			}
 		}
-		return Integer.valueOf(maxId + 1);
-	
-		
+		return Integer.valueOf(maxId + 1);		
 	}
 
 	@Override

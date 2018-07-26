@@ -35,15 +35,15 @@ public class UserBoardgameDaoImpl implements User_BoardgameDao {
 	}
 
 	@Override
-	public Collection<UserDto> findUsersByBoardgame(BoardgameDto boardgameDto) {
-		return user_Boardgame_Xs.stream().filter(userBoardgame -> userBoardgame.getBoardgameId().equals(boardgameDto.getId()))
+	public Collection<UserDto> findUsersByBoardgame(Integer boardgameId) {
+		return user_Boardgame_Xs.stream().filter(userBoardgame -> userBoardgame.getBoardgameId().equals(boardgameId))
 				.map(userBoardgame -> userDao.findById(userBoardgame.getUserId()).get() )
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public Collection<BoardgameDto> findBoardgamesByUser(UserDto userDto) {
-		return user_Boardgame_Xs.stream().filter(userBoardgame -> userBoardgame.getUserId().equals(userDto.getId()))
+	public Collection<BoardgameDto> findBoardgamesByUser(Integer userId) {
+		return user_Boardgame_Xs.stream().filter(userBoardgame -> userBoardgame.getUserId().equals(userId))
 				.map(userBoardgame -> boardgameDao.findById(userBoardgame.getBoardgameId()).get() )
 				.collect(Collectors.toList());
 	}

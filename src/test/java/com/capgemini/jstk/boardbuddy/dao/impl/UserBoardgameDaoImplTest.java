@@ -41,7 +41,7 @@ public class UserBoardgameDaoImplTest {
 	public void testFindBoardgamesByUser() {
 		//given	
 		//when
-		Collection<BoardgameDto> boardgameDtos = user_BoardgameDao.findBoardgamesByUser(userDtoId5);
+		Collection<BoardgameDto> boardgameDtos = user_BoardgameDao.findBoardgamesByUser(userDtoId5.getId());
 		//then
 		assertEquals(4, boardgameDtos.size());
 	}
