@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.capgemini.jstk.boardbuddy.aop.LogActivity;
 import com.capgemini.jstk.boardbuddy.dao.UserDao;
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
@@ -39,6 +40,7 @@ public class UserServiceTest {
 	UserDto userDtoId5;
 	
 	@Before
+	@LogActivity(message = "NEW TEST")
     public void setUp() throws Exception {
 		userDtoId1 = userDao.findById(1).get();
 		userDtoId3 = userDao.findById(3).get();

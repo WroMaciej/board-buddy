@@ -1,5 +1,7 @@
 package com.capgemini.jstk.boardbuddy.aop;
 
+import java.util.Date;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,10 +16,10 @@ public class LoggingAspect {
 
 	private Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 	
-	@Around("@annotation(LogActivity)")
-	public Object logActivity(ProceedingJoinPoint joinPoint) throws Throwable {
+	@Around("@annotation(LogActivity(message))")
+	public Object logActivity(ProceedingJoinPoint joinPoint, String message) throws Throwable {
 		Object proceed = joinPoint.proceed();
-		logger.info("Logger logs fine.");
+		logger.info("LOG at " + new Date() +" : " + message);
 		return proceed;
 	}
 

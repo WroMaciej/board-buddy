@@ -112,7 +112,7 @@ public class UserService implements UserServiceFacade {
 	}
 
 	@Override
-	@LogActivity
+	@LogActivity(message = "Finding user challenges")
 	public Collection<ChallengeResultDto> findUserChallenges(UserDto userDto) {
 		return userChallengeResultDao.findUserChallenges(userDto);
 	}
