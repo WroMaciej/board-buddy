@@ -2,6 +2,7 @@ package com.capgemini.jstk.boardbuddy.service;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 import com.capgemini.jstk.boardbuddy.dto.BoardgameDto;
 import com.capgemini.jstk.boardbuddy.dto.ChallengeResultDto;
@@ -12,6 +13,9 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationExcep
 
 public interface UserServiceFacade {
 
+	Optional<UserDto> findUserById(Integer userId);
+	Collection<UserDto> findAllUsers();
+	
 	LevelDto findLevel(UserDto userDto);
 
 	UserDto findLevelAndGetUpdatedDto(UserDto userDto);

@@ -52,6 +52,18 @@ public class UserService implements UserServiceFacade {
 		this.standbyPeriodDaoFacade = standbyPerdiodDao;
 		this.standbyPeriodService = standbyPeriodService;
 	}
+	
+	
+	@Override
+	public Optional<UserDto> findUserById(Integer userId) {
+		return userDaoFacade.findById(userId);
+	}
+
+	@Override
+	public Collection<UserDto> findAllUsers() {
+		return userDaoFacade.findAllUsers();
+	}
+	
 
 	@Override
 	public LevelDto findLevel(UserDto userDto) {
@@ -166,5 +178,7 @@ public class UserService implements UserServiceFacade {
 		standbyPeriodDaoFacade.deleteStandbyPeriod(userId, deletingPeriodId);
 		return userMessageMap;
 	}
+
+	
 
 }
