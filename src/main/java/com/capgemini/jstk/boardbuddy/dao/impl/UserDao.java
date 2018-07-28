@@ -32,8 +32,14 @@ public class UserDao implements UserDaoFacade {
 	@Override
 	@LogActivity(message = "User found.")
 	public Optional<UserDto> findById(Integer id) {
-		return Optional
-				.ofNullable(userMapper.toDto(users.stream().filter(user -> user.getId().equals(id)).findFirst().get()));
+		Optional<User> searchingUser = users.stream().filter(user -> user.getId().equals(id)).findFirst();
+		if (!searchingUser.isPresent()) {
+			return Optional.empty();
+		}
+		else {
+			return Optional
+					.ofNullable(userMapper.toDto(searchingUser.get()));
+		}
 	}
 
 	@Override
@@ -52,11 +58,13 @@ public class UserDao implements UserDaoFacade {
 		userBO.setLifeMotto(updatedUserDto.getLifeMotto());
 
 	}
-	
+
 	private User getUserFromDatabase(Integer userId) {
-		Optional<User> searchingUser = users.stream().filter(user -> user.getId().equals(userId)).findFirst();
+		Optional<User> searchingUser = users.stream().filter(user -> user.getId().equals(userId))
+				.findFirst();
 		if (!searchingUser.isPresent()) {
-			throw new NoSuchElementInDatabaseException("User to be updated does not exist! User ID: " + userId);
+			throw new NoSuchElementInDatabaseException(
+					"User to be updated does not exist! User ID: " + userId);
 		}
 		return searchingUser.get();
 	}
