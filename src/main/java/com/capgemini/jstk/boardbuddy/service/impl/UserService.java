@@ -128,16 +128,15 @@ public class UserService implements UserServiceFacade {
 	}
 
 	@Override
-	public Collection<StandbyPeriodDto> findAllCommonPeriods(UserDto userDto) {
+	public Collection<StandbyPeriodDto> findAllCommonPeriods(Integer userId) {
 		Collection<Optional<StandbyPeriodDto>> rawCommonPeriods = new ArrayList<>();
 		Collection<StandbyPeriodDto> commonPeriods = new ArrayList<>();
-		Collection<StandbyPeriodDto> userPeriods = standbyPeriodDaoFacade.findByUser(userDto);
+		Collection<StandbyPeriodDto> userPeriods = standbyPeriodDaoFacade.findByUser(userId);
 		Collection<StandbyPeriodDto> allPeriods = standbyPeriodDaoFacade.findAll();
 
 		for (StandbyPeriodDto userPeriod : userPeriods) {
 			Predicate<StandbyPeriodDto> isActive = period -> period.isActive();
-			Predicate<StandbyPeriodDto> otherUser = anyPeriod -> !anyPeriod.getUserId().equals(userDto
-					.getId());
+			Predicate<StandbyPeriodDto> otherUser = anyPeriod -> !anyPeriod.getUserId().equals(userId);
 			allPeriods.stream().filter(otherUser.and(isActive))
 					.forEach(anyPeriod -> rawCommonPeriods
 							.add(standbyPeriodService.commonPeriod(userPeriod, anyPeriod)));
@@ -149,16 +148,15 @@ public class UserService implements UserServiceFacade {
 	}
 
 	@Override
-	public Collection<StandbyPeriodDto> findCommonPeriodsWithAnotherUser(UserDto userDto1,
-			UserDto userDto2) {
-		return findAllCommonPeriods(userDto1).stream()
-				.filter(period -> period.getUserId().equals(userDto2.getId()))
+	public Collection<StandbyPeriodDto> findCommonPeriodsWithAnotherUser(Integer userId1, Integer userId2) {
+		return findAllCommonPeriods(userId1).stream()
+				.filter(period -> period.getUserId().equals(userId2))
 				.collect(Collectors.toSet());
 	}
 
 	@Override
-	public boolean isCommonPeriodForUsers(UserDto userDto1, UserDto userDto2) {
-		return !findCommonPeriodsWithAnotherUser(userDto1, userDto2).isEmpty();
+	public boolean isCommonPeriodForUsers(Integer userId1, Integer userId2) {
+		return !findCommonPeriodsWithAnotherUser(userId1, userId2).isEmpty();
 	}
 
 	@Override
@@ -172,7 +170,7 @@ public class UserService implements UserServiceFacade {
 	public Map<UserDto, String> deleteStandbyPeriod(Integer userId, Integer deletingPeriodId,
 			String comment) throws IllegalAccessException {
 		Map<UserDto, String> userMessageMap = new HashMap<>();
-		Collection<StandbyPeriodDto> commonStandbys = findAllCommonPeriods(new UserDto(userId));
+		Collection<StandbyPeriodDto> commonStandbys = findAllCommonPeriods(userId);
 		commonStandbys.stream()
 				.forEach(period -> userMessageMap.put(userDaoFacade.findById(period.getUserId()).get(), comment));
 		standbyPeriodDaoFacade.deleteStandbyPeriod(userId, deletingPeriodId);

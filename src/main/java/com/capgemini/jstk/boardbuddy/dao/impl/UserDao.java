@@ -32,13 +32,12 @@ public class UserDao implements UserDaoFacade {
 	@Override
 	@LogActivity(message = "User found.")
 	public Optional<UserDto> findById(Integer id) {
-		Optional<User> searchingUser = users.stream().filter(user -> user.getId().equals(id)).findFirst();
+		Optional<User> searchingUser = users.stream().filter(user -> user.getId().equals(id))
+				.findFirst();
 		if (!searchingUser.isPresent()) {
 			return Optional.empty();
-		}
-		else {
-			return Optional
-					.ofNullable(userMapper.toDto(searchingUser.get()));
+		} else {
+			return Optional.ofNullable(userMapper.toDto(searchingUser.get()));
 		}
 	}
 

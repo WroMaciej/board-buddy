@@ -113,11 +113,11 @@ public class UserServiceTest {
 	public void testFindCommonStandbyPeriods() {
 		//given user dtos on setup
 		//when
-		Collection<StandbyPeriodDto> commonPeriods = userService.findAllCommonPeriods(userDtoId1);		
+		Collection<StandbyPeriodDto> commonPeriods = userService.findAllCommonPeriods(userDtoId1.getId());		
 		//then
 		assertFalse(commonPeriods.isEmpty());
-		assertFalse(userService.isCommonPeriodForUsers(userDtoId1, userDtoId3));
-		assertTrue(userService.isCommonPeriodForUsers(userDtoId1, userDtoId5));		
+		assertFalse(userService.isCommonPeriodForUsers(userDtoId1.getId(), userDtoId3.getId()));
+		assertTrue(userService.isCommonPeriodForUsers(userDtoId1.getId(), userDtoId5.getId()));		
 	}
 	
 	@Test

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import com.capgemini.jstk.boardbuddy.dao.StandbyPeriodDaoFacade;
 import com.capgemini.jstk.boardbuddy.dao.impl.mock.CommonDatabaseMock;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
-import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.dto.mapper.Mapper;
 import com.capgemini.jstk.boardbuddy.entity.StandbyPeriod;
 import com.capgemini.jstk.boardbuddy.validation.ValidatorFacade;
@@ -48,10 +47,10 @@ public class StandbyPeriodDao implements StandbyPeriodDaoFacade {
 	}
 
 	@Override
-	public Collection<StandbyPeriodDto> findByUser(UserDto userDto) {
+	public Collection<StandbyPeriodDto> findByUser(Integer userId) {
 		Collection<StandbyPeriodDto> userStandbyPeriods = new ArrayList<>();
 		Stream<StandbyPeriod> userPeriods = standbyPeriods.stream()
-				.filter(standbyPeriodDto -> standbyPeriodDto.getUserId().equals(userDto.getId()));
+				.filter(standbyPeriodDto -> standbyPeriodDto.getUserId().equals(userId));
 		userPeriods.forEach(standbyPeriod -> userStandbyPeriods.add(standbyPeriodMapper.toDto(standbyPeriod)));
 		return userStandbyPeriods;
 	}

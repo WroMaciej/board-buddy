@@ -4,14 +4,13 @@ import java.util.Collection;
 import java.util.Optional;
 
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
-import com.capgemini.jstk.boardbuddy.dto.UserDto;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 
 public interface StandbyPeriodDaoFacade {
 
 	public Optional<StandbyPeriodDto> findById(Integer id);
 
-	public Collection<StandbyPeriodDto> findByUser(UserDto userDto);
+	public Collection<StandbyPeriodDto> findByUser(Integer userId);
 
 	public Collection<StandbyPeriodDto> findAll();
 

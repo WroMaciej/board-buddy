@@ -30,11 +30,11 @@ public interface UserServiceFacade {
 
 	Collection<ChallengeResultDto> findUserChallenges(UserDto userDto);
 
-	Collection<StandbyPeriodDto> findAllCommonPeriods(UserDto userDto);
+	Collection<StandbyPeriodDto> findAllCommonPeriods(Integer userId);
 
-	Collection<StandbyPeriodDto> findCommonPeriodsWithAnotherUser(UserDto userDto1, UserDto userDto2);
+	Collection<StandbyPeriodDto> findCommonPeriodsWithAnotherUser(Integer userId1, Integer userId2);
 
-	boolean isCommonPeriodForUsers(UserDto userDto1, UserDto userDto2);
+	boolean isCommonPeriodForUsers(Integer userId1, Integer userId2);
 
 	void updateProfile(Integer userId, UserDto updatedUserDto) throws IllegalOperationException;
 
