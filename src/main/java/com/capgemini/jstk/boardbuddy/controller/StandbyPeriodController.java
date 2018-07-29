@@ -1,6 +1,10 @@
 package com.capgemini.jstk.boardbuddy.controller;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +18,7 @@ import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.service.StandbyPeriodServiceFacade;
 import com.capgemini.jstk.boardbuddy.service.UserServiceFacade;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @RestController
 public class StandbyPeriodController {
@@ -43,6 +48,21 @@ public class StandbyPeriodController {
 			@PathVariable("userId") Integer userId) {
 		Collection<StandbyPeriodDto> periods = standbyPeriodService.findUserStandbyPeriods(userId);
 		return ResponseEntity.ok().body(periods);
+	}
+
+	@GetMapping("/standby-periods/{userId1}/{userId2}/{startDate}/{endDate}")
+	public ResponseEntity<Collection<StandbyPeriodDto>> getCommonStandbyPeriodFor2UsersAndGivenDatePeriod(
+			@PathVariable("userId1") Integer userId1,
+			@PathVariable("userId2") Integer userId2,
+			@PathVariable("startDate") @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+			Calendar startDate,
+			@PathVariable("endDate") @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+			Calendar endDate) {
+		Stream<StandbyPeriodDto> twoUserCommons = userService.findCommonPeriodsWithAnotherUser(userId1, userId2).stream();
+		Predicate<StandbyPeriodDto> startDateChecked = period -> period.getStartDate().after(startDate);
+		Predicate<StandbyPeriodDto> endDateChecked = period -> period.getEndDate().before(endDate);
+		Collection<StandbyPeriodDto> filteredList = twoUserCommons.filter(startDateChecked.and(endDateChecked)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(filteredList);
 	}
 
 	@PostMapping("/standby-periods/{userId}")
