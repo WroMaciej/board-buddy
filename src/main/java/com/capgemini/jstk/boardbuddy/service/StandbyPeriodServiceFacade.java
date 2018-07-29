@@ -10,7 +10,7 @@ public interface StandbyPeriodServiceFacade {
 	Optional<StandbyPeriodDto> commonPeriod(StandbyPeriodDto senderPeriod,
 			StandbyPeriodDto receiverPeriod);
 
-	void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto)
+	StandbyPeriodDto addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto)
 			throws IllegalOperationException;
 
 	void updateStandbyPeriod(Integer userId, StandbyPeriodDto updatedDto)

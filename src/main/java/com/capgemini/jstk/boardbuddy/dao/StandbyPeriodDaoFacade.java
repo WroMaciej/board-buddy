@@ -14,7 +14,7 @@ public interface StandbyPeriodDaoFacade {
 
 	public Collection<StandbyPeriodDto> findAll();
 
-	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto)
+	public StandbyPeriodDto addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto)
 			throws IllegalOperationException;
 
 	public void updateStandbyPeriod(Integer userId, StandbyPeriodDto updatedDto)

@@ -37,8 +37,8 @@ public class StandbyPeriodService implements StandbyPeriodServiceFacade{
 	}
 
 	@Override
-	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException {
-		standbyPeriodDaoFacade.addStandbyPeriod(userId, standbyPeriodDto);
+	public StandbyPeriodDto addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException {
+		return standbyPeriodDaoFacade.addStandbyPeriod(userId, standbyPeriodDto);
 	}
 
 	@Override

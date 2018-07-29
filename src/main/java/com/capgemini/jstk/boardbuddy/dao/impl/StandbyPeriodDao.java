@@ -56,11 +56,12 @@ public class StandbyPeriodDao implements StandbyPeriodDaoFacade {
 	}
 
 	@Override
-	public void addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException {
+	public StandbyPeriodDto addStandbyPeriod(Integer userId, StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException {
 		StandbyPeriod toAdd = new StandbyPeriod(getUniqueId(), userId, standbyPeriodDto.getStartDate(),
 				standbyPeriodDto.getEndDate(), standbyPeriodDto.getComment(), true);
 		standbyPeriodValidatorFacade.validate(standbyPeriodMapper.toDto(toAdd));
 		standbyPeriods.add(toAdd);
+		return standbyPeriodMapper.toDto(toAdd);
 	}
 
 	private Integer getUniqueId() {
