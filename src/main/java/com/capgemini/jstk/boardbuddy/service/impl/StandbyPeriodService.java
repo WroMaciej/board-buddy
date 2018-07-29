@@ -76,6 +76,11 @@ public class StandbyPeriodService implements StandbyPeriodServiceFacade{
 		return standbyPeriodDaoFacade.findByUser(userId);
 	}
 
+	@Override
+	public Collection<StandbyPeriodDto> getAllStandbyPeriods() {
+		return standbyPeriodDaoFacade.findAll();
+	}
+
 
 
 

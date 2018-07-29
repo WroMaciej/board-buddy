@@ -64,8 +64,8 @@ public class StandbyPeriodDao implements StandbyPeriodDaoFacade {
 		return standbyPeriodMapper.toDto(toAdd);
 	}
 
-	private Integer getUniqueId() {
-		Integer maxId = Integer.valueOf(0);
+	private int getUniqueId() {
+		int maxId = 0;
 		for (StandbyPeriod period : standbyPeriods) {
 			if (period.getId() > maxId) {
 				maxId = period.getId();

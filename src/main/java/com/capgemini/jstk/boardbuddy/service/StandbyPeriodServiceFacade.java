@@ -18,5 +18,8 @@ public interface StandbyPeriodServiceFacade {
 			throws IllegalOperationException, IllegalAccessException;
 
 	Collection<StandbyPeriodDto> findUserStandbyPeriods(Integer userId);
+
+	Collection<StandbyPeriodDto> getAllStandbyPeriods();
+	
 	
 }
