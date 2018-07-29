@@ -1,5 +1,6 @@
 package com.capgemini.jstk.boardbuddy.service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
@@ -15,4 +16,7 @@ public interface StandbyPeriodServiceFacade {
 
 	void updateStandbyPeriod(Integer userId, StandbyPeriodDto updatedDto)
 			throws IllegalOperationException, IllegalAccessException;
+
+	Collection<StandbyPeriodDto> findUserStandbyPeriods(Integer userId);
+	
 }

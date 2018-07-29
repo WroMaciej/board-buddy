@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.service.StandbyPeriodServiceFacade;
 import com.capgemini.jstk.boardbuddy.service.UserServiceFacade;
+import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 
 @RestController
 public class StandbyPeriodController {
@@ -32,14 +33,14 @@ public class StandbyPeriodController {
 	
 	@GetMapping("/standby-periods/{userId}")
 	public ResponseEntity<Collection<StandbyPeriodDto>> getAllUserStandbyPeriods(@PathVariable("userId") Integer userId){
-		Collection<StandbyPeriodDto> periods = userService.findAllCommonPeriods(userId);
+		Collection<StandbyPeriodDto> periods = standbyPeriodService.findUserStandbyPeriods(userId); // findAllCommonPeriods(userId);
 		return ResponseEntity.ok().body(periods);
 	}
 	
-	@PostMapping("/standby-periods/")
-	public ResponseEntity<StandbyPeriodDto> createStandbyPeriod(@RequestBody StandbyPeriodDto standbyPeriodDto){
-		standbyPeriodService.addStandbyPeriod(userId, standbyPeriodDto);
-		return ResponseEntity.ok().body(standbyPeriodDto);
+	@PostMapping("/standby-periods/{userId}")
+	public ResponseEntity<StandbyPeriodDto> createStandbyPeriod(@PathVariable("userId") Integer userId, @RequestBody StandbyPeriodDto standbyPeriodDto) throws IllegalOperationException{
+		StandbyPeriodDto createdDto = standbyPeriodService.addStandbyPeriod(userId, standbyPeriodDto);
+		return ResponseEntity.ok().body(createdDto);
 		//return ResponseEntity.ok().body("Standby period created succesfully");
 		
 	}

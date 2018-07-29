@@ -1,6 +1,7 @@
 package com.capgemini.jstk.boardbuddy.service.impl;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,11 @@ public class StandbyPeriodService implements StandbyPeriodServiceFacade{
 			return date2;
 		}
 		return date1;
+	}
+
+	@Override
+	public Collection<StandbyPeriodDto> findUserStandbyPeriods(Integer userId) {
+		return standbyPeriodDaoFacade.findByUser(userId);
 	}
 
 

@@ -23,6 +23,20 @@ public class StandbyPeriodDto {
 	public StandbyPeriodDto(Integer id) {
 		this.id = id;
 	}
+	
+	//TODO  needed by Jackson to convert response body to pojo
+	public StandbyPeriodDto(Integer id, Integer userId, Calendar startDate, Calendar endDate,
+			String comment, boolean isActive) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.comment = comment;
+		this.isActive = isActive;
+	}
+	
+	
 
 
 	@Override
