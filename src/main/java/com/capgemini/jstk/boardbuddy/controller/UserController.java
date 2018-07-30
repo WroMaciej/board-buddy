@@ -19,8 +19,12 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationExcep
 @RestController
 public class UserController {
 
-	@Autowired
 	private UserServiceFacade userService;
+
+	@Autowired
+	public UserController(UserServiceFacade userService) {
+		this.userService = userService;
+	}
 
 	@GetMapping("/users")
 	public @ResponseBody ResponseEntity<Collection<UserDto>> getAllUsers() {
@@ -32,7 +36,7 @@ public class UserController {
 		Optional<UserDto> userDto = userService.findUserById(userId);
 		return ResponseEntity.ok().body(userDto.get());
 	}
-	
+
 	@PutMapping("/user/{email}")
 	public @ResponseBody ResponseEntity<UserDto> updateUserByEmail(@PathVariable String email,
 			@RequestBody UserDto userDto) throws IllegalOperationException {

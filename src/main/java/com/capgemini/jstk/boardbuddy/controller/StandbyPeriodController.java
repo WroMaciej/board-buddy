@@ -34,11 +34,16 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.rest.IllegalDateExcep
 @RequestMapping("/standby-periods")
 public class StandbyPeriodController {
 
-	@Autowired
 	StandbyPeriodServiceFacade standbyPeriodService;
-	@Autowired
 	UserServiceFacade userService;
 	
+	@Autowired
+	public StandbyPeriodController(StandbyPeriodServiceFacade standbyPeriodService,
+			UserServiceFacade userService) {
+		this.standbyPeriodService = standbyPeriodService;
+		this.userService = userService;
+	}
+
 	@ExceptionHandler(IllegalDateException.class)
 	public ResponseEntity<String> userNotFoundExceptionHandler(IllegalDateException exception){
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_ACCEPTABLE);
@@ -51,14 +56,14 @@ public class StandbyPeriodController {
 	}
 
 	@GetMapping("/common/{userId}")
-	public @ResponseBody ResponseEntity<Collection<StandbyPeriodDto>> getAllCommonStandbyPeriods(
+	public @ResponseBody ResponseEntity<Collection<StandbyPeriodDto>> getCommonStandbyPeriods(
 			@PathVariable("userId") Integer userId) {
 		Collection<StandbyPeriodDto> periods = userService.findAllCommonPeriods(userId);
 		return ResponseEntity.ok().body(periods);
 	}
 
 	@GetMapping("/{userId}")
-	public @ResponseBody ResponseEntity<Collection<StandbyPeriodDto>> getAllUserStandbyPeriods(
+	public @ResponseBody ResponseEntity<Collection<StandbyPeriodDto>> getUserStandbyPeriods(
 			@PathVariable("userId") Integer userId) {
 		Collection<StandbyPeriodDto> periods = standbyPeriodService.findUserStandbyPeriods(userId);
 		return ResponseEntity.ok().body(periods);
