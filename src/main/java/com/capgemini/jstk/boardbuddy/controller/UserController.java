@@ -22,12 +22,6 @@ public class UserController {
 	@Autowired
 	private UserServiceFacade userService;
 
-//	@ExceptionHandler(UserNotFoundException.class)
-//	public ResponseEntity<UserErrorResponse> userNotFoundExceptionHandler(UserNotFoundException exception){
-//		UserErrorResponse response = new UserErrorResponse(HttpStatus.NOT_FOUND.value(), exception.getMessage());
-//		return new ResponseEntity<UserErrorResponse>(response, HttpStatus.NOT_FOUND);
-//	}
-
 	@GetMapping("/users")
 	public @ResponseBody ResponseEntity<Collection<UserDto>> getAllUsers() {
 		return ResponseEntity.ok().body(userService.findAllUsers());
@@ -38,7 +32,7 @@ public class UserController {
 		Optional<UserDto> userDto = userService.findUserById(userId);
 		return ResponseEntity.ok().body(userDto.get());
 	}
-
+	
 	@PutMapping("/user/{email}")
 	public @ResponseBody ResponseEntity<UserDto> updateUserByEmail(@PathVariable String email,
 			@RequestBody UserDto userDto) throws IllegalOperationException {
