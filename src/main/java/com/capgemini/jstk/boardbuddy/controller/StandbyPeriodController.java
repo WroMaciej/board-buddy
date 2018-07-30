@@ -1,7 +1,12 @@
 package com.capgemini.jstk.boardbuddy.controller;
 
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,7 +23,7 @@ import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
 import com.capgemini.jstk.boardbuddy.service.StandbyPeriodServiceFacade;
 import com.capgemini.jstk.boardbuddy.service.UserServiceFacade;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.capgemini.jstk.boardbuddy.validation.exceptions.rest.IllegalDateException;
 
 @RestController
 public class StandbyPeriodController {
@@ -49,18 +54,70 @@ public class StandbyPeriodController {
 		Collection<StandbyPeriodDto> periods = standbyPeriodService.findUserStandbyPeriods(userId);
 		return ResponseEntity.ok().body(periods);
 	}
+	
+	private enum DayPart{
+		START, END;
+	}
+	
+	/**
+	 * Converting string with given day to calendar with start of day
+	 * @param dayToConvert with "dd.MM.yyyy" format
+	 * @return Full calendar date
+	 * @throws ParseException 
+	 */
+	private Calendar dayToCalendar(DayPart dayPart, String dayToConvert) throws ParseException {
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(dayToConvert);	
+		if (dayPart == DayPart.START) {
+			stringBuilder.append(" 00:00:01");
+		}
+		else if (dayPart == DayPart.END) {
+			stringBuilder.append(" 23:59:59");
+		}
+		LocalDate date = LocalDate.parse(stringBuilder.toString(), dateFormat);
+		Calendar calendar = GregorianCalendar.from(date.atStartOfDay(ZoneId.of("GMT")));
+		return calendar;
+	}
+	
+	@GetMapping("/date/{day}")
+	public ResponseEntity<Calendar> getTime(@PathVariable("day") String day) throws ParseException{
+		return ResponseEntity.ok().body(dayToCalendar(DayPart.START, day));
+	}
+	
+	@GetMapping("/standby-periods/{userId1}/{userId2}")
+	public ResponseEntity<Collection<StandbyPeriodDto>> getCommonStandbyPeriodFor2Users(
+			@PathVariable("userId1") Integer userId1,
+			@PathVariable("userId2") Integer userId2){
+		Collection<StandbyPeriodDto> twoUserCommons = userService.findCommonPeriodsWithAnotherUser(userId1, userId2);
+		return ResponseEntity.ok().body(twoUserCommons);
+	}	
 
-	@GetMapping("/standby-periods/{userId1}/{userId2}/{startDate}/{endDate}")
-	public ResponseEntity<Collection<StandbyPeriodDto>> getCommonStandbyPeriodFor2UsersAndGivenDatePeriod(
+	@GetMapping("/standby-periods/{userId1}/{userId2}/{startDay}/{endDay}")
+	public ResponseEntity<Collection<StandbyPeriodDto>> getCommonStandbyPeriodFor2UsersAndGivenDaysPeriod(
 			@PathVariable("userId1") Integer userId1,
 			@PathVariable("userId2") Integer userId2,
-			@PathVariable("startDate") @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-			Calendar startDate,
-			@PathVariable("endDate") @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-			Calendar endDate) {
+			@PathVariable("startDay") String startDateDay,
+			@PathVariable("endDay") String endDateDay) throws IllegalDateException {
+		
+		Predicate<StandbyPeriodDto> startDateChecked = null;
+		Predicate<StandbyPeriodDto> endDateChecked = null;
+		try {
+			Calendar startDate = dayToCalendar(DayPart.START, startDateDay);
+			startDateChecked = period -> period.getStartDate().after(startDate);
+		} catch (ParseException e) {
+			throw new IllegalDateException("Wrong date: " + startDateDay + "  . Use format 'dd.MM.yyyy'");
+		}
+		try {
+			Calendar endDate = dayToCalendar(DayPart.END, endDateDay);
+			endDateChecked = period -> period.getEndDate().before(endDate);
+		} catch (ParseException e) {
+			throw new IllegalDateException("Wrong date: " + endDateDay + "  . Use format 'dd.MM.yyyy'");
+		}
+		
 		Stream<StandbyPeriodDto> twoUserCommons = userService.findCommonPeriodsWithAnotherUser(userId1, userId2).stream();
-		Predicate<StandbyPeriodDto> startDateChecked = period -> period.getStartDate().after(startDate);
-		Predicate<StandbyPeriodDto> endDateChecked = period -> period.getEndDate().before(endDate);
+		
+		
 		Collection<StandbyPeriodDto> filteredList = twoUserCommons.filter(startDateChecked.and(endDateChecked)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(filteredList);
 	}
