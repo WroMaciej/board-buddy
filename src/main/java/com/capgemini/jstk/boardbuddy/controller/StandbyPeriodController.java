@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
@@ -12,11 +13,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
@@ -26,6 +30,7 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationExcep
 import com.capgemini.jstk.boardbuddy.validation.exceptions.rest.IllegalDateException;
 
 @RestController
+@RequestMapping("/standby-periods")
 public class StandbyPeriodController {
 
 	@Autowired
@@ -34,21 +39,26 @@ public class StandbyPeriodController {
 	UserServiceFacade userService;
 
 	// TODO add global exception handler for user id searching
+	
+	@ExceptionHandler(IllegalDateException.class)
+	public ResponseEntity<String> userNotFoundExceptionHandler(IllegalDateException exception){
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+	}
 
-	@GetMapping("/standby-periods/")
+	@GetMapping("/")
 	public ResponseEntity<Collection<StandbyPeriodDto>> getAllStandbyPeriods() {
 		Collection<StandbyPeriodDto> periods = standbyPeriodService.getAllStandbyPeriods();
 		return ResponseEntity.ok().body(periods);
 	}
 
-	@GetMapping("/standby-periods/common/{userId}")
+	@GetMapping("/common/{userId}")
 	public ResponseEntity<Collection<StandbyPeriodDto>> getAllCommonStandbyPeriods(
 			@PathVariable("userId") Integer userId) {
 		Collection<StandbyPeriodDto> periods = userService.findAllCommonPeriods(userId);
 		return ResponseEntity.ok().body(periods);
 	}
 
-	@GetMapping("/standby-periods/{userId}")
+	@GetMapping("/{userId}")
 	public ResponseEntity<Collection<StandbyPeriodDto>> getAllUserStandbyPeriods(
 			@PathVariable("userId") Integer userId) {
 		Collection<StandbyPeriodDto> periods = standbyPeriodService.findUserStandbyPeriods(userId);
@@ -80,12 +90,7 @@ public class StandbyPeriodController {
 		return calendar;
 	}
 	
-	@GetMapping("/date/{day}")
-	public ResponseEntity<Calendar> getTime(@PathVariable("day") String day) throws ParseException{
-		return ResponseEntity.ok().body(dayToCalendar(DayPart.START, day));
-	}
-	
-	@GetMapping("/standby-periods/{userId1}/{userId2}")
+	@GetMapping("/{userId1}/{userId2}")
 	public ResponseEntity<Collection<StandbyPeriodDto>> getCommonStandbyPeriodFor2Users(
 			@PathVariable("userId1") Integer userId1,
 			@PathVariable("userId2") Integer userId2){
@@ -93,7 +98,7 @@ public class StandbyPeriodController {
 		return ResponseEntity.ok().body(twoUserCommons);
 	}	
 
-	@GetMapping("/standby-periods/{userId1}/{userId2}/{startDay}/{endDay}")
+	@GetMapping("/{userId1}/{userId2}/{startDay}/{endDay}")
 	public ResponseEntity<Collection<StandbyPeriodDto>> getCommonStandbyPeriodFor2UsersAndGivenDaysPeriod(
 			@PathVariable("userId1") Integer userId1,
 			@PathVariable("userId2") Integer userId2,
@@ -105,24 +110,23 @@ public class StandbyPeriodController {
 		try {
 			Calendar startDate = dayToCalendar(DayPart.START, startDateDay);
 			startDateChecked = period -> period.getStartDate().after(startDate);
-		} catch (ParseException e) {
+		} catch (ParseException | DateTimeParseException e) {
 			throw new IllegalDateException("Wrong date: " + startDateDay + "  . Use format 'dd.MM.yyyy'");
 		}
 		try {
 			Calendar endDate = dayToCalendar(DayPart.END, endDateDay);
 			endDateChecked = period -> period.getEndDate().before(endDate);
-		} catch (ParseException e) {
-			throw new IllegalDateException("Wrong date: " + endDateDay + "  . Use format 'dd.MM.yyyy'");
+		} catch (ParseException | DateTimeParseException e) {
+			throw new IllegalDateException("Wrong date: '" + endDateDay + "'. Use format 'dd.MM.yyyy'");
 		}
 		
 		Stream<StandbyPeriodDto> twoUserCommons = userService.findCommonPeriodsWithAnotherUser(userId1, userId2).stream();
-		
-		
+
 		Collection<StandbyPeriodDto> filteredList = twoUserCommons.filter(startDateChecked.and(endDateChecked)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(filteredList);
 	}
 
-	@PostMapping("/standby-periods/{userId}")
+	@PostMapping("/{userId}")
 	public ResponseEntity<StandbyPeriodDto> createStandbyPeriod(
 			@PathVariable("userId") Integer userId, @RequestBody StandbyPeriodDto standbyPeriodDto)
 			throws IllegalOperationException {

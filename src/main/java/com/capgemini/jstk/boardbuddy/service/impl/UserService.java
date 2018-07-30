@@ -28,6 +28,7 @@ import com.capgemini.jstk.boardbuddy.service.UserServiceFacade;
 import com.capgemini.jstk.boardbuddy.validation.ValidatorFacade;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationException;
 import com.capgemini.jstk.boardbuddy.validation.exceptions.NoSuchElementInDatabaseException;
+import com.capgemini.jstk.boardbuddy.validation.exceptions.rest.UserNotFoundException;
 
 @Service
 public class UserService implements UserServiceFacade {
@@ -56,7 +57,11 @@ public class UserService implements UserServiceFacade {
 	
 	@Override
 	public Optional<UserDto> findUserById(Integer userId) {
-		return userDaoFacade.findById(userId);
+	Optional<UserDto> userDto = userDaoFacade.findById(userId);
+	if (!userDto.isPresent()) {
+		throw new UserNotFoundException("User with given id not found. ID: " + userId);
+	}
+		return userDto;
 	}
 
 	@Override
@@ -129,6 +134,7 @@ public class UserService implements UserServiceFacade {
 
 	@Override
 	public Collection<StandbyPeriodDto> findAllCommonPeriods(Integer userId) {
+		findUserById(userId);
 		Collection<Optional<StandbyPeriodDto>> rawCommonPeriods = new ArrayList<>();
 		Collection<StandbyPeriodDto> commonPeriods = new ArrayList<>();
 		Collection<StandbyPeriodDto> userPeriods = standbyPeriodDaoFacade.findByUser(userId);
@@ -149,6 +155,8 @@ public class UserService implements UserServiceFacade {
 
 	@Override
 	public Collection<StandbyPeriodDto> findCommonPeriodsWithAnotherUser(Integer userId1, Integer userId2) {
+		findUserById(userId1);
+		findUserById(userId2);
 		return findAllCommonPeriods(userId1).stream()
 				.filter(period -> period.getUserId().equals(userId2))
 				.collect(Collectors.toSet());
