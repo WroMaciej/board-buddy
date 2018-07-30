@@ -2,29 +2,26 @@ package com.capgemini.jstk.boardbuddy.dto;
 
 import java.util.Calendar;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class StandbyPeriodDto {
 
-	@Getter
+	@Setter(AccessLevel.NONE)
 	private final Integer id;
-	@Getter	@Setter
 	private Integer userId;
-	@Getter	@Setter
 	private Calendar startDate;
-	@Getter	@Setter
 	private Calendar endDate;
-	@Getter	@Setter
 	private String comment;
-	@Getter	@Setter
 	private boolean isActive;
 
 	public StandbyPeriodDto(Integer id) {
 		this.id = id;
 	}
 	
-	//TODO  needed by Jackson to convert response body to pojo
 	public StandbyPeriodDto(Integer id, Integer userId, Calendar startDate, Calendar endDate,
 			String comment, boolean isActive) {
 		super();

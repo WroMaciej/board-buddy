@@ -1,39 +1,45 @@
 package com.capgemini.jstk.boardbuddy.dto;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class UserDto {
-		
-	@Getter
+
+	@Setter(AccessLevel.NONE)
 	private final Integer id;
-	@Getter	@Setter
 	private String firstName;
-	@Getter	@Setter
 	private String lastName;
-	@Getter	@Setter
 	private String email;
-	@Getter	@Setter
 	private String lifeMotto;
-	@Getter	@Setter
 	private Integer score;
-	
-	@Getter	@Setter
 	private Integer rankPosition;
-	@Getter	@Setter
 	private Integer wins;
-	@Getter	@Setter
 	private Integer losses;
-	@Getter	@Setter
 	private Integer draws;
-	@Getter	@Setter
 	private Integer levelValue;
-	
-	
+
 	public UserDto(Integer id) {
 		this.id = id;
 	}
 
+	public UserDto(Integer id, String firstName, String lastName, String email, String lifeMotto,
+			Integer score, Integer rankPosition, Integer wins, Integer losses, Integer draws,
+			Integer levelValue) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.lifeMotto = lifeMotto;
+		this.score = score;
+		this.rankPosition = rankPosition;
+		this.wins = wins;
+		this.losses = losses;
+		this.draws = draws;
+		this.levelValue = levelValue;
+	}
 
 	@Override
 	public int hashCode() {
@@ -43,34 +49,26 @@ public class UserDto {
 		return result;
 	}
 
-
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		UserDto other = (UserDto) obj;
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		return true;
 	}
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-		
 
 }

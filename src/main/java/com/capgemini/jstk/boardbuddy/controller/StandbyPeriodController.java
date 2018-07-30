@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.jstk.boardbuddy.dto.StandbyPeriodDto;
@@ -37,8 +38,6 @@ public class StandbyPeriodController {
 	StandbyPeriodServiceFacade standbyPeriodService;
 	@Autowired
 	UserServiceFacade userService;
-
-	// TODO add global exception handler for user id searching
 	
 	@ExceptionHandler(IllegalDateException.class)
 	public ResponseEntity<String> userNotFoundExceptionHandler(IllegalDateException exception){
@@ -46,20 +45,20 @@ public class StandbyPeriodController {
 	}
 
 	@GetMapping("/")
-	public ResponseEntity<Collection<StandbyPeriodDto>> getAllStandbyPeriods() {
+	public @ResponseBody ResponseEntity<Collection<StandbyPeriodDto>> getAllStandbyPeriods() {
 		Collection<StandbyPeriodDto> periods = standbyPeriodService.getAllStandbyPeriods();
 		return ResponseEntity.ok().body(periods);
 	}
 
 	@GetMapping("/common/{userId}")
-	public ResponseEntity<Collection<StandbyPeriodDto>> getAllCommonStandbyPeriods(
+	public @ResponseBody ResponseEntity<Collection<StandbyPeriodDto>> getAllCommonStandbyPeriods(
 			@PathVariable("userId") Integer userId) {
 		Collection<StandbyPeriodDto> periods = userService.findAllCommonPeriods(userId);
 		return ResponseEntity.ok().body(periods);
 	}
 
 	@GetMapping("/{userId}")
-	public ResponseEntity<Collection<StandbyPeriodDto>> getAllUserStandbyPeriods(
+	public @ResponseBody ResponseEntity<Collection<StandbyPeriodDto>> getAllUserStandbyPeriods(
 			@PathVariable("userId") Integer userId) {
 		Collection<StandbyPeriodDto> periods = standbyPeriodService.findUserStandbyPeriods(userId);
 		return ResponseEntity.ok().body(periods);
@@ -91,7 +90,7 @@ public class StandbyPeriodController {
 	}
 	
 	@GetMapping("/{userId1}/{userId2}")
-	public ResponseEntity<Collection<StandbyPeriodDto>> getCommonStandbyPeriodFor2Users(
+	public @ResponseBody ResponseEntity<Collection<StandbyPeriodDto>> getCommonStandbyPeriodFor2Users(
 			@PathVariable("userId1") Integer userId1,
 			@PathVariable("userId2") Integer userId2){
 		Collection<StandbyPeriodDto> twoUserCommons = userService.findCommonPeriodsWithAnotherUser(userId1, userId2);
@@ -99,7 +98,7 @@ public class StandbyPeriodController {
 	}	
 
 	@GetMapping("/{userId1}/{userId2}/{startDay}/{endDay}")
-	public ResponseEntity<Collection<StandbyPeriodDto>> getCommonStandbyPeriodFor2UsersAndGivenDaysPeriod(
+	public @ResponseBody ResponseEntity<Collection<StandbyPeriodDto>> getCommonStandbyPeriodFor2UsersAndGivenDaysPeriod(
 			@PathVariable("userId1") Integer userId1,
 			@PathVariable("userId2") Integer userId2,
 			@PathVariable("startDay") String startDateDay,
@@ -127,12 +126,13 @@ public class StandbyPeriodController {
 	}
 
 	@PostMapping("/{userId}")
-	public ResponseEntity<StandbyPeriodDto> createStandbyPeriod(
+	public @ResponseBody ResponseEntity<StandbyPeriodDto> createStandbyPeriod(
 			@PathVariable("userId") Integer userId, @RequestBody StandbyPeriodDto standbyPeriodDto)
 			throws IllegalOperationException {
 		StandbyPeriodDto createdDto = standbyPeriodService.addStandbyPeriod(userId,
 				standbyPeriodDto);
 		return ResponseEntity.ok().body(createdDto);
 	}
+	
 
 }

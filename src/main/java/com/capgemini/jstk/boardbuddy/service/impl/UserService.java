@@ -42,9 +42,12 @@ public class UserService implements UserServiceFacade {
 	private StandbyPeriodServiceFacade standbyPeriodService;
 
 	@Autowired
-	public UserService(UserDaoFacade userDaoFacade, LevelDaoFacade levelDaoFacade, User_BoardgameDaoFacade user_BoardgameDaoFacade,
-			UserChallengeResultDaoFacade userChallengeResultDaoFacade, StandbyPeriodDaoFacade standbyPerdiodDao,
-			StandbyPeriodServiceFacade standbyPeriodService, ValidatorFacade<UserDto> userValidator) {
+	public UserService(UserDaoFacade userDaoFacade, LevelDaoFacade levelDaoFacade,
+			User_BoardgameDaoFacade user_BoardgameDaoFacade,
+			UserChallengeResultDaoFacade userChallengeResultDaoFacade,
+			StandbyPeriodDaoFacade standbyPerdiodDao,
+			StandbyPeriodServiceFacade standbyPeriodService,
+			ValidatorFacade<UserDto> userValidator) {
 		this.userValidatorFacade = userValidator;
 		this.userDaoFacade = userDaoFacade;
 		this.levelDaoFacade = levelDaoFacade;
@@ -53,14 +56,23 @@ public class UserService implements UserServiceFacade {
 		this.standbyPeriodDaoFacade = standbyPerdiodDao;
 		this.standbyPeriodService = standbyPeriodService;
 	}
-	
-	
+
 	@Override
 	public Optional<UserDto> findUserById(Integer userId) {
-	Optional<UserDto> userDto = userDaoFacade.findById(userId);
-	if (!userDto.isPresent()) {
-		throw new UserNotFoundException("User with given id not found. ID: " + userId);
+		Optional<UserDto> userDto = userDaoFacade.findById(userId);
+		if (!userDto.isPresent()) {
+			throw new UserNotFoundException("User with given id not found. ID: " + userId);
+		}
+		return userDto;
 	}
+
+	@Override
+	public Optional<UserDto> findByEmail(String email) {
+		Optional<UserDto> userDto = userDaoFacade.findAllUsers().stream()
+				.filter(u -> u.getEmail().equals(email)).findFirst();
+		if (!userDto.isPresent()) {
+			throw new UserNotFoundException("User with given email not found. E-mail: " + email);
+		}
 		return userDto;
 	}
 
@@ -68,7 +80,6 @@ public class UserService implements UserServiceFacade {
 	public Collection<UserDto> findAllUsers() {
 		return userDaoFacade.findAllUsers();
 	}
-	
 
 	@Override
 	public LevelDto findLevel(UserDto userDto) {
@@ -142,7 +153,8 @@ public class UserService implements UserServiceFacade {
 
 		for (StandbyPeriodDto userPeriod : userPeriods) {
 			Predicate<StandbyPeriodDto> isActive = period -> period.isActive();
-			Predicate<StandbyPeriodDto> otherUser = anyPeriod -> !anyPeriod.getUserId().equals(userId);
+			Predicate<StandbyPeriodDto> otherUser = anyPeriod -> !anyPeriod.getUserId()
+					.equals(userId);
 			allPeriods.stream().filter(otherUser.and(isActive))
 					.forEach(anyPeriod -> rawCommonPeriods
 							.add(standbyPeriodService.commonPeriod(userPeriod, anyPeriod)));
@@ -154,12 +166,12 @@ public class UserService implements UserServiceFacade {
 	}
 
 	@Override
-	public Collection<StandbyPeriodDto> findCommonPeriodsWithAnotherUser(Integer userId1, Integer userId2) {
+	public Collection<StandbyPeriodDto> findCommonPeriodsWithAnotherUser(Integer userId1,
+			Integer userId2) {
 		findUserById(userId1);
 		findUserById(userId2);
 		return findAllCommonPeriods(userId1).stream()
-				.filter(period -> period.getUserId().equals(userId2))
-				.collect(Collectors.toSet());
+				.filter(period -> period.getUserId().equals(userId2)).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -179,12 +191,10 @@ public class UserService implements UserServiceFacade {
 			String comment) throws IllegalAccessException {
 		Map<UserDto, String> userMessageMap = new HashMap<>();
 		Collection<StandbyPeriodDto> commonStandbys = findAllCommonPeriods(userId);
-		commonStandbys.stream()
-				.forEach(period -> userMessageMap.put(userDaoFacade.findById(period.getUserId()).get(), comment));
+		commonStandbys.stream().forEach(period -> userMessageMap
+				.put(userDaoFacade.findById(period.getUserId()).get(), comment));
 		standbyPeriodDaoFacade.deleteStandbyPeriod(userId, deletingPeriodId);
 		return userMessageMap;
 	}
-
-	
 
 }

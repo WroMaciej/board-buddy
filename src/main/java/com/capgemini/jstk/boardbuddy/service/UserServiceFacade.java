@@ -14,6 +14,9 @@ import com.capgemini.jstk.boardbuddy.validation.exceptions.IllegalOperationExcep
 public interface UserServiceFacade {
 
 	Optional<UserDto> findUserById(Integer userId);
+	
+	Optional<UserDto> findByEmail(String email);
+	
 	Collection<UserDto> findAllUsers();
 	
 	LevelDto findLevel(UserDto userDto);
@@ -40,6 +43,8 @@ public interface UserServiceFacade {
 
 	Map<UserDto, String> deleteStandbyPeriod(Integer userId, Integer deletingPeriodId,
 			String comment) throws IllegalAccessException;
+	
+	
 
 }
 

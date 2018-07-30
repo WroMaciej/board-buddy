@@ -1,14 +1,15 @@
 package com.capgemini.jstk.boardbuddy.dto;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class BoardgameDto {
 
-	@Getter
+	@Setter(AccessLevel.NONE)
 	private final Integer id;
-	@Getter
-	@Setter
 	private String name;
 
 	public BoardgameDto(Integer id) {
@@ -25,18 +26,23 @@ public class BoardgameDto {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		BoardgameDto other = (BoardgameDto) obj;
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		return true;
 	}
 
